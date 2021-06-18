@@ -1,0 +1,67 @@
+.small-height { 
+  padding: 1em; 
+} 
+.learn-container { 
+padding-right: 2em; 
+} 
+
+.main-area { 
+        margin: 1em;
+	width: 100%; 
+
+} 
+.main-area img {
+
+	display: block;
+	border: 0;
+	width: 200%;
+}
+
+
+.card {
+	background: white;
+	margin-bottom: 2em;	
+        border: 1px solid #eee;
+}
+
+.card:hover { 
+	box-shadow: 3px 3px 30px hsl(0, 0%, 70%);
+} 
+.card a {
+	color: black;
+	text-decoration: none;
+}
+
+.card a:hover {
+	box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
+        color: #dd3333; 
+}
+
+.card-content {
+	padding: 2em;
+        padding-top: 1em; 
+}
+
+.card-content h2 {
+	margin-top: 0;
+	margin-bottom: .5em;
+	font-weight: light;
+}
+
+.card-content p {
+	font-size: 80%;
+}
+
+/* Flexbox stuff */
+
+.cards {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+}
+
+.card {
+	flex: 0 1 32%;
+}
+
+
