@@ -1,0 +1,44 @@
+---
+layout: post
+title: Web Services Example 1
+date: 2008-02-21 04:10:48.000000000 +05:00
+type: post
+parent_id: '0'
+published: true
+password: ''
+status: publish
+categories:
+- Java
+- Tutorials
+tags: []
+meta:
+  _wpas_done_all: '1'
+author:
+  login: recluze
+  email: recluze@gmail.com
+  display_name: recluze
+  first_name: Mohammad
+  last_name: Nauman
+permalink: "/2008/02/21/web-services-example-1/"
+---
+After creating a successful environment for web services in Eclipse, it's time to take things to another level by writing a service that actually does something. Here, we create a web service (still a simple one) which takes the salaries of employees, including allowances, and calculates their taxes. The client sends an XML document and receives the same document back except the taxes are now filled in. Later in our SOA course, we'll see how these documents can be encrypted and signed to ensure integrity and privacy. Anyway, let's get on with the web service.
+
+<!--more--> First, follow [the tutorial](http://recluze.wordpress.com/2008/02/06/web-services-using-apache-tomcat-and-eclipse/) in which we set up the environment for web services in eclipse. In that tutorial, you write a class on the service provider side that has two function -- getNums and getNums2. In that step, create a class file with one function. The code follows:
+
+```
+package edu.serg.samples; import org.w3c.dom.Document; import org.w3c.dom.Node; import org.w3c.dom.NodeList; public class ProcessTax { &nbsp;&nbsp;&nbsp; public Document processTax(Document employees) { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; try { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; NodeList nl = employees.getFirstChild().getChildNodes(); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; for (int i = 0; i \< nl.getLength(); i++) &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; calculateTax(employees, nl.item(i)); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } catch (Exception e) { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return employees; &nbsp;&nbsp;&nbsp; } &nbsp;&nbsp;&nbsp; private void calculateTax(Document emps, Node emp) { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; try { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (emp == null) &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; NodeList nl = emp.getChildNodes(); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (nl == null) &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; return; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; float total = 0; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; for (int i = 0; i \< nl.getLength(); i++) { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Node nn = nl.item(i); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Node nc = nn.getFirstChild(); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (nn != null) { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (nn.getNodeName().equals("basic") &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; || nn.getNodeName().equals("allowance")) &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; total += Integer.parseInt(nc.getNodeValue()); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; else if (nn.getNodeName().equals("tax")) { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; if (nc != null) &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; nc.setNodeValue(Float.toString(total \* 12 / 100)); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; else { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; nc = emps.createTextNode(Float &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; .toString(total \* 12 / 100)); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; nn.appendChild(nc); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } catch (Exception e) { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; e.printStackTrace(); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; } &nbsp;&nbsp;&nbsp; } }
+```
+
+Now, follow the rest of the tutorial and create a client. At the very end of the tutorial, you create a client SOATestClient. Here, we create a TaxClient:
+
+```
+package edu.serg.samples; import java.net.URL; import javax.xml.parsers.DocumentBuilder; import javax.xml.parsers.DocumentBuilderFactory; import javax.xml.transform.Transformer; import javax.xml.transform.TransformerFactory; import javax.xml.transform.dom.DOMSource; import javax.xml.transform.stream.StreamResult; import org.w3c.dom.Document; public class TaxClient { &nbsp;&nbsp;&nbsp; /\*\* &nbsp;&nbsp;&nbsp; &nbsp;\* @param args &nbsp;&nbsp;&nbsp; &nbsp;\*/ &nbsp;&nbsp;&nbsp; public static void main(String[] args) throws Exception { &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // create the source document from file &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance(); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; dbf.setIgnoringElementContentWhitespace(true); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DocumentBuilder db = dbf.newDocumentBuilder(); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Document doc = db.parse("src/edu/serg/samples/employees.xml"); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; doc.normalize(); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // call the web service to process the file &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ProcessTaxSoapBindingStub srv = new ProcessTaxSoapBindingStub(new URL( &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; "http://localhost:14593/TaxApp/services/ProcessTax"), &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; new ProcessTaxServiceLocator()); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Document res = srv.processTax(doc); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; // output the new file &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; DOMSource src = new DOMSource(res); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; StreamResult sr = new StreamResult(System.out); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; TransformerFactory tf = TransformerFactory.newInstance(); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; Transformer t = tf.newTransformer(); &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; t.transform(src, sr); &nbsp;&nbsp;&nbsp; } }
+```
+
+This code may look daunting if you've only been working with DOM for a week but you need to figure out what the different classes do. The rest is pretty straight forward. Note that you may need to change the xml file path and end point (URL) of your web service on your system. These settings are for my system.
+
+The employees.xml file which we've used in the code above is this:
+
+```
+\<?xml version="1.0" encoding="UTF-8"?\> \<employees\> &nbsp;&nbsp;&nbsp; \<employee\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<name\>employee 1\</name\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<basic\>100\</basic\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<allowance\>10\</allowance\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<tax\>\</tax\> &nbsp;&nbsp;&nbsp; \</employee\> &nbsp;&nbsp;&nbsp; \<employee\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<name\>employee 1\</name\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<basic\>200\</basic\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<allowance\>20\</allowance\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<tax\>\</tax\> &nbsp;&nbsp;&nbsp; \</employee\> &nbsp;&nbsp;&nbsp; \<employee\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<name\>employee 1\</name\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<basic\>300\</basic\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<allowance\>30\</allowance\> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;\<tax\>\</tax\> &nbsp;&nbsp;&nbsp; \</employee\> \</employees\>
+```
