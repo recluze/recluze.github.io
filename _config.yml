@@ -1,6 +1,6 @@
-title: Texture Theme
-author: GitHub User
-email: your-email@domain.com
+title: recluze 
+author: recluze
+email: recluze@gmail.com 
 description: > # this means to ignore newlines until "show_exerpts:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
@@ -15,12 +15,20 @@ sass:
 
 permalink: /posts/:title/
 texture:
-  title: recluze 
+  title: recluze
   tagline: Nauman (recluze) on Computing, Philosophy and more ...
   date_format: "%b %-d, %Y"
   style: red
-  showNav: false
+  showNav: true 
   showPicker: false 
+
+  navigation:
+    - title: Home 
+      url: "/"
+    - title: About
+      url: "/about"
+    - title: Publications
+      url: "/publications"
 
   # generate social links in footer
   social_links:
@@ -32,8 +40,8 @@ texture:
 
 # If you want to link only specific pages in your header, uncomment
 # this and add the path to the pages in order as they should show up
-#header_pages:
-# - about.md
+header_pages:
+ - about.md
 
 # Build settings
 # theme: texture
