@@ -1,5 +1,12 @@
 .small-height { 
-  padding: 1em; 
+  padding-bottom: 1em; 
+  padding-left: 0em;
+  padding-right: 0em;
+} 
+.medium-height { 
+  padding-bottom: 1em; 
+  padding-left: 0em;
+  padding-right: 0em;
 } 
 .learn-container { 
 padding-right: 2em; 
@@ -19,13 +26,14 @@ padding-right: 2em;
 
 
 .card {
-	background: white;
-	margin-bottom: 2em;	
+	background: #fffefe;
+	margin-bottom: 1em;	
         border: 1px solid #eee;
 }
 
 .card:hover { 
 	box-shadow: 3px 3px 30px hsl(0, 0%, 70%);
+	border: 1px solid rgba(50, 50, 200, 0.5);
 } 
 .card a {
 	color: black;
@@ -34,7 +42,6 @@ padding-right: 2em;
 
 .card a:hover {
 	box-shadow: 3px 3px 8px hsl(0, 0%, 80%);
-        color: #dd3333; 
 }
 
 .card-content {
@@ -64,4 +71,81 @@ padding-right: 2em;
 	flex: 0 1 32%;
 }
 
+.navbar ul li { 
+	padding-top: 0.3em !important;
+	padding-bottom: 0.3em !important;
+	border: 0px solid #ffffff !important; 
+	border-bottom: 2px solid  rgba(255, 255, 255, .25) !important ; 
+	xborder-top: 1px solid  rgba(255, 255, 255, .25) !important ; 
+} 
+.navbar ul li:hover { 
+	border-bottom: 2px solid  rgba(255, 255, 255, .75) !important ; 
+	xborder-top: 1px solid  rgba(255, 255, 255, .75) !important ; 
+} 
 
+.navbar ul a { 
+	color: #ffffff;
+} 
+
+
+
+.container a { 
+	color: #dd3333; 
+} 
+
+
+.card span { 
+	color: #666666 !important; 
+	font-family: monospace;
+	font-size: 0.8em;
+} 
+
+.card h2 { 
+	font-size: 1.2em;
+	text-shadow: 2px 2px #eeeeee;
+} 
+
+
+h2 { 
+	font-family: 'Noto Sans JP', sans-serif !important;
+} 
+
+
+
+
+/** redirect stuff */ 
+
+.redirect-container { 
+  display: flex;
+  height: 100%; 
+  justify-content: center;
+  align-items: center; 	
+  text-align: center;
+} 
+
+
+.redirect-container .redirect { 
+	margin: auto;
+	font-family: 'Helvetica', 'Verdana', sans-serif !important;
+	vertical-align: middle;
+} 
+
+.redirect h1 { 
+	font-family: 'Noto Sans JP', 'Helvetica', sans-serif; 
+	color: #666666;
+        font-size: 2em;	
+} 
+
+
+.redirect a { 
+	margin-top: 2em;
+	display: inline-block;
+	font-size: 0.9em;
+	text-decoration: none; 
+	color: rgba(50, 70, 200, 1); 
+} 
+
+
+.redirect a:hover { 
+	color: rgba(50, 150, 50, 1); 
+} 

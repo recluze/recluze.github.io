@@ -18,9 +18,9 @@ texture:
   title: recluze
   tagline: Nauman (recluze) on Computing, Philosophy and more ...
   date_format: "%b %-d, %Y"
-  style: red
+  style: blue 
   showNav: true 
-  showPicker: false 
+  showPicker: false
 
   navigation:
     - title: Home 
@@ -29,6 +29,8 @@ texture:
       url: "/about"
     - title: Publications
       url: "/publications"
+    - title: Courses 
+      url: "/learn"
 
   # generate social links in footer
   social_links:
@@ -49,3 +51,11 @@ header_pages:
 plugins:
   - jekyll-seo-tag
 #  - jekyll-feed
+#
+#
+#
+
+
+courses: 
+  linux: http://linux.com 
+  elixir: http://elixir.com 

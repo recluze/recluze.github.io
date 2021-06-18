@@ -1,14 +1,14 @@
 ---
 layout: page
 title: About
-permalink: /about/
+permalink: /about
 ---
 
 ## About Me 
 
 My name is Mohammad Nauman and I am, foremost, a Muslim. I am also a teacher by profession, a designer in my free time and a perpetual student.
 
-You can download my resume from here: Mohammad Nauman (CV)
+You can download my resume from here: [Mohammad Nauman (CV)](/nam-cv.pdf)
 
 ## Research Statement
 
@@ -28,6 +28,6 @@ Above all, my experience in teaching has shown me that the best way to gain know
 
 ## Publications
 
-You can take a look at my publications here.
+You can take a look at my [publications here](/publications).
 
 
