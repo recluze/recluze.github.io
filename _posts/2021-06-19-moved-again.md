@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  Moved to Github Page
+title:  Moved to Github Pages
 date: 2021-06-19 08:15:00.000000000 +05:00
 published: true
 status: publish
