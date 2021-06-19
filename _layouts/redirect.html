@@ -8,7 +8,11 @@
 
     <div class='redirect-container'> 
       <div class='redirect'> 
-        <h1>Applying Discount</h1> 
+        {%- if page.message -%}
+          <h1>{{ page.message }}</h1> 
+        {%- else -%} 
+          <h1>Applying Discount</h1> 
+        {%- endif -%} 
 	<p>to <strong>{{ page.title }}</strong></p> 
         <p><a href="{{ page.link }}">Click here if you are not redirected automatically within 5 seconds</a></p>
       </div> 
