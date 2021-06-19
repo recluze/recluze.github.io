@@ -26,9 +26,9 @@ padding-right: 2em;
 
 
 .card {
-	background: #fffefe;
+	background: #fff9f9;
 	margin-bottom: 1em;	
-        border: 1px solid #eee;
+        border: 1px solid #bbbbbb;
 }
 
 .card:hover { 
@@ -64,11 +64,13 @@ padding-right: 2em;
 .cards {
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-between;
+   /* justify-content: space-between; */ 
+   justify-content: left; 
 }
 
 .card {
-	flex: 0 1 32%;
+	flex: 0 0 30%;
+	margin: 0.8em;
 }
 
 .navbar ul li { 
@@ -149,3 +151,9 @@ h2 {
 .redirect a:hover { 
 	color: rgba(50, 150, 50, 1); 
 } 
+
+
+body { 
+        /* background: url('/assets/images/zigzag.png');  */ 
+} 
+
