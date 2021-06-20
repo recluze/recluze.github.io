@@ -1,6 +1,6 @@
 - title: Hyperledger Fabric 2.x - First Practical Blockchain
   desc: Deploy your first smart contract on the popular block chain framework.
-  link: /course-
+  link: /course-blockchain
   imgsrc: hyperledger.jpg 
   lectures: 25 
   hours: 2.5 
@@ -11,7 +11,7 @@
 
 - title: Linux Command Line - From Zero to Expert
   desc: Get in the rhythm of the command line as a first step towards Linux System Administration, VoIP and many more areas 
-  link: /course-
+  link: /course-linux
   imgsrc: linux.jpg 
   lectures: 15
   hours: 2.5 
@@ -22,7 +22,7 @@
 
 - title: Julia Programming Language - From Zero to Expert
   desc: Supercharge your data science and ML career by learning the next generation language favored by the experts.
-  link: /course-
+  link: /course-julia
   imgsrc: julia.jpg 
   lectures: 30 
   hours: 3.5 
@@ -32,7 +32,7 @@
 
 - title: Practical Deep Learning with Tensorflow 2.0 and Keras
   desc: Learn to apply machine learning to your problems. Follow a complete pipeline including pre-processing and training.
-  link: /course-
+  link: /course-keras
   imgsrc: keras.jpg 
   lectures: 31 
   hours: 3.5 
@@ -42,7 +42,7 @@
 
 - title: Applied Probability for Data Science/Machine Learning
   desc: Learn how to learn the maths behind data science and machine learning to boost your understanding of these hot topics.
-  link: /course-
+  link: /course-applied-probability
   imgsrc: prob.jpg 
   lectures:  37
   hours:  6.5
@@ -52,7 +52,7 @@
 
 - title: Beyond Basic Programming - Intermediate Python
   desc: Take your Python skills to the next level. Learn how expert programmers work with code and the techniques they use.
-  link: /course-
+  link: /course-intermediate-python
   imgsrc: interm-python.jpg 
   lectures:  36
   hours: 3 
@@ -62,7 +62,7 @@
 
 - title: LaTeX For Everyone and Everything
   desc: Figures, tables, templates, research papers and even drawing high quality figures.
-  link: /course-
+  link: /course-latex
   imgsrc: latex.jpg 
   lectures: 29 
   hours: 2.5 
@@ -72,7 +72,7 @@
 
 - title: Elixir and Phoenix - Real World Functional Programming
   desc: Boost Your Programming Skills by Learning The Next Generation Functional Programming Language and Web Framework
-  link: /course-
+  link: /course-elixir-phoenix
   imgsrc: elixir.jpg 
   lectures: 47 
   hours:  4
@@ -82,7 +82,7 @@
 
 - title: Sentiment Analysis through Deep Learning with Keras & Python
   desc: Learn to perform industry grade sentiment analysis using deep learning on real world text.
-  link: /course-
+  link: /course-sentiment-analysis
   imgsrc: sentiment.jpg 
   lectures: 23 
   hours:  3

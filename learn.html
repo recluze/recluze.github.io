@@ -13,10 +13,10 @@ permalink: /learn
 
       {% for course in site.data.courses %}
       <!-- card begin -->
-      <div class="text-center bg-gray-100 px-0 py-0 m-2 rounded mt-4 
+      <div class="text-center bg-gray-100 px-0 py-0 m-2 rounded mt-4
                   border border-gray-300 relative hover:shadow-2xl shadow-md">
-        <a href='#'>
-          <div class="">
+        <a href='{{ course.link }}' target="_blank">
+          <div class="text-center">
             <div class="">
               <img class="rounded-sm" src="/assets/images/courses/{{ course.imgsrc }}" alt="" />
               <span class="absolute top-0 left-0 inline-flex items-center justify-center px-4 py-3 
@@ -47,7 +47,7 @@ permalink: /learn
                 {{ course.desc }}
               </div>
             
-              <div class='text-gray-600 font-mono text-xs absolute bottom-0 mb-4'>
+              <div class='text-gray-600 w-full font-mono text-xs absolute bottom-0 mb-4'>
                 {{ course.lectures }} lectures | {{ course.hours }} hours total
               </div>
             </div>
