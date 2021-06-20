@@ -2,21 +2,25 @@
   padding-bottom: 1em; 
   padding-left: 0em;
   padding-right: 0em;
+  padding-top: 4em;
 } 
 .medium-height { 
   padding-bottom: 1em; 
   padding-left: 0em;
   padding-right: 0em;
+  padding-top: 4em;
 } 
 .learn-container { 
-padding-right: 2em; 
+	padding-right: 2em; 
 } 
 
 .main-area { 
-        margin: 1em;
 	width: 100%; 
-
+	margin: 0;
+	padding: 0; 
 } 
+
+/* 
 .main-area img {
 
 	display: block;
@@ -61,18 +65,16 @@ padding-right: 2em;
 
 /* Flexbox stuff */
 
-.cards {
+/* .cards {
    display: flex;
    flex-wrap: wrap;
-   /* justify-content: space-between; */ 
+   /* justify-content: space-between; 
    justify-content: left; 
+} 
+*/
+.navbar { 
+	margin-top: 1em;
 }
-
-.card {
-	flex: 0 0 30%;
-	margin: 0.8em;
-}
-
 .navbar ul li { 
 	padding-top: 0.3em !important;
 	padding-bottom: 0.3em !important;
@@ -89,29 +91,48 @@ padding-right: 2em;
 	color: #ffffff;
 } 
 
+.container h2 { 
+	padding-top: 1em;
+}
 
 
 .container a { 
-	color: #dd3333; 
+	/* color: #dd3333; */
+	color: #1155dd; 
 } 
-
+/* 
 
 .card span { 
 	color: #666666 !important; 
 	font-family: monospace;
 	font-size: 0.8em;
-} 
+}  */
 
-.card h2 { 
+/* .card h2 { 
 	font-size: 1.2em;
 	text-shadow: 2px 2px #eeeeee;
 } 
 
 
+  */
 h2 { 
 	font-family: 'Noto Sans JP', sans-serif !important;
+	padding-bottom: 1em;
+}
+
+.text-fancy-head { 
+	font-family: 'Noto Sans JP', sans-serif !important;
+	text-shadow: 1px 2px #eeeeee;
+	color: #000 !important;
+	font-size: 1.5rem;
+	line-height: 2rem;
 } 
 
+.text-fancy-body { 
+	color: #444 !important;
+	font-size: 1rem;
+	line-height: 1.5rem;
+} 
 
 
 
@@ -155,5 +176,27 @@ h2 {
 
 body { 
         /* background: url('/assets/images/zigzag.png');  */ 
+	line-height: 1.5em;
+	font-family: 'Roboto', sans-serif;
 } 
 
+.post-container, .container { 
+	padding-bottom: 2em;
+}
+.post-container p, .container p { 
+	padding-top: 1em;
+}
+
+.post-container li { 
+	padding-top: 1em;
+	list-style-type: circle;
+	margin-left: 1em;
+}
+
+.posts { 
+	margin-top: 0;
+}
+
+.posts li { 
+	margin-bottom: 1em;
+}

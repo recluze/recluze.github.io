@@ -1,0 +1,157 @@
+---
+layout: learn
+title: Video Courses
+permalink: /learn
+---
+<main class="main-area">
+
+    <div class="centered">
+
+        <section class="cards">
+
+            <article class="card">
+                <a href="/course-blockchain" target="_blank">
+                    <picture class="thumbnail">
+                        <img src="/assets/images/courses/hyperledger.jpg" alt="">
+                    </picture>
+                    <div class="card-content">
+
+                        <h2>Hyperledger Fabric 2.x - First Practical Blockchain</h2>
+                        <p>Deploy your first smart contract on the popular block chain framework.</p>
+                        <p><span>25 Lectures</span> | <span>2.5 total hours</span></p> 
+                    </div><!-- .card-content -->
+                </a>
+            </article><!-- .card -->
+
+
+            <article class="card">
+                <a href="/course-linux" target="_blank">
+                    <picture class="thumbnail">
+                        <img src="/assets/images/courses/linux.jpg" alt="">
+                    </picture>
+                    <div class="card-content">
+
+                        <h2>Linux Command Line - From Zero to Expert</h2>
+                        <p>Get in the rhythm of the command line as a first step towards Linux System Administration, VoIP and many more areas </p>
+                        <p><span>25 Lectures</span> | <span>2.5 total hours</span></p> 
+                    </div><!-- .card-content -->
+                </a>
+            </article><!-- .card -->
+
+            <article class="card">
+                <a href="/course-julia" target="_blank">
+                    <picture class="thumbnail">
+                        <img src="/assets/images/courses/julia.jpg" alt="">
+                    </picture>
+                    <div class="card-content">
+
+                        <h2>Julia Programming Language - From Zero to Expert</h2>
+                        <p>Supercharge your data science and ML career by learning the next generation language favored by the experts.</p>
+                        <p><span>30 Lectures</span> | <span>3.5 total hours</span></p> 
+                    </div><!-- .card-content -->
+                </a>
+            </article><!-- .card -->
+
+            <article class="card">
+                <a href="/course-keras" target="_blank">
+                    <picture class="thumbnail">
+                        <img src="/assets/images/courses/keras.jpg" alt="">
+                    </picture>
+                    <div class="card-content">
+
+                        <h2>Practical Deep Learning with Tensorflow 2.0 and Keras</h2>
+                        <p>Learn to apply machine learning to your problems. Follow a complete pipeline including pre-processing and training.</p>
+                        <p><span>31 Lectures</span> | <span>3.5 total hours</span></p> 
+                    </div><!-- .card-content -->
+                </a>
+            </article><!-- .card -->
+
+            <article class="card">
+                <a href="/course-applied-probability" target="_blank">
+                    <picture class="thumbnail">
+                        <img src="/assets/images/courses/prob.jpg" alt="">
+                    </picture>
+                    <div class="card-content">
+
+                        <h2>Applied Probability for Data Science/Machine Learning</h2>
+                        <p>Learn how to learn the maths behind data science and machine learning to boost your understanding of these hot topics. </p>
+                        <p><span>37 Lectures</span> | <span>6.5 total hours</span></p> 
+                    </div><!-- .card-content -->
+                </a>
+            </article><!-- .card -->
+
+            <article class="card">
+                <a href="/course-intermediate-python" target="_blank">
+                    <picture class="thumbnail">
+                        <img src="/assets/images/courses/interm-python.jpg" alt="">
+                    </picture>
+                    <div class="card-content">
+
+                        <h2>Beyond Basic Programming - Intermediate Python</h2>
+                        <p>Take your Python skills to the next level. Learn how expert programmers work with code and the techniques they use. </p>
+                        <p><span>36 Lectures</span> | <span>3 total hours</span></p> 
+                    </div><!-- .card-content -->
+                </a>
+            </article><!-- .card -->
+
+            <article class="card">
+                <a href="/course-latex" target="_blank">
+                    <picture class="thumbnail">
+                        <img src="/assets/images/courses/latex.jpg" alt="">
+                    </picture>
+                    <div class="card-content">
+
+                        <h2>LaTeX For Everyone and Everything</h2>
+                        <p>Figures, tables, templates, research papers and even drawing high quality figures.</p>
+                        <p><span>29 Lectures</span> | <span>2.5 total hours</span></p> 
+                    </div><!-- .card-content -->
+                </a>
+            </article><!-- .card -->
+
+            <article class="card">
+                <a href="/course-elixir-phoenix" target="_blank">
+                    <picture class="thumbnail">
+                        <img src="/assets/images/courses/elixir.jpg" alt="">
+                    </picture>
+                    <div class="card-content">
+
+                        <h2>Elixir and Phoenix - Real World Functional Programming</h2>
+                        <p>Boost Your Programming Skills by Learning The Next Generation Functional Programming Language
+                            and Web Framework </p>
+                        <p><span>47 Lectures</span> | <span>4 total hours</span></p> 
+                    </div><!-- .card-content -->
+                </a>
+            </article><!-- .card -->
+
+            <article class="card">
+                <a href="/course-sentiment-analysis" target="_blank">
+                    <picture class="thumbnail">
+                        <img src="/assets/images/courses/sentiment.jpg" alt="">
+                    </picture>
+                    <div class="card-content">
+
+                        <h2>Sentiment Analysis through Deep Learning with Keras & Python</h2>
+                        <p>Learn to perform industry grade sentiment analysis using deep learning on real world text.</p>
+                        <p><span>23 Lectures</span> | <span>3 total hours</span></p> 
+                    </div><!-- .card-content -->
+                </a>
+            </article><!-- .card -->
+
+            <article class="card">
+                <a href="/course-asterisk" target="_blank">
+                    <picture class="thumbnail">
+                        <img src="/assets/images/courses/asterisk.jpg" alt="">
+                    </picture>
+                    <div class="card-content">
+
+                        <h2>Asterisk and FreePBX - Begin Your VoIP Dev Journey</h2>
+                        <p>Learn to build Asterisk and FreePBX from source and set up local phones. Focus on practical with very little theory. </p>
+                        <p><span>13 Lectures</span> | <span>1 total hour</span></p> 
+                    </div><!-- .card-content -->
+                </a>
+            </article><!-- .card -->
+        </section><!-- .cards -->
+
+    </div><!-- .centered -->
+
+</main>
