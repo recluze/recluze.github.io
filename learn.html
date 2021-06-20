@@ -5,48 +5,57 @@ permalink: /learn
 ---
 
 <main class="main-area">
+  <h2 class='courses-head mt-4 px-6 py-0'>Get Maximum Discounts on All Courses</h2>
   <!-- ... -->
   <div class="mx-auto p-4">
     <!-- Flex on med screens and up -->
     <div class="md:grid md:grid-cols-3 md:gap-3 w-full lg:grid-cols-4">
 
+      {% for course in site.data.courses %}
       <!-- card begin -->
       <div class="text-center bg-gray-100 px-0 py-0 m-2 rounded mt-4 
                   border border-gray-300 relative hover:shadow-2xl shadow-md">
         <a href='#'>
           <div class="">
             <div class="">
-              <img class="rounded-sm" src="/assets/images/courses/hyperledger.jpg" alt="" />
+              <img class="rounded-sm" src="/assets/images/courses/{{ course.imgsrc }}" alt="" />
               <span class="absolute top-0 left-0 inline-flex items-center justify-center px-4 py-3 
-                           text-sm font-normal leading-none text-gray-400
+                           text-sm font-normal leading-none text-gray-400 
                            transform translate-x-2 -translate-y-1/2 bg-gray-100 border-gray-400 border
                            rounded-full line-through w-24 h-8">
-                $24.99
+              {{ course.listprice }}
               </span>
               <span class="absolute top-0 right-5 inline-flex items-center justify-center px-4 py-3 
-                           text-sm leading-none text-white 
+                           text-sm leading-none text-white price-tag 
                            transform translate-x-2 -translate-y-1/2 bg-red-700 
                            rounded-full w-24 h-6 hover:bg-green-700">
-                $12.99
+              {{ course.price }}
               </span>
+              {% if course.tag != "None" %}
+                <span class="absolute top-10 left-0 inline-flex items-center justify-center px-4 py-3 
+                            text-xs transform translate-x-2 -translate-y-1/2 course-tag
+                            rounded-full w-24 h-6">
+                {{ course.tag }}
+                </span>
+              {% endif %}
             </div>
             <div class="mt-4 py-2 px-6 pb-8">
               <div class="text-lg text-fancy-head">
-                Hyperledger Fabric 2.x - First Practical Blockchain
+                {{ course.title }}
               </div>
               <div class='text-gray-600 my-4 text-sm leading-relaxed text-fancy-body'>
-                Deploy your first smart contract on the popular block chain framework.
+                {{ course.desc }}
               </div>
+            
               <div class='text-gray-600 font-mono text-xs absolute bottom-0 mb-4'>
-                25 lectures | 2.5 hours total
+                {{ course.lectures }} lectures | {{ course.hours }} hours total
               </div>
             </div>
           </div>
         </a>
       </div>
       <!-- card end -->
-
-
+      {% endfor %}
     </div>
   </div>
 </main>

@@ -52,8 +52,3 @@ plugins:
 #
 #
 #
-
-
-courses: 
-  linux: http://linux.com 
-  elixir: http://elixir.com 
