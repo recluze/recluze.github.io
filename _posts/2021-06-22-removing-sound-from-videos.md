@@ -40,6 +40,12 @@ I then use another open source tool called Spleeter to do source separation (aka
 spleeter separate -p spleeter:2stems -o temp/ -f "{instrument}.{codec}" audio-file.wav
 ```
 
+Spleeter, by default, can only do source separation for 10 minute audios. You can change it but it requires a lot of resources. The solution to this problem was fairly straight-forward: split the videos in parts of 10 minutes each. This can be done easily with ffmpeg. 
+
+```bash 
+!ffmpeg -i downloaded-video.mp4 -c copy -map 0 -segment_time 00:10:00 -f segment -reset_timestamps 1 video-Part-%02d.mkv
+```
+
 I then merge the cleaned audio track with the video using FFMPEG again. 
 
 ```bash
