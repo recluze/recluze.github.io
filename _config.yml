@@ -13,7 +13,9 @@ show_excerpts: true # set to true to show excerpts on the homepage
 sass:
   sass_dir: _sass
 
-permalink: /posts/:title/
+# permalink: /posts/:title/
+permalink: /posts/:year/:month/:day/:title/
+
 texture:
   title: recluze
   tagline: Nauman (recluze) on Computing, Philosophy and more ...
