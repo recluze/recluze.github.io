@@ -447,8 +447,7 @@ In the server, click on `Get Balance` to get the REC balance. Copy the Account I
 
 
 
-#
-# Deploying on the Public/Global Ropsten Network 
+## Deploying on the Public/Global Ropsten Network 
 
 Now let's do the same with the online Ropsten Testnet because we actually want to have this app distributed! It is supposed to be a DApp after all! 
 
