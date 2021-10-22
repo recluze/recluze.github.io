@@ -1,3 +1,13 @@
+- title: Create Your First DApp on Ethereum - A Concise Tutorial 
+  desc: Run 'Hello World' and 'Coin' DApps (Smart Contracts) using Ethereum, Hardhat, and node.js. 
+  link: /course-dapp
+  imgsrc: dapp.jpg 
+  lectures: 9 
+  hours: 1.5 
+  listprice: $19.99
+  price: $12.99
+  tag: New
+
 - title: Hyperledger Fabric 2.x - First Practical Blockchain
   desc: Deploy your first smart contract on the popular block chain framework.
   link: /course-blockchain
@@ -6,8 +16,7 @@
   hours: 2.5 
   listprice: $29.99
   price: $12.99
-  tag: None
-
+  tag: Bestseller 
 
 - title: Linux Command Line - From Zero to Expert
   desc: Get in the rhythm of the command line as a first step towards Linux System Administration, VoIP and many more areas 
