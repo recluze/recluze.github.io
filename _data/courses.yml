@@ -6,7 +6,7 @@
   hours: 1.5 
   listprice: $19.99
   price: $12.99
-  tag: New
+  tag: Bestseller/New
 
 - title: Hyperledger Fabric 2.x - First Practical Blockchain
   desc: Deploy your first smart contract on the popular block chain framework.
