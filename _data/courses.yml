@@ -4,9 +4,9 @@
   imgsrc: dapp.jpg 
   lectures: 9 
   hours: 1.5 
-  listprice: $19.99
+  listprice: $29.99
   price: $12.99
-  tag: Bestseller/New
+  tag: Bestseller
 
 - title: Hyperledger Fabric 2.x - First Practical Blockchain
   desc: Deploy your first smart contract on the popular block chain framework.
@@ -14,7 +14,7 @@
   imgsrc: hyperledger.jpg 
   lectures: 25 
   hours: 2.5 
-  listprice: $29.99
+  listprice: $89.99
   price: $12.99
   tag: Bestseller 
 
@@ -24,7 +24,7 @@
   imgsrc: linux.jpg 
   lectures: 15
   hours: 2.5 
-  listprice: $29.99
+  listprice: $89.99
   price: $12.99
   tag: Highly&nbsp;Rated
 
@@ -75,7 +75,7 @@
   imgsrc: latex.jpg 
   lectures: 29 
   hours: 2.5 
-  listprice: $29.99
+  listprice: $89.99
   price: $15.99
   tag: Bestseller
 
@@ -85,7 +85,7 @@
   imgsrc: elixir.jpg 
   lectures: 47 
   hours:  4
-  listprice: $24.99
+  listprice: $59.99
   price: $12.99
   tag: Bestseller
 
