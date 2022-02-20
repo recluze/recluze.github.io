@@ -28,7 +28,7 @@
   price: $12.99
   tag: Highly&nbsp;Rated
 
-- title: Supabase From Scratch: Serverless Database Backend with JS
+- title: Supabase From Scratch - Serverless Database Backend with JS
   desc: Concise tutorial on using REST API, Javascript and React for serverless database and authentication using Supabase 
   link: /course-supabase
   imgsrc: supabase.jpg
