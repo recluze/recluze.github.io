@@ -879,3 +879,9 @@ video {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+@media (min-width: 1280px) {
+  .xl\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+}
