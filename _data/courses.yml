@@ -1,3 +1,13 @@
+- title: Svelte Crash Course through Projects with Backend Connections
+  desc: Learn Svelte through 2 Projects (includes Reactivity, Components, Backend Connectivity and Best Practices)
+  link: /course-svelte
+  imgsrc: svelte.jpg
+  lectures: 20
+  hours: 2
+  listprice: $54.99
+  price: $12.99
+  tag: New
+
 - title: Create Your First DApp on Ethereum - A Concise Tutorial 
   desc: Run 'Hello World' and 'Coin' DApps (Smart Contracts) using Ethereum, Hardhat, and node.js. 
   link: /course-dapp
