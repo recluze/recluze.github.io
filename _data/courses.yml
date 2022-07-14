@@ -38,15 +38,6 @@
   price: $12.99
   tag: Highly&nbsp;Rated
 
-- title: Supabase From Scratch - Serverless Database Backend with JS
-  desc: Concise tutorial on using REST API, Javascript and React for serverless database and authentication using Supabase 
-  link: /course-supabase
-  imgsrc: supabase.jpg
-  lectures: 17
-  hours: 1.5
-  listprice: $34.99
-  price: $12.99
-  tag: Highest&nbsp;Rated 
 
 - title: Julia Programming Language - From Zero to Expert
   desc: Supercharge your data science and ML career by learning the next generation language favored by the experts.
