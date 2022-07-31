@@ -6,7 +6,7 @@
   hours: 2
   listprice: $54.99
   price: $12.99
-  tag: New
+  tag: Bestseller 
 
 - title: Create Your First DApp on Ethereum - A Concise Tutorial 
   desc: Run 'Hello World' and 'Coin' DApps (Smart Contracts) using Ethereum, Hardhat, and node.js. 
@@ -67,7 +67,7 @@
   hours:  6.5
   listprice: $19.99
   price: $12.99
-  tag: Bestseller 
+  tag: None 
 
 - title: Beyond Basic Programming - Intermediate Python
   desc: Take your Python skills to the next level. Learn how expert programmers work with code and the techniques they use.
