@@ -1,0 +1,155 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>351 Cache Simulator</title>
+<script language="javascript" type="text/javascript" src="files/p5.min.js"></script>
+<script language="javascript" type="text/javascript" src="files/p5.dom.min.js"></script>
+<script src="files/seedrandom.min.js"></script>
+<script language="javascript" type="text/javascript" src="files/cachesim.js"></script>
+
+</head>
+
+
+<body data-new-gr-c-s-check-loaded="8.904.0" data-gr-ext-installed="">
+<h1>351 Cache Simulator</h1>
+
+<div style="width: 300px; float: left;">
+
+  <fieldset id="pFieldset" style="height: 260px">
+  <legend><b>System Parameters:</b></legend>
+  <table border="0">
+    <tbody><tr>
+      <td>Address width:
+      </td><td><select id="inm" name="inm">
+          <option value="4">4</option>
+          <option value="6">6</option>
+          <option value="8" selected="selected">8</option>
+          <option value="10">10</option>
+          <option value="12">12</option>
+        </select>
+      </td><td>bits
+    </td></tr>
+    <tr>
+      <td>Cache size:
+      </td><td><select id="inC" name="inC">
+          <option value="8">8</option>
+          <option value="16">16</option>
+          <option value="32" selected="selected">32</option>
+          <option value="64">64</option>
+          <option value="128">128</option>
+          <option value="256">256</option> 
+        </select>
+      </td><td>bytes
+    </td></tr>
+    <tr>
+      <td>Block size:
+      </td><td colspan="2">
+	<input class="radioK" type="radio" name="inK" value="2">2
+	<input class="radioK" type="radio" name="inK" value="4"> 4
+        <input class="radioK" type="radio" name="inK" value="8" checked="checked"> 8
+        bytes
+    </td></tr>
+    <tr>
+      <td>Associativity:
+      </td><td colspan="2"><input class="radioE" type="radio" name="inE" value="1" checked="checked"> 1
+        <input class="radioE" type="radio" name="inE" value="2"> 2
+        <input class="radioE" type="radio" name="inE" value="4"> 4
+        way(s)
+    </td></tr>
+    <tr>
+      <td>Write Hit:
+      </td><td colspan="2"><select id="inWH" name="inWH">
+           <option value="1" selected="selected">Write back</option>
+           <option value="0">Write through</option>
+        </select> 
+    </td></tr>
+    <tr>
+      <td>Write Miss:
+      </td><td colspan="2"><select id="inWM" name="inWM">
+           <option value="1" selected="selected">Write-allocate</option>
+           <option value="0">No write-allocate</option>
+        </select> 
+    </td></tr>
+    <tr>
+      <td>Replacement:
+      </td><td colspan="2"><select id="inreplace" name="inreplace">
+           <option value="1" selected="selected">Least Recently Used</option>
+           <option value="0">Random</option>
+           <option value="2">Round-Robin (FIFO)</option>
+        </select> 
+    </td></tr>
+    <tr>
+      <td colspan="3" align="center">
+        <br><input id="paramButton" type="submit" value="Generate System">
+    </td></tr>
+    <tr>
+      <td colspan="3" align="center">
+        <input id="paramBox" type="checkbox" name="paramBox">Explain
+    </td></tr>
+  </tbody></table>
+  </fieldset>
+
+</div>
+
+<div style="height: 127px; float: left;">
+  <fieldset style="width: 420px;">
+  <legend><b>Manual Memory Access:</b></legend>
+  <table border="0">
+    <tbody><tr>
+      <td rowspan="3"><input id="simBox" type="checkbox" name="simBox">Explain &nbsp; 
+      </td><td style="text-align: center;"><input id="readButton" type="submit" value="Read" disabled="disabled">
+      </td><td>Addr: 0x<input id="rAddr" type="text" name="rAddr" size="3" maxlength="3" disabled="disabled">
+    </td></tr>
+    <tr>
+      <td style="text-align: center;"><input id="writeButton" type="submit" value="Write" disabled="disabled">
+      </td><td>Addr: 0x<input id="wAddr" type="text" name="wAddr" size="3" maxlength="3" disabled="disabled">,
+      </td><td>Byte: 0x<input id="wData" type="text" name="wData" size="2" maxlength="2" disabled="disabled">
+    </td></tr>
+    <tr>
+      <td style="text-align: center;"><input id="flushButton" type="submit" value="Flush" disabled="disabled">
+    </td></tr>
+  </tbody></table>
+
+  <table style="margin-top: 10px;" border="0">
+    <tbody><tr style="background: #d0d0d0;" align="center">
+      <td width="80">Tag</td>
+      <td width="60">Index</td>
+      <td width="50">Offset</td>
+      <td style="background: white;" width="20"></td>
+      <td width="90">Cache Hits</td>
+      <td width="90">Cache Misses</td>
+    </tr>
+    <tr align="center">
+      <td id="dispT" style="background: #98FB98;">–</td><td id="dispI" style="background: #98FB98;">–</td><td id="dispO" style="background: #98FB98;">–</td><td>
+      </td><td id="dispHit" style="background: #87CEFA;">–</td><td id="dispMiss" style="background: #87CEFA;">–</td></tr>
+  </tbody></table>
+  </fieldset>
+
+  <fieldset style="width: 420px; margin-top: 10px; float: left;">
+  <legend><b>Simulation Messages:</b></legend>
+  <textarea id="msgbox" rows="4" cols="51" disabled="disabled" style="resize: none;"></textarea>
+  </fieldset>
+</div>
+
+<div style="float: left;">
+  <fieldset style="height: 260px; text-align: center;">
+  <legend style="text-align: left;"><b>History:</b></legend>
+  <textarea id="hist" rows="12" cols="19" disabled="disabled" style="margin-top: 10px; resize: none;">&gt; </textarea>
+  <p>
+  <input id="loadHist" type="submit" value="Load" disabled="disabled"> || 
+  <input id="upButton" type="submit" value="↑" disabled="disabled">
+  <input id="dnButton" type="submit" value="↓" disabled="disabled">
+  </p>
+  </fieldset>
+</div>
+
+
+<p style="width: 100%; overflow: hidden;"></p>
+
+
+<div id="p5canvas"><canvas id="defaultCanvas0" class="p5Canvas" style="width: 960px; height: 10px;" width="1920" height="10"></canvas></div>
+
+
+
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
