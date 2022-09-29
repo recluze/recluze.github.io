@@ -1,0 +1,183 @@
+@font-face {
+    font-family: titleFont;
+    src: url(../fonts/BebasNeue.otf);
+}
+
+body {
+	font-size:14px;
+	background-color: #f4fafb;
+	background-size : cover;
+	font-family:sans-serif;
+	background-attachment: fixed;
+}
+h3 {margin: 5px;}
+h4 {margin:0;}
+button{
+	background-color:#EFEFFF;
+	border: 0px;
+	border-radius:3px;
+	padding:5px;
+	font-size:14px;
+	cursor: pointer;
+	border: 1px #000 solid;
+
+}
+button:active, button:focus{
+	font-weight:bold;
+}
+table{
+	border:0px;
+}
+table tr td{
+	background-color: rgba(250,250,250,0.7);
+	
+}
+.left{
+	border: 2px #333 solid;
+	border-radius:3px;
+	padding : 5px;
+	width:220px;
+	float:left;
+	margin-top: 10px;
+	display:inline-block;
+	position:absolute;
+
+}
+
+.configurationTab {
+	width:100%;
+}
+
+@media screen and (min-width: 464px) {
+  .configurationTab {
+	margin-top:100px;
+	display:inline-block;
+  }
+}
+@media screen and (min-width: 980px) {
+  .configurationTab {
+	margin-top:50px;
+	 display:inline-block;
+	
+  }
+}
+@media screen and (min-width: 1086px) {
+  .configurationTab {
+	margin-top:0px;
+	 display:inline-block;
+	
+  }
+}
+.labels{
+    text-align: left;
+    padding:0px;
+	font-weight:bold;
+	padding-top: 3px;
+    color:#000;
+}
+/*.replacementPolicy{
+	width:100%;
+	height:100%;
+	background-color : rgba(250,250,250,0.4);
+	border-radius: 5px;
+}*/
+.reppol {
+	padding:0;
+	margin:5px 0px;
+	
+}
+
+.cachetype{
+	font-family:'Calibri';
+	padding-top:3px;
+	padding-bottom:3px;
+	font-size:14px;
+	font-weight:normal;
+	padding-left:12px;
+
+}
+.cachetype input{width:auto; float:left;}
+.onsubmit {margin-top: 5px;}
+.instruction {
+	width:100%;
+	margin-top:10px;
+	margin-bottom : 5px;
+	border-top: 1px #000 solid;
+	border-bottom: 1px #000 solid;
+	padding-top: 5px;
+	padding-bottom : 10px;
+	
+}
+.instruction select { width:100px;}
+@media screen and (max-width: 767px) {
+  .instruction {border:0px; display:inline-block; }
+
+}
+.submitinstruction{width:100%;}
+.information{
+	width:100%;
+	border-bottom: 1px #000 solid;
+	margin-bottom : 5px;
+	padding-bottom : 10px;
+}
+@media screen and (max-width: 767px) {
+  .information {border:0px; display:inline-block; }
+
+}
+.information_text{text-align:center; width:100%; height:100px; overflow:auto;}
+
+.hitmiss{
+	margin-top:5px;
+	width:100%;
+	overflow : auto;
+	max-height: 500px;
+	position:relative;
+    font-size:12px;
+	border-bottom: 1px #000 solid;
+	margin-bottom : 5px;
+	padding-bottom : 10px;
+}
+
+
+
+
+
+.header h3 {font-size:55px; text-align:center;}
+@media screen and (min-width: 767px) {
+  .header h3 {font-size:32px; }
+   .chart {margin-top:100px; }
+}
+@media screen and (min-width: 981px) {
+  .header {margin-top:50px; }
+   .chart {margin-top:50px; }
+}
+@media screen and (min-width: 1086px) {
+  .header {margin-top:0px; }
+   .chart {margin-top:0px; }
+}
+
+
+
+.addressevaluated{ margin:0 auto; float:left;	vertical-align: bottom;}
+.addressevaluatedVM{ margin:0 auto; width:100%; float:left;	}
+.addressevaluated input{width:100%; margin-left:-2px; padding:0; text-align:center; font-weight:bold; text-transform:uppercase; }
+.addressevaluatedVM input{width:100%; margin-left:-2px; padding:0; text-align:center; font-weight:bold; text-transform:uppercase; }
+.memorydiv{  padding:5px 10px;}
+.memoryblocks{height:90px; border:1px solid #000; overflow:auto; display: inline-block; white-space: nowrap; width:100%; z-index: 9999;}
+.memoryblocks table{width:100%; font-size:11px; text-align:center;}
+.caption{width:90%; text-align:center; margin:0 auto; padding-bottom:10px;}
+.caption tr:nth-child(2) td{border:1px #000 solid;}
+.drawingSpace {width:100%; position:absolute; z-index: -1;}
+.tableSpace {width:100%;}
+.drawtable {width:90%; text-align:center; margin:0 auto;}
+.drawtable td{border: 1px solid #333;}
+.drawtable tr td:nth-child(1) {width:10%;}
+.drawtable tr td:nth-child(2) {width:10%;}
+.firstdraw {width:50%; float:left;}
+.seconddraw {width:50%; float:right;}
+.sa4table {width:25%; float:left; display:inline-block;}
+.sa2table {width:50%; float:left; display:inline-block;}
+.settings_logo{margin-left:1px; font-size:36px;}
+/*.settings_text{background-color : rgba(250,250,250,0.8); border-radius:5px; margin-top:3px; margin-left:5px; margin-bottom:5px; text-align:center; padding-right:2px;}*/
+.settings_image{ border-radius:36px; width:36px; height:36px;  }
+.settings_image img {width:36px; }

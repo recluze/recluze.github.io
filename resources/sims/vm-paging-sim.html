@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="vm-paging-sim_files/font-awesome.min.css">
+<script type="text/javascript" src="vm-paging-sim_files/vm.js"></script>
+<script type="text/javascript" src="vm-paging-sim_files/general.js"></script>
+
+
+<style>
+#VM
+{
+	width: 100%;
+	margin : 0 auto;
+	min-height:10px;
+	text-align:center;
+}
+.TLBTable{
+	width: 100%;
+	margin : 0 auto;
+	display: inline-block;
+	min-height:10px;
+	position:relative;
+
+}
+.MiddleBox{
+
+	width: 70%;
+	display: inline-block;
+	min-height:10px;
+	position:relative;
+	margin-top: 20px;
+		margin-left : 30%;
+}
+.MiddleBox label {
+
+	background:#FFF;
+	padding : 5px;
+	width : 300px;
+	display : inline-block;
+	border: #000 1px solid;
+
+}
+#TLBTable table{width:50%; margin:0 auto;}
+.PageTable{
+	float:left;
+	display: inline-block;
+	width : 45%;
+	position:relative;
+	min-height:10px;
+	margin-left : 30px;
+
+}
+#PageTable table{width:100%;}
+.PhysicalMemory{
+	float:right;
+	display : inline-block;
+	width : 45%;
+	position:relative;
+	min-height:10px;
+	margin-right: 30px;
+}
+#PhysicalMemory table{width:100%;}
+
+</style>
+    <title>Virtual Memory Simulator</title>
+	    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="vm-paging-sim_files/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="vm-paging-sim_files/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="vm-paging-sim_files/offcanvas.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+ 
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="vm-paging-sim_files/css.css">
+</head>
+<body data-new-gr-c-s-check-loaded="8.904.0" data-gr-ext-installed="">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://personal.ntu.edu.sg/smitha/ParaCache/Paracache/start.html">ParaCache</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="col-sm-12 col-md-3" id="sidebar">
+		<div class="col-sm-6 col-md-2 configurationTab">
+
+			<div><label class="col-xs-8 col-sm-8 labels" name="Cache Size"> Frame Size <font size="-4">(power of 2)</font> </label><input class="col-xs-4 col-sm-4" type="text" name="physicalpagesize" id="physicalpagesize" value="128"></div>					
+			<div><label class="col-xs-8 col-sm-8 labels" name="Offset Size"> Offset Bits <font size="-4"></font> </label><input class="col-xs-4 col-sm-4" type="text" name="offsetsize" id="offsetsize" value="2"></div>					
+			<div><label class="col-xs-8 col-sm-8 labels" name="Memory Size"> Virtual Memory Size <font size="-4">(power of 2)</font></label><input class="col-xs-4 col-sm-4" type="text" name="memorysize" id="memorysize" value="2048"> </div>
+			<div><label class="col-xs-8 col-sm-8 labels" name="TLB Size"> TLB Entries <font size="-4"></font></label> <input class="col-xs-4 col-sm-4" type="text" name="TLBsize" id="TLBsize" value="10"></div>
+			<div class="submit">
+				<button class="col-xs-6 col-sm-6 onsubmit" onclick="resetConfigurationVM()">Reset</button>
+				<button class="col-xs-6 col-sm-6 onsubmit" id="submitConfig" onclick="loadConfiguration()">Submit</button>				
+
+			</div>
+		</div>
+		<!------------------ LOAD INSTRUCTION ---------------------------------->
+		<div class="col-sm-6 col-md-2 instruction">
+			<h4> Load Instruction	</h4>
+			<label class="col-xs-8 col-sm-8 labels">LOAD<font size="-4">(in hex)</font>#</label>
+			<input type="hidden" name="InstructionType" id="InstructionType" value="VM"> 
+                 <input class="col-xs-4 col-sm-4" type="text" name="instruction_data" id="instruction_data" value="3">
+            <input class="col-xs-12 col-sm-12" type="text" placeholder="List of next 10 Instructions" id="list_of_instruction">
+			<button class="col-xs-6 col-sm-6 onsubmit" id="genRandom" onclick="generateRandomNumber()">Gen. Random</button>
+			<button class="col-xs-6 col-sm-6 onsubmit" id="submit" onclick="loadInstruction()">Submit</button>
+		</div>
+		
+		<!------------------INFORMATION  -------------------------------->
+		<div class="col-sm-6 col-md-2 information" id="information">
+			<h4> Information </h4>
+			<div id="information_text" class="col-sm-12 col-md-12 information_text">
+				Please Configure Cache Settings.
+			</div>
+			<button class="col-xs-6 col-sm-6 onsubmit" id="next" onclick="loadInformation()" disabled="disabled">Next</button>
+			<button class="col-xs-6 col-sm-6 onsubmit" id="fastforward" onclick="fastForward()" disabled="disabled">Fast Forward</button>
+		</div>
+		<!-----------------------STATISTICS ---------------------------->
+		<div class="col-sm-6 col-md-2 hitmiss" id="hitmiss">
+
+		<b> Statistics </b> <br>
+			<label class="col-xs-12 col-sm-6 "> Hit Rate  &nbsp; &nbsp;: </label>
+			<label class="col-xs-12 col-sm-6" id="hitRateLabel">&nbsp;</label> 
+			<label class="col-xs-6 col-sm-6"> Miss Rate : </label>
+			<label class="col-xs-6 col-sm-6" id="missRateLabel">&nbsp; </label> 
+		<b>	List of Previous Instructions :  </b>
+				<label class="col-xs-12 col-sm-12 " id="listOfInstructionsLabel"> </label> 
+		</div>
+    </div>
+	<!------------------------------RIGHT SIDE-------------------------------------------->
+	<div class="col-sm-12 col-md-9">
+	<!------------HEADER ----------------------------------->
+	<div class="col-sm-12 col-md-10 header">
+		<h3><i class="fa fa-sliders" aria-hidden="true"></i>
+			<font face="titleFont"> Virtual Memory </font></h3>	
+	   </div>
+		<div id="addressevaluated" class="col-sm-12 col-md-12 addressevaluatedVM">
+			<h3><i class="fa fa-sign-in" aria-hidden="true"></i> Instruction Breakdown </h3>
+			<table id="caption" class="caption"><tbody><tr>
+			<td><input type="text" id="page" name="page" placeholder="page" disabled="disabled"></td>
+			<td><input type="text" id="offset" name="offset" placeholder="offset" disabled="disabled"></td>
+			</tr>
+			<tr>
+			<td id="pagebit">  &nbsp;</td>
+			<td id="offsetbit">&nbsp;</td>
+			</tr>
+			</tbody></table>
+		</div>
+		<div id="drawingSpace" class="drawingSpace"></div>
+		<div id="VM" class="col-sm-12 col-md-12 VM">
+
+			<div class="col-sm-3 col-md-3 "></div>
+			<div id="TLBTableContainer" class="col-sm-6 col-md-6 TLBTable">
+				<div> <h3> <i class="fa fa-eye" aria-hidden="true"></i> Translation Lookaside Buffer</h3></div>
+				<div id="TLBTable">
+				<table class="tlbtable" id="tlbtable"><tbody><tr><td></td>
+						<td>  Virtual Page# </td>
+						<td> Frame# </td></tr></tbody></table>
+				</div>
+			</div>
+			<div class="col-sm-3 col-md-3 "></div>
+			<div id="MiddleBox" class="MiddleBox">
+				<label id="middlebox_frame"> Frame </label>
+				<label id="middlebox_offset"> Offset </label>
+			</div>	
+			<div id="PageTableContainer" class="PageTable">
+				<h3> <i class="fa fa-cloud" aria-hidden="true"></i> Page Table</h3>
+				<div id="PageTable">
+					<table class="pagetable" id="pagetable"><tbody><tr><td>Index</td><td>Valid</td><td> Frame # </td></tr></tbody></table>
+				</div>
+			</div>
+			<div id="PhysicalMemoryContainer" class="PhysicalMemory">
+				<h3> <i class="fa fa-database" aria-hidden="true"></i> Physical Memory</h3>
+				<div id="PhysicalMemory">
+					<table class="physicalmemory" id="physicalmemory"><tbody><tr><td>Frame #</td><td> Content </td></tr></tbody></table>
+				</div>
+			</div>
+
+		</div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="vm-paging-sim_files/jquery.min.js"></script>
+    <script src="vm-paging-sim_files/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="vm-paging-sim_files/ie10-viewport-bug-workaround.js"></script>
+    <script src="vm-paging-sim_files/offcanvas.js"></script>
+
+</div></body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
