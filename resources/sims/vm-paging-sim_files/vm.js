@@ -112,7 +112,7 @@ function loadInstruction(){
 }
 
 function loadVMTLBTable(){
-	var whattowrite="<table class=tlbtable id=tlbtable><tr><td></td><td> Virtual Page# </td><td> Physical Page# </td></tr>";
+	var whattowrite="<table class=tlbtable id=tlbtable><tr><td></td><td> Virtual Page# </td><td> Frame# </td></tr>";
 	for (z = 0; z< TLB; z++) { 
     whattowrite += "<tr id=trTLB"+z+"><td id=markerTLB"+z+">"+z+"</td><td id=tlbframe"+z+"> "+TLBPageArray[z]+
 					" </td><td id=tlbpage"+z+">"+ TLBFrameArray[z] +
@@ -123,7 +123,7 @@ function loadVMTLBTable(){
 }
 
 function loadVMPageTable(){
-	var whattowrite="<table class=pagetable id=pagetable><tr><td> Index </td><td> Valid </td><td> PhysicalPage#</td></tr>";
+	var whattowrite="<table class=pagetable id=pagetable><tr><td> Index </td><td> Valid </td><td> Frame#</td></tr>";
 	for (z = 0; z< zmemory; z++) { 
     whattowrite += "<tr id=tr"+z+"><td id=marker"+z+">"+z.toString(16).toUpperCase()+"</td><td id=ptvalid"+z+"> "+PageTableValidArray[z]+
 					" </td><td id=ptframe"+z+">"+ PageTableFrameArray[z] +
@@ -134,7 +134,7 @@ function loadVMPageTable(){
 }
 
 function loadVMPhysicalMemoryTable(){
-	var whattowrite="<table class=physicalmemory id=physicalmemory><tr><td> Physical Page# </td><td> Content </td></tr>";
+	var whattowrite="<table class=physicalmemory id=physicalmemory><tr><td> Frame# </td><td> Content </td></tr>";
 	for (z = 0; z< physicalMemoryRows; z++) { 
     whattowrite += "<tr id=trpp"+z+"><td>"+z.toString(16).toUpperCase()+
 					"</td> <td id=ppframe"+z+">"+ PhysicalMemoryContentArray[z] +
