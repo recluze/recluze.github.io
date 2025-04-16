@@ -1,0 +1,565 @@
+---
+permalink: /keras-book
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Keras: The Comprehensive Guide to Deep Learning with Keras API and Python - Book Resources</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563EB;
+            --primary-dark: #1E40AF;
+            --secondary: #3B82F6;
+            --background: #FFFFFF;
+            --text: #1F2937;
+            --text-light: #6B7280;
+            --light: #F3F4F6;
+            --border: #E5E7EB;
+            --borderleft: #646567;
+            --code-bg: #F9FAFB;
+            --hover: #EFF6FF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 100;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            letter-spacing: -0.025em;
+        }
+
+        .subhead { 
+          font-family: 'Montserrat', sans-serif;
+        }
+        
+        header p {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 100;
+            font-size: 1.875rem;
+            margin: 40px 0 25px;
+            color: var(--primary-dark);
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 100;
+            font-size: 1.5rem;
+            margin: 30px 0 15px;
+            color: var(--primary-dark);
+        }
+        
+        p {
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+        
+        .intro {
+            max-width: 900px;
+            margin: 40px auto 60px;
+            padding: 30px;
+            background-color: var(--light);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .intro h2 {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-top: 0;
+        }
+        
+        .toc {
+            margin: 40px 0 60px;
+            max-width: 900px;
+            margin: 40px auto 60px;
+            padding: 30px;
+        }
+        
+        .toc-list {
+            list-style-type: none;
+        }
+        
+        .toc-item {
+            margin-bottom: 25px;
+        }
+        
+        .toc-chapter {
+            padding: 20px;
+            background-color: var(--light);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .toc-chapter:hover {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+        
+        .toc-link {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-size: 1.25rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .toc-number {
+            /* font-weight: 700; */
+            /* margin-right: 8px; */
+        }
+        
+        .toc-description {
+            margin: 10px 0 15px;
+            font-size: 0.95rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+        
+        .toc-subsections {
+            list-style-type: none;
+            margin: 15px 0 0 0;
+            padding: 0 0 0 20px;
+            border-left: 1px solid var(--borderleft);
+        }
+        
+        .toc-subsection {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .toc-subsection a {
+            text-decoration: none;
+            color: var(--text);
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            flex-grow: 1;
+        }
+        
+        .toc-subsection a:hover {
+            color: var(--primary);
+        }
+        
+        .toc-resources {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .toc-resources a { 
+            display: block; 
+            /* margin-top: 0.5em; */
+            /* margin-bottom: 0.5em; */
+            /* max-width: 50%;  */
+            width: 50%; /* only half the width */
+            box-sizing: border-box;
+        }
+
+        .label-nb { 
+            opacity: 0.4;
+            color: black;
+            font-weight: 100;
+        }
+        
+        .chapters {
+            display: none; /* Hide the separate resources section */
+        }
+        
+        .resource-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--light);
+            border-color: var(--primary-dark);
+        }
+
+        .btn-outline:hover .label-nb {
+            color: var(--light);
+            opacity: 1;
+        }
+        
+        .btn-sm {
+            padding: 4px 10px;
+            font-size: 0.8rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin: 60px 0 30px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 40px 0 30px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .toc-chapter {
+                padding: 15px;
+            }
+            
+            .toc-link {
+                font-size: 1.1rem;
+            }
+            
+            .intro {
+                padding: 20px;
+            }
+
+            .toc-resources a { 
+            display: block; 
+            /* margin-top: 0.5em; */
+            /* margin-bottom: 0.5em; */
+            /* max-width: 50%;  */
+            width: 100%; /* only half the width */
+            box-sizing: border-box;
+        }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Modern Keras</h1>
+        <p class="subhead">The Comprehensive Guide to Deep Learning with Keras API and Python</p>
+    </header>
+    
+    <section class="intro">
+        <h2>About This Book</h2>
+        <p>This book lays the foundation for practical deep learning development, beginning with core machine learning concepts and gradually building toward sophisticated neural network architectures. Whether you're a beginner seeking to understand the fundamentals or an experienced practitioner looking to stay ahead of the curve, this guide offers clear explanations, practical code examples, and hands-on projects that will enhance your deep learning journey.</p>
+        <p>Throughout our journey in this book, you'll encounter snippets of code that demonstrate key concepts. Don't worry if some of the code examples in the first few chapters look complex or unfamiliar -- they're not meant to be fully understood right away. Think of them as windows into the practical world of machine learning, giving you glimpses of how theoretical concepts transform into working solutions.</p>
+        <p>As we progress through the book, we'll dive into the internals of Keras -- the powerful tool that makes much of this code possible. That's when these initial code examples will start to click into place, like puzzle pieces finally finding their home. You'll begin to understand not just what the code does, but why it's written that way.</p>
+    </section>
+    
+    <section class="toc">
+        <h2>Table of Contents </h2>
+        <ul class="toc-list">
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a class="toc-link"><span class="toc-number">1.</span> Introduction</a>
+                    <p class="toc-description">This chapter lays the foundation for the book, beginning with an overview of deep learning, its evolution, and its transformative impact across industries. It explores why Keras, with its simplicity and powerful capabilities, is the ideal framework for both beginners and experienced practitioners.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">1.1 Overview of Deep Learning</a></li>
+                        <li class="toc-subsection"><a href="#">1.2 Why Keras?</a></li>
+                        <li class="toc-subsection"><a href="#">1.3 How to Use This Book</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter1/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">2.</span> Introduction to the Core of Machine Learning</a>
+                    <p class="toc-description">This chapter introduces the foundational concepts of machine learning, starting with a clear definition and its role as the backbone of artificial intelligence. Readers will explore the primary types of machine learning (supervised, unsupervised, and semi-supervised) understanding their unique applications and significance.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">2.1 What is Machine Learning?</a></li>
+                        <li class="toc-subsection"><a href="#">2.2 Types of Machine Learning: Supervised, Unsupervised, and Semi-Supervised</a></li>
+                        <li class="toc-subsection"><a href="#">2.3 The Magic Sauce: Reinforcement Learning</a></li>
+                        <li class="toc-subsection"><a href="#">2.4 Basics of Neural Networks</a></li>
+                        <li class="toc-subsection"><a href="#">2.5 Setting Up Your Environment</a></li>
+                        <li class="toc-subsection"><a href="#">2.6 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter2/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">3.</span> Fundamentals of Gradient Descent</a>
+                    <p class="toc-description">This chapter focuses on gradient descent, a cornerstone of deep learning and optimization. Readers will gain a clear understanding of how gradient descent works and its role in minimizing loss functions to train models effectively. The chapter examines the different types of gradient descent (batch, stochastic, and mini-batch) highlighting their strengths and trade-offs in various scenarios.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">3.1 Understanding Gradient Descent</a></li>
+                        <li class="toc-subsection"><a href="#">3.2 Types of Gradient Descent: Batch, Stochastic, Mini-Batch</a></li>
+                        <li class="toc-subsection"><a href="#">3.3 Learning Rate and Optimization</a></li>
+                        <li class="toc-subsection"><a href="#">3.4 Implementing Gradient Descent in Code</a></li>
+                        <li class="toc-subsection"><a href="#">3.5 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter3/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">4.</span> Classification Through Gradient Descent</a>
+                    <p class="toc-description">This chapter introduces the application of gradient descent in classification tasks, starting with the fundamentals of classification and its importance in solving real-world problems. It explains the differences between binary and multiclass classification, providing clarity on when and how to use each approach.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">4.1 Classification Basics</a></li>
+                        <li class="toc-subsection"><a href="#">4.2 Binary vs. Multiclass Classification</a></li>
+                        <li class="toc-subsection"><a href="#">4.3 Loss Functions: Cross-Entropy</a></li>
+                        <li class="toc-subsection"><a href="#">4.4 Building a Classifier with Gradient Descent</a></li>
+                        <li class="toc-subsection"><a href="#">4.5 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter4/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">5.</span> Getting Started with Keras</a>
+                    <p class="toc-description">This chapter introduces readers to the Keras framework, emphasizing its user-friendly design and robust capabilities for building deep learning models. Step-by-step guidance is provided for setting up Keras, ensuring a smooth start for practical experimentation. Readers will then build their first Keras model, gaining hands-on experience with its intuitive workflow.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">5.1 Introduction to Keras Framework</a></li>
+                        <li class="toc-subsection"><a href="#">5.2 Setting Up Keras</a></li>
+                        <li class="toc-subsection"><a href="#">5.3 Building Your First Model</a></li>
+                        <li class="toc-subsection"><a href="#">5.4 Implementing Core Concepts in Keras: Gradient Descent and Classification</a></li>
+                        <li class="toc-subsection"><a href="#">5.5 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter5/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">6.</span> Regularization Techniques</a>
+                    <p class="toc-description">This chapter addresses the challenges of overfitting and underfitting, helping readers identify when a model needs more data or better tuning. It introduces dropout as a key regularization method, explaining its concept and practical implementation to improve model generalization.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">6.1 Understanding Overfitting and Underfitting: Do You Need More Data?</a></li>
+                        <li class="toc-subsection"><a href="#">6.2 Dropout: Concept and Implementation</a></li>
+                        <li class="toc-subsection"><a href="#">6.3 Other Regularization Methods: L1 and L2 Regularization, and When Not to Use Them</a></li>
+                        <li class="toc-subsection"><a href="#">6.4 Applying Regularization in Keras</a></li>
+                        <li class="toc-subsection"><a href="#">6.5 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter6/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">7.</span> Convolutional Neural Networks (CNNs)</a>
+                    <p class="toc-description">This chapter introduces convolutional neural networks (CNNs), a specialized architecture designed for processing grid-like data such as images. Readers will learn about the structure of CNNs, focusing on the roles of convolutional layers, pooling layers, and fully connected layers, and how they work together to extract and classify features.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">7.1 Introduction to CNNs</a></li>
+                        <li class="toc-subsection"><a href="#">7.2 Convolutional Layers, Pooling Layers, and Fully Connected Layers</a></li>
+                        <li class="toc-subsection"><a href="#">7.3 Implementing CNNs with Keras</a></li>
+                        <li class="toc-subsection"><a href="#">7.4 The "Shapes Problem"</a></li>
+                        <li class="toc-subsection"><a href="#">7.5 Case Study: Image Classification</a></li>
+                        <li class="toc-subsection"><a href="#">7.6 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter7/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">8.</span> Exploring the Functional API of Keras</a>
+                    <p class="toc-description">This chapter introduces the Keras Functional API, a powerful feature that enables the construction of complex and flexible neural network architectures beyond the limitations of sequential models. Readers will learn how to use the Functional API to design intricate models with branching, shared layers, and custom connections.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">8.1 Overview of Keras Functional API</a></li>
+                        <li class="toc-subsection"><a href="#">8.2 Building Complex Models with Functional API</a></li>
+                        <li class="toc-subsection"><a href="#">8.3 Use Cases and Examples</a></li>
+                        <li class="toc-subsection"><a href="#">8.4 Case Study: Custom Model Architectures</a></li>
+                        <li class="toc-subsection"><a href="#">8.5 Using Transfer Learning to Customize Models for Your Organization</a></li>
+                        <li class="toc-subsection"><a href="#">8.6 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="#" class="btn btn-outline btn-sm">08-01-residual-connections <span class='label-nb'> - Notebook</span></a>
+                        <a href="#" class="btn btn-outline btn-sm">08-02-siamese-network  <span class='label-nb'> - Notebook</span></a>
+                        <a href="#" class="btn btn-outline btn-sm">08-03-unet-segmentation  <span class='label-nb'> - Notebook</span></a>
+                        <a href="#" class="btn btn-outline btn-sm">08-04-transfer-learning-intro  <span class='label-nb'> - Notebook</span></a>
+                        <a href="#" class="btn btn-outline btn-sm">08-05-transfer-learning-eurosat  <span class='label-nb'> - Notebook</span></a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">9.</span> Understanding Transformers</a>
+                    <p class="toc-description">This chapter introduces transformers, a revolutionary architecture, which forms the foundation of modern large language models (LLMs). Readers will explore the theory behind transformers, understanding how they leverage self-attention mechanisms and parallel processing for unparalleled efficiency and performance.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">9.1 Theory Behind Transformers</a></li>
+                        <li class="toc-subsection"><a href="#">9.2 Components: Attention Mechanism, Encoder, and Decoder</a></li>
+                        <li class="toc-subsection"><a href="#">9.3 Implementing Transformers in Keras</a></li>
+                        <li class="toc-subsection"><a href="#">9.4 Case Study: Natural Language Processing</a></li>
+                        <li class="toc-subsection"><a href="#">9.5 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter9/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">10.</span> Reinforcement Learning</a>
+                    <p class="toc-description">This chapter introduces the exciting field of reinforcement learning, where models learn to make decisions through interaction with an environment. Readers will explore key concepts such as agents, environments, and reward systems, which form the backbone of reinforcement learning.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">10.1 Introduction to Reinforcement Learning</a></li>
+                        <li class="toc-subsection"><a href="#">10.2 Key Concepts: Agents, Environments, Rewards</a></li>
+                        <li class="toc-subsection"><a href="#">10.3 Popular Algorithms: Q-Learning, Policy Gradients, and DQN</a></li>
+                        <li class="toc-subsection"><a href="#">10.4 Implementing Reinforcement Learning Models in Keras</a></li>
+                        <li class="toc-subsection"><a href="#">10.5 Case Study: Game Playing and Strategy Optimization</a></li>
+                        <li class="toc-subsection"><a href="#">10.6 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter10/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">11.</span> Autoencoders and Generative AI</a>
+                    <p class="toc-description">This chapter explores the fascinating domain of generative AI, starting with an introduction to autoencoders and their ability to compress and reconstruct data. It expands into advanced concepts like variational autoencoders (VAEs), which add a probabilistic element to representation learning, and generative adversarial networks (GANs).</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">11.1 Introduction to Autoencoders</a></li>
+                        <li class="toc-subsection"><a href="#">11.2 Variational Autoencoders (VAEs)</a></li>
+                        <li class="toc-subsection"><a href="#">11.3 Generative Adversarial Networks (GANs)</a></li>
+                        <li class="toc-subsection"><a href="#">11.4 Building and Training Autoencoders in Keras</a></li>
+                        <li class="toc-subsection"><a href="#">11.5 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter11/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">12.</span> Advanced Generative AI: Stable Diffusion</a>
+                    <p class="toc-description">This chapter dives deeper into stable diffusion, an advanced generative AI model that has pushed the boundaries of image generation and enhancement. Readers will explore the underlying theory, including how stable diffusion combines key concepts such as denoising processes and latent space representations to produce high-quality outputs.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">12.1 Theory Behind Stable Diffusion</a></li>
+                        <li class="toc-subsection"><a href="#">12.2 How Stable Diffusion Utilizes Core Concepts</a></li>
+                        <li class="toc-subsection"><a href="#">12.3 Implementing Stable Diffusion Models</a></li>
+                        <li class="toc-subsection"><a href="#">12.4 Case Study: Image Generation and Enhancement</a></li>
+                        <li class="toc-subsection"><a href="#">12.5 Summary</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter12/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+            
+            <li class="toc-item">
+                <div class="toc-chapter">
+                    <a href="#" class="toc-link"><span class="toc-number">13.</span> Recap of Key Concepts</a>
+                    <p class="toc-description">The final chapter provides a comprehensive recap of the key concepts and skills covered throughout the book, reinforcing the foundational and advanced knowledge readers have gained. It also looks ahead to the future of deep learning, discussing emerging trends and technologies that are shaping the field.</p>
+                    <ul class="toc-subsections">
+                        <li class="toc-subsection"><a href="#">13.1 Future Trends in Deep Learning</a></li>
+                        <li class="toc-subsection"><a href="#">13.2 Tips for Staying Updated with Advancements</a></li>
+                        <li class="toc-subsection"><a href="#">13.3 Following the Latest Research</a></li>
+                    </ul>
+                    <div class="toc-resources">
+                        <a href="https://github.com/username/keras-book/blob/main/chapter13/" class="btn btn-sm">GitHub Notebooks</a>
+                        <a href="#" class="btn btn-outline btn-sm">Interactive Demos</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </section>
+    
+    <footer>
+        <p>© 2025 · Future-Proof Deep Learning with Keras</p>
+    </footer>
+</body>
+</html>
