@@ -229,9 +229,9 @@ permalink: /keras-book
                 <button class="action-button primary-button inline-flex">
                     <i class="fas fa-book mr-2"></i> Get the Book
                 </button>
-                <button class="action-button secondary-button inline-flex">
+                <!-- <button class="action-button secondary-button inline-flex">
                     <i class="fas fa-eye mr-2"></i> Preview
-                </button>
+                </button> -->
             </div>
         </section>
 
@@ -261,29 +261,25 @@ permalink: /keras-book
                         class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
                         aria-expanded="false">
                         <span class="font-medium text-gray-700"><span class="mr-2 text-gray-500">1</span>
-                            Foundations of Modern Development</span>
+                            Introduction</span>
                         <i class="fas fa-chevron-right chevron-icon text-gray-500"></i>
                     </button>
                     <div class="chapter-content bg-white">
                         <p class="text-gray-600 text-sm mb-4">
-                            This chapter lays the foundation for the book,
-                            beginning with an overview of deep learning, its
-                            evolution, and its transformative impact across
-                            industries. It explores why Keras, with its
-                            simplicity and powerful capabilities, is the
-                            ideal framework for both beginners and
-                            experienced practitioners.
+                            In this chapter, we’ll explore some success stories of deep learning, discuss why Keras is
+                            the ideal framework for learning this impressive technology, what you can expect from this
+                            book’s comprehensive journey, and how to use it most effectively to build your expertise.
                         </p>
                         <h4 class="font-semibold text-gray-700 mb-2 text-sm">
                             Sections:
                         </h4>
                         <ul class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1">
-                            <li>Understanding the Development Lifecycle</li>
-                            <li>Version Control with Git</li>
-                            <li>Agile Methodologies</li>
-                            <li>Introduction to Cloud Computing</li>
+                            <li>1.1	Overview of Deep Learning</li>
+                            <li>1.2	Why Keras</li>
+                            <li>1.3	The Structure of This Book</li>
+                            <li>1.4	How to Use This Book</li>
                         </ul>
-                        <h4 class="font-semibold text-gray-700 mb-2 text-sm">
+                        <!-- <h4 class="font-semibold text-gray-700 mb-2 text-sm">
                             Resources:
                         </h4>
                         <div>
@@ -296,7 +292,7 @@ permalink: /keras-book
                             <button class="action-button resource-button block w-full md:w-1/2">
                                 Code Examples
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
 
@@ -759,12 +755,12 @@ permalink: /keras-book
                     <div class="chapter-content bg-white">
                         <p class="text-gray-600 text-sm mb-4">
                             In this chapter, we will explore how machines learn optimal decision-making through trial
-                            and error. We’ll examine the core concepts of agents, environments, and reward signals, and
+                            and error. We'll examine the core concepts of agents, environments, and reward signals, and
                             introduce key algorithms including Q-learning, and Deep Q-Networks. Using Keras and
-                            Gymnasium, we’ll implement these techniques while balancing exploration and exploitation.
+                            Gymnasium, we'll implement these techniques while balancing exploration and exploitation.
                             The chapter will highlight crucial innovations like experience replay and target networks
                             that have transformed reinforcement learning into a practical tool for complex problems.
-                            We’ll also connect these concepts to the large language models discussed in the previous
+                            We'll also connect these concepts to the large language models discussed in the previous
                             chapter, demonstrating how reinforcement learning techniques serves as a backbone for these
                             powerful systems.
                         </p>
@@ -797,6 +793,157 @@ permalink: /keras-book
                                 10-03-frozen-lake-dqn
                             </button>
                         </div>
+                    </div>
+                </div>
+                <!-- Enf of Chapter  -->
+
+                <!-- start of Chapter  -->
+                <div class="chapter-item border border-gray-200 rounded-lg overflow-hidden ">
+                    <button
+                        class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                        aria-expanded="false">
+                        <span class="font-medium text-gray-700"><span class="mr-2 text-gray-500">11</span>
+                            Autoencoders and Generative AI
+                        </span>
+                        <i class="fas fa-chevron-right chevron-icon text-gray-500"></i>
+                    </button>
+                    <div class="chapter-content bg-white">
+                        <p class="text-gray-600 text-sm mb-4">
+                            In this chapter, we will explore generative AI models that create new data from learned
+                            patterns, marking our transition from discriminative models that classify inputs to
+                            generative models that produce outputs. Along with transformers, generative models represent
+                            one of the most important technological foundations driving the current AI revolution,
+                            enabling everything from artistic creation to data augmentation. We'll progress from
+                            autoencoders through Variational Autoencoders to Generative Adversarial Networks, building
+                            the foundation for understanding modern generative AI.
+                        </p>
+                        <h4 class="font-semibold text-gray-700 mb-2 text-sm">
+                            Subsections:
+                        </h4>
+                        <ul class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1">
+                            <li>Introduction to Autoencoders</li>
+                            <li>Variational Autoencoders (VAEs)</li>
+                            <li>Generative Adversarial Networks (GANs)</li>
+                            <li>Summary</li>
+
+                        </ul>
+                        <h4 class="font-semibold text-gray-700 mb-2 text-sm">
+                            Resources:
+                        </h4>
+                        <div>
+                            <button class="action-button resource-button block w-full md:w-1/2">
+                                <i class="fa-solid fa-laptop-code notebook-icon"></i>
+                                11-01-autoencoder-basics
+                            </button>
+                            <button class="action-button resource-button block w-full md:w-1/2">
+                                <i class="fa-solid fa-laptop-code notebook-icon"></i>
+                                11-02-denoising-autoencoder
+                            </button>
+                            <button class="action-button resource-button block w-full md:w-1/2">
+                                <i class="fa-solid fa-laptop-code notebook-icon"></i>
+                                11-03-vaes
+                            </button>
+                            <button class="action-button resource-button block w-full md:w-1/2">
+                                <i class="fa-solid fa-laptop-code notebook-icon"></i>
+                                11-04-acgan-fashion-mnist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Enf of Chapter  -->
+
+
+                <!-- start of Chapter  -->
+                <div class="chapter-item border border-gray-200 rounded-lg overflow-hidden ">
+                    <button
+                        class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                        aria-expanded="false">
+                        <span class="font-medium text-gray-700"><span class="mr-2 text-gray-500">12</span>
+                            Advanced Generative AI: Stable Diffusion
+                        </span>
+                        <i class="fas fa-chevron-right chevron-icon text-gray-500"></i>
+                    </button>
+                    <div class="chapter-content bg-white">
+                        <p class="text-gray-600 text-sm mb-4">
+                            In this chapter, we’ll tackle one of the most exciting frontiers in modern AI: Stable
+                            Diffusion. You'll start by exploring the mathematics behind diffusion processes,
+                            understanding how computers learn to transform random noise into visual art and build your
+                            own diffusion model from scratch, watching it evolve from chaotic pixels to recognizable
+                            images. You'll uncover the secret behind "Stable" Diffusion and explore text-conditioned
+                            generation, where written words enable creative visual expression. Finally, you'll briefly
+                            consider sophisticated techniques like inpainting, where you control image generation with
+                            precision. By the end of this chapter, you'll understand how these systems work and how to
+                            harness their power for your own projects.
+                        </p>
+                        <h4 class="font-semibold text-gray-700 mb-2 text-sm">
+                            Subsections:
+                        </h4>
+                        <ul class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1">
+                            <li>Theory Behind Stable Diffusion </li>
+                            <li>How Stable Diffusion Utilizes Core Concepts</li>
+                            <li>Implementing Stable Diffusion Models</li>
+                            <li>Case Study: Image Generation</li>
+                            <li>Summary</li>
+
+                        </ul>
+                        <h4 class="font-semibold text-gray-700 mb-2 text-sm">
+                            Resources:
+                        </h4>
+                        <div>
+                            <button class="action-button resource-button block w-full md:w-1/2">
+                                <i class="fa-solid fa-laptop-code notebook-icon"></i>
+                                12-01-diffusion-scratch
+                            </button>
+                            <button class="action-button resource-button block w-full md:w-1/2">
+                                <i class="fa-solid fa-laptop-code notebook-icon"></i>
+                                12-02-prompt-based-images
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Enf of Chapter  -->
+
+
+                <!-- start of Chapter  -->
+                <div class="chapter-item border border-gray-200 rounded-lg overflow-hidden ">
+                    <button
+                        class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                        aria-expanded="false">
+                        <span class="font-medium text-gray-700"><span class="mr-2 text-gray-500">13</span>
+                            Recap of Key Concepts
+                        </span>
+                        <i class="fas fa-chevron-right chevron-icon text-gray-500"></i>
+                    </button>
+                    <div class="chapter-content bg-white">
+                        <p class="text-gray-600 text-sm mb-4">
+                            This chapter serves as both a celebration of your learning journey and a compass for the
+                            road ahead. We'll explore where deep learning is heading, discover practical strategies for
+                            staying current with rapid developments in Keras and AI research, and develop skills for
+                            following cutting-edge research. Most importantly, you'll gain the mindset and tools needed
+                            to transform from a student of machine learning into a practitioner who can adapt and grow
+                            alongside this quickly evolving field.
+                        </p>
+                        <h4 class="font-semibold text-gray-700 mb-2 text-sm">
+                            Subsections:
+                        </h4>
+                        <ul class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1">
+                            <li>Future Trends in Deep Learning</li>
+                            <li>Tips for Staying Updated with Advancements</li>
+                            <li>Following the Latest Research</li>
+                        </ul>
+                        <!-- <h4 class="font-semibold text-gray-700 mb-2 text-sm">
+                            Resources:
+                        </h4>
+                        <div>
+                            <button class="action-button resource-button block w-full md:w-1/2">
+                                <i class="fa-solid fa-laptop-code notebook-icon"></i>
+                                12-01-diffusion-scratch
+                            </button>
+                            <button class="action-button resource-button block w-full md:w-1/2">
+                                <i class="fa-solid fa-laptop-code notebook-icon"></i>
+                                12-02-prompt-based-images
+                            </button>
+                        </div> -->
                     </div>
                 </div>
                 <!-- Enf of Chapter  -->
