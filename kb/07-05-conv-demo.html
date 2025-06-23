@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Convolution Demo</title>
+<style>
+:root {
+--primary: #4361ee;
+--secondary: #3a0ca3;
+--accent: #f72585;
+--background: #f8f9fa;
+--card: #ffffff;
+--text: #212529;
+--border: #e9ecef;
+--shadow: rgba(0, 0, 0, 0.1);
+}
+
+.highlight-cell {
+background-color: rgba(247, 37, 133, 0.2) !important;
+border: 1px solid rgba(247, 37, 133, 0.5) !important;
+transition: all 0.3s ease;
+}
+
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+}
+
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background-color: var(--background);
+color: var(--text);
+line-height: 1.6;
+padding: 0;
+margin: 0;
+}
+
+.container {
+/* max-width: 1000px; */
+margin: 0 auto;
+padding: 2rem;
+}
+
+h2 {
+color: var(--secondary);
+margin-bottom: 1.5rem;
+font-weight: 600;
+text-align: center;
+}
+
+.card {
+background: var(--card);
+border-radius: 12px;
+box-shadow: 0 8px 30px var(--shadow);
+overflow: hidden;
+margin-bottom: 2rem;
+transition: transform 0.3s ease;
+width: 100%;
+}
+
+.card:hover {
+transform: translateY(-2px);
+}
+
+.card-header {
+background: var(--primary);
+color: white;
+padding: 1.5rem;
+font-weight: 500;
+}
+
+.card-body {
+padding: 1.5rem;
+}
+
+.btn {
+display: inline-block;
+background-color: var(--primary);
+color: white;
+border: none;
+padding: 12px 24px;
+border-radius: 8px;
+cursor: pointer;
+font-weight: 500;
+letter-spacing: 0.5px;
+transition: all 0.3s ease;
+box-shadow: 0 4px 6px rgba(67, 97, 238, 0.2);
+margin-top: 1.5rem;
+}
+
+.btn:hover {
+background-color: var(--secondary);
+transform: translateY(-2px);
+box-shadow: 0 6px 8px rgba(58, 12, 163, 0.25);
+}
+
+.btn:active {
+transform: translateY(0);
+}
+
+.matrix-container {
+display: flex;
+flex-wrap: wrap;
+justify-content: space-around;
+align-items: flex-start;
+gap: 20px;
+}
+
+.matrix-wrapper {
+margin: 1rem;
+text-align: center;
+}
+
+.matrix-label {
+font-weight: 600;
+margin-bottom: 0.5rem;
+color: var(--secondary);
+font-size: 1.1rem;
+}
+
+.matrix {
+display: inline-grid;
+gap: 0.5rem;
+padding: 1rem;
+background-color: var(--background);
+border-radius: 8px;
+box-shadow: inset 0 2px 5px var(--shadow);
+}
+
+.filter-matrix {
+grid-template-columns: repeat(3, 1fr);
+}
+
+.image-matrix {
+grid-template-columns: repeat(7, 1fr);
+}
+
+.result-matrix {
+grid-template-columns: repeat(3, 1fr);
+}
+
+.matrix-cell {
+width: 50px;
+height: 50px;
+display: flex;
+align-items: center;
+justify-content: center;
+background-color: white;
+border-radius: 8px;
+box-shadow: 0 2px 4px var(--shadow);
+transition: all 0.3s ease;
+position: relative;
+}
+
+.filter-cell {
+background-color: rgba(67, 97, 238, 0.1);
+border: 1px solid rgba(67, 97, 238, 0.3);
+}
+
+.filter-cell:hover {
+background-color: rgba(67, 97, 238, 0.2);
+}
+
+.image-cell {
+background-color: rgba(58, 12, 163, 0.1);
+border: 1px solid rgba(58, 12, 163, 0.3);
+}
+
+.image-cell:hover {
+background-color: rgba(58, 12, 163, 0.2);
+}
+
+.result-cell {
+background-color: rgba(247, 37, 133, 0.1);
+border: 1px solid rgba(247, 37, 133, 0.3);
+font-weight: 600;
+}
+
+.cell-input {
+width: 100%;
+height: 100%;
+border: none;
+background: transparent;
+text-align: center;
+font-size: 1rem;
+color: var(--text);
+outline: none;
+}
+
+.cell-value {
+font-weight: 500;
+}
+
+.info-panel {
+margin-top: 2rem;
+padding: 1.5rem;
+background-color: white;
+border-radius: 12px;
+box-shadow: 0 4px 10px var(--shadow);
+}
+
+.info-title {
+font-weight: 600;
+color: var(--secondary);
+margin-bottom: 0.5rem;
+font-size: 1.1rem;
+}
+
+.info-content {
+font-size: 0.95rem;
+color: #6c757d;
+}
+
+a { 
+    text-decoration: none;
+    color: #6c757d;
+    border-bottom: 1px dashed #6c757d; 
+}
+
+.animation-container {
+position: relative;
+margin: 2rem auto;
+width: 280px;
+height: 180px;
+background-color: rgba(58, 12, 163, 0.05);
+border-radius: 8px;
+border: 1px solid var(--border);
+overflow: hidden;
+display: none;
+}
+
+.stride-input {
+width: 60px;
+height: 40px;
+padding: 8px;
+font-size: 16px;
+text-align: center;
+border: 1px solid var(--border);
+border-radius: 6px;
+margin: 0 10px;
+}
+
+.stride-input:focus {
+border-color: var(--primary);
+outline: none;
+box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+}
+
+.stride-container {
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 1rem 0;
+}
+
+.dynamic-matrix {
+display: grid;
+gap: 0.5rem;
+padding: 1rem;
+background-color: var(--background);
+border-radius: 8px;
+box-shadow: inset 0 2px 5px var(--shadow);
+}
+
+.highlight {
+animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+0% {
+box-shadow: 0 0 0 0px rgba(247, 37, 133, 0.4);
+}
+100% {
+box-shadow: 0 0 0 15px rgba(247, 37, 133, 0);
+}
+}
+
+@media (max-width: 768px) {
+.container {
+padding: 1rem;
+}
+
+.card-header, .card-body {
+padding: 1rem;
+}
+
+.matrix-cell {
+width: 40px;
+height: 40px;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h2>Interactive Convolution Demo</h2>
+
+<div class="card">
+    <div class="card-header">
+        Set the Stride 
+    </div>
+    <div class="card-body">    
+        <div class="stride-container">
+            <label for="stride-input">Stride:</label>
+            <input type="number" id="stride-input" class="stride-input" value="1" min="1" max="3">
+            <div id="output-size-info" style="margin-left: 15px; color: var(--secondary); font-weight: 500;">
+                Output Size: 5×5
+            </div>
+        </div>    
+    </div>
+</div>
+
+
+
+<div class="card">
+<div class="card-header">
+Convolution Parameters
+</div>
+<div class="card-body">
+<div class="matrix-container">
+    <div class="matrix-wrapper">
+        <div class="matrix-label">3×3 Filter</div>
+        <div class="matrix filter-matrix" id="filter-matrix">
+            <!-- Filter cells will be generated by JavaScript -->
+        </div>
+    </div>
+    
+    <div class="matrix-wrapper">
+        <div class="matrix-label">7×7 Image</div>
+        <div class="matrix image-matrix" id="image-matrix">
+            <!-- Image cells will be generated by JavaScript -->
+        </div>
+    </div>
+    
+    <div class="matrix-wrapper">
+        <div class="matrix-label">Result (<span id="result-size">5×5</span>)</div>
+        <div class="dynamic-matrix" id="result-matrix">
+            <!-- Result cells will be generated by JavaScript -->
+        </div>
+    </div>
+</div>
+
+<div style="text-align: center;">
+    <button id="apply-btn" class="btn">Apply Convolution</button>
+    <button id="next-btn" class="btn" style="margin-left: 10px; background-color: var(--accent); display: none;">Next Step</button>
+</div>
+</div>
+</div>
+
+
+
+<div class="info-panel">
+<div class="info-title">About this Page</div>
+<div class="info-content">
+<p>This page is created as part of supporting material for the book, "Modern Keras: The Comprehensive Guide to Deep Learning with the Keras API and Python" by Mohammad Nauman (recluze). See more about it <a href="https://recluze.net/keras-book" target="_blank">here</a>. </p>
+</div>
+</div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+// Initialize matrices
+createFilterMatrix();
+createImageMatrix();
+createResultMatrix();
+
+// Add event listeners for buttons
+document.getElementById('apply-btn').addEventListener('click', startConvolution);
+document.getElementById('next-btn').addEventListener('click', nextConvolutionStep);
+});
+
+// Global variables for step-by-step animation
+let currentWindowIndex = 0;
+let windows = [];
+
+// Start convolution process
+function startConvolution() {
+// Get filter values
+const filterCells = document.querySelectorAll('.filter-cell input');
+const filterValues = Array.from(filterCells).map(input => parseFloat(input.value) || 0);
+
+// Get image values
+const imageCells = document.querySelectorAll('.image-cell input');
+const imageValues = Array.from(imageCells).map(input => parseFloat(input.value) || 0);
+
+// Get stride value
+const stride = parseInt(document.getElementById('stride-input').value) || 1;
+
+// Convert to 2D arrays
+const filter = reshape(filterValues, 3, 3);
+const image = reshape(imageValues, 7, 7);  // 7x7 image
+
+// Calculate all results but don't display them yet
+window.fullResult = convolve(image, filter, stride);
+
+// Reset all result cells to 0
+const resultCells = document.querySelectorAll('.result-cell .cell-value');
+resultCells.forEach(cell => {
+cell.textContent = '0.0';
+});
+
+// Reset animation and show first step
+currentWindowIndex = 0;
+clearAllHighlights();
+
+// Show the Next button
+document.getElementById('next-btn').style.display = 'inline-block';
+
+// Show first step
+highlightCurrentStep();
+}
+
+// Go to next convolution step
+function nextConvolutionStep() {
+// Get output dimensions based on stride
+const stride = parseInt(document.getElementById('stride-input').value) || 1;
+const outputSize = Math.floor((7 - 3) / stride) + 1;
+
+// Update the current result cell with the calculated value
+const resultCells = document.querySelectorAll('.result-cell .cell-value');
+const rowIndex = Math.floor(currentWindowIndex / outputSize);
+const colIndex = currentWindowIndex % outputSize;
+resultCells[currentWindowIndex].textContent = window.fullResult[rowIndex][colIndex].toFixed(1);
+
+// Move to next step
+currentWindowIndex++;
+
+if (currentWindowIndex >= window.filterPositions.length) {
+// Animation complete
+clearAllHighlights();
+currentWindowIndex = 0;
+document.getElementById('next-btn').style.display = 'none';
+return;
+}
+
+highlightCurrentStep();
+}
+
+// Highlight current step
+function highlightCurrentStep() {
+clearAllHighlights();
+
+const imageCells = document.querySelectorAll('.image-cell');
+const resultCells = document.querySelectorAll('.result-cell');
+
+// Highlight current window cells
+const currentPosition = window.filterPositions[currentWindowIndex];
+currentPosition.cellIndices.forEach(idx => {
+if (idx >= 0 && idx < imageCells.length) {
+    imageCells[idx].classList.add('highlight-cell');
+}
+});
+
+// Highlight corresponding result cell
+if (resultCells[currentWindowIndex]) {
+resultCells[currentWindowIndex].classList.add('highlight');
+}
+}
+
+// Clear all highlights
+function clearAllHighlights() {
+const imageCells = document.querySelectorAll('.image-cell');
+const resultCells = document.querySelectorAll('.result-cell');
+
+imageCells.forEach(cell => cell.classList.remove('highlight-cell'));
+resultCells.forEach(cell => cell.classList.remove('highlight'));
+}
+
+// Create the 5x5 image matrix with input fields
+function createImageMatrix() {
+const imageMatrix = document.getElementById('image-matrix');
+imageMatrix.innerHTML = '';
+
+// Default image values (gradient pattern)
+const defaultValues = [
+0, 0, 0, 0, 0, 0, 0,
+0, 1, 1, 1, 1, 1, 0,
+0, 1, 2, 2, 2, 1, 0,
+0, 1, 2, 3, 2, 1, 0,
+0, 1, 2, 2, 2, 1, 0,
+0, 1, 1, 1, 1, 1, 0,
+0, 0, 0, 0, 0, 0, 0
+];
+
+for (let i = 0; i < 49; i++) {
+const cell = document.createElement('div');
+cell.className = 'matrix-cell image-cell';
+
+const input = document.createElement('input');
+input.type = 'number';
+input.className = 'cell-input';
+input.value = defaultValues[i];
+input.step = '0.1';
+
+cell.appendChild(input);
+imageMatrix.appendChild(cell);
+}
+
+// Add stride change listener
+document.getElementById('stride-input').addEventListener('change', updateOutputSize);
+updateOutputSize();
+}
+
+// Update the output size based on stride
+function updateOutputSize() {
+const stride = parseInt(document.getElementById('stride-input').value) || 1;
+const imageSize = 7; // 7x7 image
+const filterSize = 3; // 3x3 filter
+
+// Calculate output dimensions
+const outputSize = Math.floor((imageSize - filterSize) / stride) + 1;
+
+// Update UI
+document.getElementById('output-size-info').textContent = `Output Size: ${outputSize}×${outputSize}`;
+document.getElementById('result-size').textContent = `${outputSize}×${outputSize}`;
+
+// Recreate result matrix with new size
+createResultMatrix(outputSize);
+}
+
+// Create the result matrix for output
+function createResultMatrix(size = 5) {
+const resultMatrix = document.getElementById('result-matrix');
+resultMatrix.innerHTML = '';
+resultMatrix.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+
+for (let i = 0; i < size * size; i++) {
+const cell = document.createElement('div');
+cell.className = 'matrix-cell result-cell';
+cell.id = `result-${i}`;
+
+const valueSpan = document.createElement('span');
+valueSpan.className = 'cell-value';
+valueSpan.textContent = '0.0';
+
+cell.appendChild(valueSpan);
+resultMatrix.appendChild(cell);
+}
+}
+
+// Apply convolution operation
+function applyConvolution() {
+startConvolution();
+}
+
+// Reshape 1D array to 2D array
+function reshape(array, rows, cols) {
+const result = [];
+for (let i = 0; i < rows; i++) {
+result.push(array.slice(i * cols, (i + 1) * cols));
+}
+return result;
+}
+
+// Perform convolution operation
+function convolve(image, filter, stride = 1) {
+const result = [];
+const imageRows = image.length;
+const imageCols = image[0].length;
+const filterRows = filter.length;
+const filterCols = filter[0].length;
+
+// Calculate output dimensions
+const outputRows = Math.floor((imageRows - filterRows) / stride) + 1;
+const outputCols = Math.floor((imageCols - filterCols) / stride) + 1;
+
+// Initialize result matrix with zeros
+for (let i = 0; i < outputRows; i++) {
+const resultRow = [];
+for (let j = 0; j < outputCols; j++) {
+    resultRow.push(0);
+}
+result.push(resultRow);
+}
+
+// Calculate positions where the filter will be applied (accounting for stride)
+window.filterPositions = [];
+for (let i = 0; i <= imageRows - filterRows; i += stride) {
+for (let j = 0; j <= imageCols - filterCols; j += stride) {
+    const cellIndices = [];
+    
+    // For each position, collect the indices of cells in the window
+    for (let fi = 0; fi < filterRows; fi++) {
+        for (let fj = 0; fj < filterCols; fj++) {
+            const imageRowIdx = i + fi;
+            const imageColIdx = j + fj;
+            const imageIdx = imageRowIdx * imageCols + imageColIdx;
+            cellIndices.push(imageIdx);
+        }
+    }
+    
+    window.filterPositions.push({
+        rowStart: i,
+        colStart: j,
+        cellIndices: cellIndices
+    });
+}
+}
+
+// For each filter position, calculate the result value
+for (let k = 0; k < window.filterPositions.length; k++) {
+const pos = window.filterPositions[k];
+const i = pos.rowStart;
+const j = pos.colStart;
+
+// Calculate the corresponding result cell
+const resultRow = Math.floor(k / outputCols);
+const resultCol = k % outputCols;
+
+// Perform the convolution at this position
+let sum = 0;
+for (let fi = 0; fi < filterRows; fi++) {
+    for (let fj = 0; fj < filterCols; fj++) {
+        sum += image[i + fi][j + fj] * filter[fi][fj];
+    }
+}
+
+result[resultRow][resultCol] = sum;
+}
+
+return result;
+}
+
+// Create the 3x3 filter matrix with input fields
+function createFilterMatrix() {
+const filterMatrix = document.getElementById('filter-matrix');
+filterMatrix.innerHTML = '';
+
+// Default filter values (Sobel operator)
+const defaultValues = [
+1, 1, 1,
+1, 0, 1,
+1, 1, 1
+];
+
+for (let i = 0; i < 9; i++) {
+const cell = document.createElement('div');
+cell.className = 'matrix-cell filter-cell';
+
+const input = document.createElement('input');
+input.type = 'number';
+input.className = 'cell-input';
+input.value = defaultValues[i];
+input.step = '0.1';
+
+cell.appendChild(input);
+filterMatrix.appendChild(cell);
+}
+}
+</script>
+</body>
+</html>

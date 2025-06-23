@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Q-Learning Grid World</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+
+        h1 {
+            color: #0056b3;
+            margin-bottom: 20px;
+            font-weight: 100;
+        }
+
+        .info-title {
+            font-weight: 600;
+            color: var(--secondary);
+            /* margin-bottom: 0.5rem; */
+            margin-top: 2em; 
+            font-size: 1.1rem;
+        }
+
+        canvas {
+            border: 2px solid #333;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #gridCanvas {
+            /* Specific styles for the grid canvas */
+        }
+
+        /* Removed #rewardChart styles */
+
+        .controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            width: 800px;
+            /* Match canvas width for better alignment */
+        }
+
+        .slider-group {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .slider-group label {
+            width: 120px;
+            text-align: right;
+            font-weight: bold;
+        }
+
+        .slider-group input[type="range"] {
+            flex-grow: 1;
+            -webkit-appearance: none;
+            height: 8px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            border-radius: 5px;
+        }
+
+        .slider-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .slider-group input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #007bff;
+            cursor: pointer;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .slider-group span {
+            min-width: 40px;
+            text-align: left;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .buttons button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: white;
+            /* Plain white background */
+            color: #007bff;
+            /* Text color for outline effect */
+            border: 2px solid #007bff;
+            /* Blue outline */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+        }
+
+        .buttons button:hover {
+            background-color: #007bff;
+            /* Blue background on hover */
+            color: white;
+            /* White text on hover */
+            transform: translateY(-2px);
+        }
+
+        /* Remove specific button styles as they are now unified */
+        #startButton,
+        #stopButton,
+        #resetButton,
+        #policyButton {
+            /* No specific styles needed here, inherited from .buttons button */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Q-Learning Grid World</h1>
+
+    <canvas id="gridCanvas"></canvas>
+
+    <div class="controls">
+        <div class="slider-group">
+            <label for="epsilonSlider">Epsilon:</label>
+            <input type="range" id="epsilonSlider" min="0" max="1" step="0.01" value="0.9">
+            <span id="epsilonValue">0.90</span>
+        </div>
+
+        <div class="slider-group">
+            <label for="speedSlider">Interval:</label>
+            <input type="range" id="speedSlider" min="1" max="500" step="1" value="30">
+            <span id="speedValue">30 ms</span>
+        </div>
+
+        <div class="buttons">
+            <button id="startButton">Start Learning</button>
+            <button id="stopButton">Stop Learning</button>
+            <button id="resetButton">Reset Q-Table</button>
+            <button id="policyButton">Visualize Policy</button>
+        </div>
+        <div>
+            Click on Visualize Policy to see the optimal actions for each state. Then click on Start Learning to see how
+            the Q-values change over time.
+        </div>
+
+
+        <div class="info-panel">
+            <div class="info-title">About This Demo</div>
+            <p style="padding-top: 1em;">This page is created as part of supporting material for the book, "Modern
+                Keras: The Comprehensive Guide to Deep Learning with the Keras API and Python" by Mohammad Nauman
+                (recluze). See more about it <a href="https://recluze.net/keras-book" target="_blank">here</a>. </p>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // --- Grid and Canvas Setup ---
+        const GRID_SIZE = 10; // Changed to 10x10 grid
+        const CELL_SIZE = 40; // Pixels per cell
+        const CANVAS_SIZE = GRID_SIZE * CELL_SIZE;
+
+        const canvas = document.getElementById('gridCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = CANVAS_SIZE;
+        canvas.height = CANVAS_SIZE;
+
+        // --- Fixed Locations (change these values to relocate) ---
+        // Adjusted locations to fit within a 10x10 grid
+        const GEM_LOCATIONS = [
+            { r: 5, c: 3 },
+            { r: 7, c: 1 },
+            { r: 4, c: 8 },
+            { r: 4, c: 6 }
+        ];
+
+        const FIRE_LOCATIONS = [
+            { r: 5, c: 5 },
+            { r: 9, c: 2 },
+            { r: 3, c: 7 }
+        ];
+
+        const SUPER_GEM_LOCATION = { r: 0, c: GRID_SIZE - 1 }; // Stays at bottom-right (9,9 for 10x10)
+
+        // --- Q-Learning Parameters ---
+        let GAMMA = 0.9;   // Discount factor
+        let ALPHA = 0.1;   // Learning rate
+        let EPSILON = 0.1; // Exploration-exploitation trade-off (initial from slider)
+        let LEARNING_INTERVAL_MS = 50; // Speed of simulation (initial from slider)
+        // Removed MOVING_AVERAGE_WINDOW
+
+        // --- Q-Table and Rewards ---
+        // Q-table: Q[row][col][action]
+        // Actions: 0: Up, 1: Down, 2: Left, 3: Right
+        let qTable = Array(GRID_SIZE).fill(0).map(() =>
+            Array(GRID_SIZE).fill(0).map(() => Array(4).fill(0))
+        );
+
+        // --- Agent State ---
+        let agentPos = { r: 0, c: 0 }; // Agent starts at top-left
+        let learningIntervalId = null;
+        let policyVisible = false;
+
+        // --- Reward Chart Data (removed) ---
+        // let rewardsPerEpisode = [];
+        // let currentEpisodeReward = 0;
+        // let episodeCount = 0;
+        // let rewardChartInstance = null;
+
+        // --- UI Elements ---
+        const epsilonSlider = document.getElementById('epsilonSlider');
+        const epsilonValueSpan = document.getElementById('epsilonValue');
+        const speedSlider = document.getElementById('speedSlider');
+        const speedValueSpan = document.getElementById('speedValue');
+        const startButton = document.getElementById('startButton');
+        const stopButton = document.getElementById('stopButton');
+        const resetButton = document.getElementById('resetButton');
+        const policyButton = document.getElementById('policyButton');
+        // Removed plotButton
+        // Removed rewardChartCanvas
+
+        // --- Helper Functions ---
+
+        function updateEpsilon() {
+            EPSILON = parseFloat(epsilonSlider.value);
+            epsilonValueSpan.textContent = EPSILON.toFixed(2);
+        }
+
+        function updateSpeed() {
+            LEARNING_INTERVAL_MS = parseInt(speedSlider.value);
+            speedValueSpan.textContent = `${LEARNING_INTERVAL_MS} ms`;
+            // If learning is active, restart interval with new speed
+            if (learningIntervalId) {
+                stopLearning();
+                startLearning();
+            }
+        }
+
+        function getReward(r, c) {
+            if (GEM_LOCATIONS.some(loc => loc.r === r && loc.c === c)) {
+                return 10;
+            }
+            if (FIRE_LOCATIONS.some(loc => loc.r === r && loc.c === c)) {
+                return -10;
+            }
+            if (r === SUPER_GEM_LOCATION.r && c === SUPER_GEM_LOCATION.c) {
+                return 100;
+            }
+            return 0; // Default reward for empty cell
+        }
+
+        function isTerminalState(r, c) {
+            return GEM_LOCATIONS.some(loc => loc.r === r && loc.c === c) ||
+                FIRE_LOCATIONS.some(loc => loc.r === r && loc.c === c) ||
+                (r === SUPER_GEM_LOCATION.r && c === SUPER_GEM_LOCATION.c);
+        }
+
+        function chooseAction(r, c) {
+            // Epsilon-greedy strategy
+            if (Math.random() < EPSILON) {
+                // Explore: Choose a random action
+                return Math.floor(Math.random() * 4); // 0:Up, 1:Down, 2:Left, 3:Right
+            } else {
+                // Exploit: Choose the action with the highest Q-value
+                const qValues = qTable[r][c];
+                const maxQ = Math.max(...qValues);
+                const bestActions = [];
+                for (let i = 0; i < 4; i++) {
+                    if (qValues[i] === maxQ) {
+                        bestActions.push(i);
+                    }
+                }
+                // If multiple actions have the same max Q-value, pick one randomly
+                return bestActions[Math.floor(Math.random() * bestActions.length)];
+            }
+        }
+
+        function getNextState(r, c, action) {
+            let nextR = r;
+            let nextC = c;
+
+            switch (action) {
+                case 0: nextR--; break; // Up
+                case 1: nextR++; break; // Down
+                case 2: nextC--; break; // Left
+                case 3: nextC++; break; // Right
+            }
+
+            // Keep agent within grid boundaries
+            nextR = Math.max(0, Math.min(GRID_SIZE - 1, nextR));
+            nextC = Math.max(0, Math.min(GRID_SIZE - 1, nextC));
+
+            return { r: nextR, c: nextC };
+        }
+
+        function getMaxQValue(r, c) {
+            return Math.max(...qTable[r][c]);
+        }
+
+        function getOptimalAction(r, c) {
+            const qValues = qTable[r][c];
+            const maxQ = Math.max(...qValues);
+            // Return the index of the first action that matches maxQ
+            return qValues.indexOf(maxQ);
+        }
+
+        // --- Drawing Functions ---
+
+        function lerpColor(color1, color2, factor) {
+            const result = color1.slice();
+            for (let i = 0; i < 3; i++) {
+                result[i] = Math.round(result[i] + factor * (color2[i] - result[i]));
+            }
+            return `rgb(${result.join(',')})`;
+        }
+
+        function drawGrid() {
+            ctx.clearRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+
+            const green = [0, 128, 0];   // Low value
+            const yellow = [255, 255, 0]; // High value
+
+            // Find min/max Q-values across all states for normalization
+            let minQ = Infinity;
+            let maxQ = -Infinity;
+            for (let r = 0; r < GRID_SIZE; r++) {
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    const stateMaxQ = getMaxQValue(r, c);
+                    if (stateMaxQ > maxQ) maxQ = stateMaxQ;
+                    if (stateMaxQ < minQ) minQ = stateMaxQ;
+                }
+            }
+            // Handle case where all Q-values are initially 0
+            if (minQ === Infinity) minQ = 0;
+            if (maxQ === -Infinity) maxQ = 0;
+            // Add a small buffer if min/max are the same to avoid division by zero
+            if (minQ === maxQ) {
+                if (minQ === 0) { maxQ = 1; } // If all are 0, make range [0,1]
+                else { minQ *= 0.9; maxQ *= 1.1; } // Expand range slightly
+            }
+
+
+            for (let r = 0; r < GRID_SIZE; r++) {
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    const x = c * CELL_SIZE;
+                    const y = r * CELL_SIZE;
+
+                    // Draw state value background
+                    let normalizedValue = 0;
+                    if (maxQ - minQ > 0) {
+                        normalizedValue = (getMaxQValue(r, c) - minQ) / (maxQ - minQ);
+                    }
+                    // Clamp to [0,1] just in case
+                    normalizedValue = Math.max(0, Math.min(1, normalizedValue));
+
+                    ctx.fillStyle = lerpColor(green, yellow, normalizedValue);
+                    ctx.fillRect(x, y, CELL_SIZE, CELL_SIZE);
+
+                    // Draw grid lines
+                    ctx.strokeStyle = '#ccc';
+                    ctx.strokeRect(x, y, CELL_SIZE, CELL_SIZE);
+                }
+            }
+
+            // Draw special states
+            GEM_LOCATIONS.forEach(loc => {
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(loc.c * CELL_SIZE + CELL_SIZE / 2, loc.r * CELL_SIZE + CELL_SIZE / 2, CELL_SIZE * 0.3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = 'darkblue';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.font = 'bold 12px Arial';
+                ctx.fillStyle = 'blue';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('+10', loc.c * CELL_SIZE + CELL_SIZE / 2, loc.r * CELL_SIZE + CELL_SIZE / 2);
+            });
+
+            FIRE_LOCATIONS.forEach(loc => {
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.arc(loc.c * CELL_SIZE + CELL_SIZE / 2, loc.r * CELL_SIZE + CELL_SIZE / 2, CELL_SIZE * 0.3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = 'darkred';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.font = 'bold 12px Arial';
+                ctx.fillStyle = 'red';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('-10', loc.c * CELL_SIZE + CELL_SIZE / 2, loc.r * CELL_SIZE + CELL_SIZE / 2);
+            });
+
+            // Super Gem
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(SUPER_GEM_LOCATION.c * CELL_SIZE + CELL_SIZE / 2, SUPER_GEM_LOCATION.r * CELL_SIZE + CELL_SIZE / 2, CELL_SIZE * 0.4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.strokeStyle = 'darkmagenta';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            ctx.font = 'bold 14px Arial';
+            ctx.fillStyle = 'darkmagenta';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('+100', SUPER_GEM_LOCATION.c * CELL_SIZE + CELL_SIZE / 2, SUPER_GEM_LOCATION.r * CELL_SIZE + CELL_SIZE / 2);
+
+
+            // Draw Agent
+            ctx.fillStyle = 'black';
+            ctx.beginPath();
+            ctx.arc(agentPos.c * CELL_SIZE + CELL_SIZE / 2, agentPos.r * CELL_SIZE + CELL_SIZE / 2, CELL_SIZE * 0.2, 0, Math.PI * 2);
+            ctx.fill();
+
+            if (policyVisible) {
+                drawPolicy();
+            }
+        }
+
+        function drawPolicy() {
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.7)';
+            ctx.lineWidth = 2;
+            const arrowSize = CELL_SIZE * 0.2;
+
+            for (let r = 0; r < GRID_SIZE; r++) {
+                for (let c = 0; c < GRID_SIZE; c++) {
+                    if (isTerminalState(r, c)) continue; // Don't draw policy for terminal states
+
+                    const optimalAction = getOptimalAction(r, c);
+                    const startX = c * CELL_SIZE + CELL_SIZE / 2;
+                    const startY = r * CELL_SIZE + CELL_SIZE / 2;
+
+                    ctx.beginPath();
+                    switch (optimalAction) {
+                        case 0: // Up
+                            ctx.moveTo(startX, startY);
+                            ctx.lineTo(startX, startY - CELL_SIZE * 0.3);
+                            ctx.lineTo(startX - arrowSize, startY - CELL_SIZE * 0.3 + arrowSize);
+                            ctx.moveTo(startX, startY - CELL_SIZE * 0.3);
+                            ctx.lineTo(startX + arrowSize, startY - CELL_SIZE * 0.3 + arrowSize);
+                            break;
+                        case 1: // Down
+                            ctx.moveTo(startX, startY);
+                            ctx.lineTo(startX, startY + CELL_SIZE * 0.3);
+                            ctx.lineTo(startX - arrowSize, startY + CELL_SIZE * 0.3 - arrowSize);
+                            ctx.moveTo(startX, startY + CELL_SIZE * 0.3);
+                            ctx.lineTo(startX + arrowSize, startY + CELL_SIZE * 0.3 - arrowSize);
+                            break;
+                        case 2: // Left
+                            ctx.moveTo(startX, startY);
+                            ctx.lineTo(startX - CELL_SIZE * 0.3, startY);
+                            ctx.lineTo(startX - CELL_SIZE * 0.3 + arrowSize, startY - arrowSize);
+                            ctx.moveTo(startX - CELL_SIZE * 0.3, startY);
+                            ctx.lineTo(startX - CELL_SIZE * 0.3 + arrowSize, startY + arrowSize);
+                            break;
+                        case 3: // Right
+                            ctx.moveTo(startX, startY);
+                            ctx.lineTo(startX + CELL_SIZE * 0.3, startY);
+                            ctx.lineTo(startX + CELL_SIZE * 0.3 - arrowSize, startY - arrowSize);
+                            ctx.moveTo(startX + CELL_SIZE * 0.3, startY);
+                            ctx.lineTo(startX + CELL_SIZE * 0.3 - arrowSize, startY + arrowSize);
+                            break;
+                    }
+                    ctx.stroke();
+                }
+            }
+        }
+
+
+        // --- Q-Learning Logic ---
+        function qLearningStep() {
+            const currentState = { r: agentPos.r, c: agentPos.c };
+            const action = chooseAction(currentState.r, currentState.c);
+            const nextState = getNextState(currentState.r, currentState.c, action);
+            const reward = getReward(nextState.r, nextState.c);
+
+            // Removed currentEpisodeReward accumulation
+            // currentEpisodeReward += reward;
+
+            const maxQ_nextState = getMaxQValue(nextState.r, nextState.c);
+
+            // Q-learning formula
+            qTable[currentState.r][currentState.c][action] =
+                qTable[currentState.r][currentState.c][action] +
+                ALPHA * (reward + GAMMA * maxQ_nextState - qTable[currentState.r][currentState.c][action]);
+
+            agentPos = nextState; // Move agent
+
+            drawGrid(); // Redraw grid with updated state values
+
+            // Check for episode termination
+            if (isTerminalState(agentPos.r, agentPos.c)) {
+                // Removed reward tracking and plot updates
+                // rewardsPerEpisode.push(currentEpisodeReward);
+                // episodeCount++;
+                // currentEpisodeReward = 0;
+                agentPos = { r: 0, c: 0 }; // Reset agent to start
+            }
+        }
+
+        function startLearning() {
+            if (!learningIntervalId) {
+                learningIntervalId = setInterval(qLearningStep, LEARNING_INTERVAL_MS);
+                startButton.disabled = true;
+                stopButton.disabled = false;
+                policyButton.disabled = true; // Disable policy visualization during active learning
+                // Removed plotButton disable
+            }
+        }
+
+        function stopLearning() {
+            if (learningIntervalId) {
+                clearInterval(learningIntervalId);
+                learningIntervalId = null;
+                startButton.disabled = false;
+                stopButton.disabled = true;
+                policyButton.disabled = false; // Re-enable policy visualization
+                // Removed plotButton enable
+            }
+        }
+
+        function resetQTable() {
+            stopLearning();
+            qTable = Array(GRID_SIZE).fill(0).map(() =>
+                Array(GRID_SIZE).fill(0).map(() => Array(4).fill(0))
+            );
+            agentPos = { r: 0, c: 0 };
+            policyVisible = false; // Hide policy on reset
+            // Removed reward history clear
+            // rewardsPerEpisode = [];
+            // currentEpisodeReward = 0;
+            // episodeCount = 0;
+            // Removed chart update to clear it
+            drawGrid(); // Redraw with reset values
+            console.log("Q-Table reset.");
+        }
+
+        function togglePolicyVisualization() {
+            policyVisible = !policyVisible;
+            drawGrid(); // Redraw to show/hide policy
+        }
+
+        // --- Chart.js Functions (removed) ---
+        // function setupRewardChart() { ... }
+        // function updateRewardChart() { ... }
+
+
+        // --- Event Listeners ---
+        epsilonSlider.addEventListener('input', updateEpsilon);
+        speedSlider.addEventListener('input', updateSpeed);
+        startButton.addEventListener('click', startLearning);
+        stopButton.addEventListener('click', stopLearning);
+        resetButton.addEventListener('click', resetQTable);
+        policyButton.addEventListener('click', togglePolicyVisualization);
+        // Removed plotButton event listener
+
+        // --- Initial Setup ---
+        updateEpsilon(); // Set initial epsilon value from slider
+        updateSpeed();   // Set initial speed value from slider
+        // Removed setupRewardChart()
+        drawGrid();      // Initial drawing of the grid
+        stopButton.disabled = true; // Disable stop button initially
+    </script>
+</body>
+
+</html>
