@@ -1,0 +1,270 @@
+/* RAM Table Container */
+.ram-table-container {
+    flex-grow: 1;
+    flex-shrink: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    margin-top: 10px;
+    padding: 0 10px;
+    min-width: 0;
+    min-height: 0;
+    max-width: 100%;
+}
+
+/* RAM Header */
+.ram-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+/* Table Base */
+table {
+    width: 100%;
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    position: relative;
+    table-layout: fixed;
+}
+
+/* Sticky Header */
+thead {
+    position: sticky;
+    top: 0;
+    background: rgba(30, 30, 50, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 10;
+}
+
+/* Cells */
+th,
+td {
+    text-align: left;
+    padding: 4px 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    box-sizing: border-box;
+    height: 46px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* Column widths in display mode (3 columns) */
+th:nth-child(1),
+td:nth-child(1) {
+    width: 15%;
+    min-width: 60px;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 25%;
+    min-width: 100px;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+    width: 60%;
+    min-width: 120px;
+}
+
+/* Header styling */
+th {
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #a0a0b0;
+}
+
+/* Address column header responsive text */
+.address-short {
+    display: none;
+}
+
+/* Body and rows */
+td {
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    font-size: 14px;
+    color: #e0e0e0;
+    transition: all 0.2s ease;
+}
+
+tbody {
+    position: relative;
+    z-index: 1;
+}
+
+tbody tr:hover td {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* Type cell styling in display mode */
+.type-instruction {
+    color: #ffa366;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.type-data {
+    color: #66b3ff;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Edit mode: inputs/selects inside table */
+td select,
+td input {
+    width: calc(50% - 5px);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 4px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    height: 30px;
+    font-size: 13px;
+    background: rgba(0, 0, 0, 0.3);
+    color: #e0e0e0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.4;
+}
+
+td select {
+    margin-right: 10px;
+}
+
+/* Type column (2nd column) - full width select */
+td:nth-child(2) select {
+    width: 100%;
+    margin-right: 0;
+}
+
+/* Value column (3rd column) - when only input (data type) */
+td:nth-child(3) input:only-child {
+    width: 100%;
+}
+
+/* Reduce padding in edit mode to fit form elements */
+td:nth-child(2):has(select),
+td:nth-child(3):has(select),
+td:nth-child(3):has(input) {
+    padding: 7px 2px;
+}
+
+/* Input group inside table cell */
+td .input-group {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+/* Add/Remove Row Button Styles */
+.actions-cell {
+    text-align: center;
+    padding: 4px !important;
+}
+
+.remove-row-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: rgba(201, 72, 72, 0.2);
+    border: 1px solid rgba(201, 72, 72, 0.3);
+    border-radius: 8px;
+    color: #ff6666;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-row-btn:hover {
+    background: rgba(201, 72, 72, 0.3);
+    border-color: rgba(201, 72, 72, 0.5);
+    box-shadow: 0 2px 8px rgba(201, 72, 72, 0.3);
+    transform: scale(1.05);
+}
+
+.remove-row-btn:active {
+    transform: scale(0.95);
+}
+
+.add-row-row {
+    background: transparent !important;
+}
+
+.add-row-row td {
+    border-bottom: none !important;
+    padding: 8px 4px !important;
+}
+
+.add-row-btn {
+    width: 100%;
+    height: 40px;
+    padding: 0 16px;
+    background: rgba(76, 175, 80, 0.15);
+    border: 1px dashed rgba(76, 175, 80, 0.3);
+    border-radius: 8px;
+    color: #81c784;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.add-row-btn:hover {
+    background: rgba(76, 175, 80, 0.25);
+    border-color: rgba(76, 175, 80, 0.5);
+    border-style: solid;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+}
+
+.add-row-btn:active {
+    transform: scale(0.98);
+}
+
+/* Column widths in edit mode (4 columns) */
+th.edit-column:not(.hidden),
+td:nth-child(4) {
+    width: 12%;
+    min-width: 50px;
+}
+
+/* Adjust other columns when in edit mode */
+tbody:has(td:nth-child(4)) ~ thead th:nth-child(1),
+thead:has(th.edit-column:not(.hidden)) th:nth-child(1),
+tbody tr:has(td:nth-child(4)) td:nth-child(1) {
+    width: 12%;
+    min-width: 50px;
+}
+
+tbody:has(td:nth-child(4)) ~ thead th:nth-child(2),
+thead:has(th.edit-column:not(.hidden)) th:nth-child(2),
+tbody tr:has(td:nth-child(4)) td:nth-child(2) {
+    width: 23%;
+    min-width: 100px;
+}
+
+tbody:has(td:nth-child(4)) ~ thead th:nth-child(3),
+thead:has(th.edit-column:not(.hidden)) th:nth-child(3),
+tbody tr:has(td:nth-child(4)) td:nth-child(3) {
+    width: 53%;
+    min-width: 150px;
+}

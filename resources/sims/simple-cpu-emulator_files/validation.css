@@ -1,0 +1,52 @@
+/* Execution Error Display */
+.execution-error {
+    display: none;
+    flex-direction: column;
+    align-items: left;
+    gap: 8px;
+    padding: 12px;
+    background: rgba(201, 72, 72, 0.15);
+    border-radius: 8px;
+    border: 1px solid rgba(201, 72, 72, 0.4);
+    font-size: 13px;
+    line-height: 1.5;
+    color: #ffb3b3;
+    font-weight: 500;
+    box-shadow: 0 4px 16px rgba(201, 72, 72, 0.2);
+    width: calc(100% - 24px);
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 12px;
+    z-index: 10;
+}
+
+.execution-error.visible {
+    display: flex;
+    animation: error-slide-in 0.3s ease-out;
+}
+
+/* Slide-in animation for execution error */
+@keyframes error-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Validation Error Row Styles */
+tr.validation-error td {
+    background: rgba(201, 72, 72, 0.12) !important;
+    box-shadow: inset 0 0 0 2px rgba(201, 72, 72, 0.4);
+}
+
+tr.validation-error input {
+    background: rgba(201, 72, 72, 0.18) !important;
+}

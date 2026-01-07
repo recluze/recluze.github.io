@@ -1,0 +1,82 @@
+html, body {
+    touch-action: manipulation;
+    overscroll-behavior: none;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    color: #e0e0e0;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(221, 132, 72, 0.4);
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(221, 132, 72, 0.6);
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    background: linear-gradient(135deg, #dd8448 0%, #ffa366 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+    flex-shrink: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Electric border shared variables and keyframes */
+:root {
+  --electric-border-color: #dd8448;
+  --electric-light-color: #ffa366;
+}
+
+@keyframes electric-pulse {
+  0% {
+    filter: drop-shadow(0 0 2px var(--electric-border-color))
+            drop-shadow(0 0 2px var(--electric-border-color));
+    border-color: var(--electric-border-color);
+  }
+  50% {
+    filter: drop-shadow(0 0 3px var(--electric-border-color))
+            drop-shadow(0 0 36px var(--electric-border-color));
+    border-color: var(--electric-border-color);
+  }
+  100% {
+    filter: drop-shadow(0 0 4px var(--electric-border-color))
+            drop-shadow(0 0 4px var(--electric-border-color));
+    border-color: var(--electric-border-color);
+  }
+}

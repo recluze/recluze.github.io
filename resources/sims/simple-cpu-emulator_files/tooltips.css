@@ -1,0 +1,331 @@
+/* Phase Tooltip */
+.phase-tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 12px);
+    transform: translateX(-50%) scale(0.95);
+    background: rgba(20, 20, 35, 0.98);
+    backdrop-filter: blur(20px);
+    color: #e0e0e0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: normal;
+    max-width: 300px;
+    min-width: 250px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(221, 132, 72, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 10000;
+    font-weight: 400;
+    text-align: left;
+}
+
+.phase-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(20, 20, 35, 0.98);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Button Tooltip */
+.button-tooltip {
+    position: absolute;
+    left: 50%;
+    top: calc(100% + 12px);
+    transform: translateX(-50%) scale(0.95);
+    background: rgba(20, 20, 35, 0.98);
+    backdrop-filter: blur(20px);
+    color: #e0e0e0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: normal;
+    max-width: 280px;
+    min-width: 240px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(221, 132, 72, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1000;
+    font-weight: 400;
+    text-align: center;
+}
+
+.button-tooltip::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-bottom-color: rgba(20, 20, 35, 0.98);
+    filter: drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Accumulator Tooltip */
+.accumulator-tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 12px);
+    transform: translateX(-50%) scale(0.95);
+    background: rgba(20, 20, 35, 0.98);
+    backdrop-filter: blur(20px);
+    color: #e0e0e0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: normal;
+    max-width: 280px;
+    min-width: 220px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(221, 132, 72, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1000;
+    font-weight: 400;
+    text-align: center;
+}
+
+.accumulator-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(20, 20, 35, 0.98);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Instruction Register Tooltip */
+.ir-tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 12px);
+    transform: translateX(-50%) scale(0.95);
+    background: rgba(20, 20, 35, 0.98);
+    backdrop-filter: blur(20px);
+    color: #e0e0e0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: normal;
+    max-width: 300px;
+    min-width: 240px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(221, 132, 72, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1000;
+    font-weight: 400;
+    text-align: center;
+}
+
+.ir-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(20, 20, 35, 0.98);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Program Counter Tooltip */
+.pc-tooltip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 12px);
+    transform: translateX(-50%) scale(0.95);
+    background: rgba(20, 20, 35, 0.98);
+    backdrop-filter: blur(20px);
+    color: #e0e0e0;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: normal;
+    max-width: 300px;
+    min-width: 240px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(221, 132, 72, 0.3);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+    z-index: 1000;
+    font-weight: 400;
+    text-align: center;
+}
+
+.pc-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(20, 20, 35, 0.98);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Validation Tooltip (floating, JS-controlled) */
+.validation-tooltip {
+    position: fixed;
+    background: rgba(20, 20, 35, 0.98);
+    backdrop-filter: blur(20px);
+    color: #ffb3b3;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: normal;
+    max-width: 280px;
+    min-width: 200px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6),
+                0 0 0 1px rgba(201, 72, 72, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+    z-index: 10000;
+    font-weight: 500;
+    text-align: center;
+}
+
+.validation-tooltip.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.validation-tooltip-arrow {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(20, 20, 35, 0.98);
+}
+
+/* Tooltip visibility / interaction states via classes & media queries */
+
+/* Desktop: delayed hover for phase tooltip */
+@media (hover: hover) and (pointer: fine) {
+    .execution-phase:hover .phase-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) scale(1);
+        transition-delay: 0.7s;
+    }
+
+    .execution-phase:hover .phase-tooltip::before {
+        transition-delay: 0.7s;
+    }
+
+    .button-wrapper:hover .button-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) scale(1);
+        transition-delay: 0.7s;
+    }
+
+    .button-wrapper:hover .button-tooltip::before {
+        transition-delay: 0.7s;
+    }
+
+    .accumulator-wrapper:hover .accumulator-tooltip,
+    .ir-wrapper:hover .ir-tooltip,
+    .pc-wrapper:hover .pc-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) scale(1);
+        transition-delay: 0.7s;
+    }
+
+    .accumulator-wrapper:hover .accumulator-tooltip::before,
+    .ir-wrapper:hover .ir-tooltip::before,
+    .pc-wrapper:hover .pc-tooltip::before {
+        transition-delay: 0.7s;
+    }
+}
+
+/* Mobile / touch: show tooltips when `.show-tooltip` is applied */
+@media (hover: none) and (pointer: coarse) {
+    .execution-phase.show-tooltip .phase-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) scale(1);
+    }
+
+    .button-wrapper.show-tooltip .button-tooltip,
+    .accumulator-wrapper.show-tooltip .accumulator-tooltip,
+    .ir-wrapper.show-tooltip .ir-tooltip,
+    .pc-wrapper.show-tooltip .pc-tooltip {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+/* Tooltip adjustments on smaller screens */
+@media screen and (max-width: 768px) {
+    .phase-tooltip {
+        max-width: min(250px, calc(100vw - 30px));
+        min-width: 150px;
+        max-height: 40vh;
+        overflow-y: auto;
+        font-size: 12px;
+        padding: 10px 14px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%) scale(0.95);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .phase-tooltip::before {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+    }
+
+    .phase-tooltip.tooltip-below::before {
+        top: -16px;
+        bottom: auto;
+        border: 8px solid transparent;
+        border-bottom-color: rgba(20, 20, 35, 0.98);
+        border-top-color: transparent;
+    }
+
+    .button-tooltip,
+    .accumulator-tooltip,
+    .ir-tooltip,
+    .pc-tooltip {
+        max-width: 240px;
+        min-width: 200px;
+        font-size: 12px;
+        padding: 10px 14px;
+    }
+}

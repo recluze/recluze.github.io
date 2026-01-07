@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- saved from url=(0068)https://andreisuslov.github.io/cpu-simulator/?utm_source=chatgpt.com -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+     <title>Simple CPU Simulator</title>
+     <link rel="icon" href="https://andreisuslov.github.io/cpu-simulator/src/assets/logo.png" type="image/png">
+     <link rel="apple-touch-icon" href="https://andreisuslov.github.io/cpu-simulator/src/assets/logo.png">
+     <link rel="shortcut icon" href="https://andreisuslov.github.io/cpu-simulator/src/assets/logo.png" type="image/png">
+     <!-- Split CSS: order is important to preserve cascade -->
+     <link rel="stylesheet" href="./simple-cpu-emulator_files/base.css">
+     <link rel="stylesheet" href="./simple-cpu-emulator_files/layout.css">
+     <link rel="stylesheet" href="./simple-cpu-emulator_files/components-controls.css">
+     <link rel="stylesheet" href="./simple-cpu-emulator_files/components-registers.css">
+     <link rel="stylesheet" href="./simple-cpu-emulator_files/components-ram-table.css">
+     <link rel="stylesheet" href="./simple-cpu-emulator_files/tooltips.css">
+     <link rel="stylesheet" href="./simple-cpu-emulator_files/validation.css">
+     <link rel="stylesheet" href="./simple-cpu-emulator_files/responsive.css">
+ </head>
+<body style="overscroll-behavior-x: auto;">
+    <div class="container">
+        <div class="simulator">
+            <div class="cpu">
+                <div class="cpu-header">
+                    <h2>CPU</h2>
+                    <div class="mode-toggle">
+                        <input type="checkbox" id="pillButtonInput" class="pill-button-input">
+                        <span class="pill-button">
+                            <span class="pill-button-selection pill-button-selection_manual pill-button-selection_active">Manual</span>
+                            <span class="pill-button-selection pill-button-selection_auto">Auto</span>
+                            <span class="pill-button-highlight" style="width: 72px; left: 4px;"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="mode-controls">
+                    <div id="manualControls" class="control-group">
+                        <div class="start-reset-container">
+                            <div class="button-wrapper">
+                                <button id="clockTick" onclick="clockTick()">Clock Tick</button>
+                                <div class="button-tooltip">Fetch 'JUMP 1' from RAM[3] → IR</div>
+                            </div>
+                            <button class="reset-btn" onclick="resetCPU()" title="Reset CPU">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                    <path d="M21 3v5h-5"></path>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                    <path d="M3 21v-5h5"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="autoControls" class="control-group hidden">
+                        <div class="interval-control">
+                            <label for="intervalInput">Interval (ms):</label>
+                            <input type="number" id="intervalInput" min="10" max="5000" step="10" value="100">
+                        </div>
+                        <div class="start-reset-container">
+                            <button id="startBtn" onclick="startAuto()">Start</button>
+                            <div id="runningControls" class="running-controls hidden">
+                                <button id="pauseBtn" onclick="pauseAuto()">Pause</button>
+                                <button id="stopBtn" onclick="stopAuto()">Stop</button>
+                            </div>
+                            <button id="autoResetBtn" class="reset-btn" onclick="resetCPU()" title="Reset CPU">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                    <path d="M21 3v5h-5"></path>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                    <path d="M3 21v-5h5"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="executionError" class="execution-error"></div>
+                </div>
+                <div class="top-row">
+                    <div class="register pc-wrapper">
+                        <h3>Program Counter</h3>
+                        <div id="pc" class="register-value">3</div>
+                        <div class="pc-tooltip">Current address: 3, pointing to RAM[3] which contains 'JUMP 1'. This instruction will be fetched into IR</div>
+                    </div>
+                    <div class="register ir-wrapper">
+                        <h3>Instruction Register</h3>
+                        <div id="ir" class="register-value">STORE 6</div>
+                        <div class="ir-tooltip">Current instruction: 'STORE 6' (completed). Next: 'JUMP 1' will be fetched from RAM[3]</div>
+                    </div>
+                </div>
+                <div class="bottom-row">
+                    <div class="register">
+                        <div id="execution-phases">
+                            <div class="execution-phase active-phase" data-phase="Fetch">► Fetch<div class="phase-tooltip">The CPU is fetching the instruction from RAM address 3 (which is 'JUMP 1') and loading it into the Instruction Register.</div>
+                            </div>
+                            <div class="execution-phase" data-phase="Decode">Decode<div class="phase-tooltip">The CPU decodes the instruction in the Instruction Register to understand what operation it needs to perform (e.g., 'LOAD', 'ADD', 'STORE').</div>
+                            </div>
+                            <div class="execution-phase" data-phase="Execute">Execute<div class="phase-tooltip">The CPU executes the instruction, carrying out the operation (like adding numbers or moving data between registers and RAM).</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="register accumulator-wrapper">
+                        <h3>Accumulator</h3>
+                        <div id="accumulator" class="register-value">4</div>
+                        <div class="accumulator-tooltip">Current value: 4, holding result from previous operations</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ram">
+                <div class="ram-header">
+                    <h2>RAM</h2>
+                    <div class="mode-switch">
+                        <button id="modeToggle" onclick="toggleMode()" style="display: flex;">
+                            <span id="modeText">Modify</span>
+                            <svg id="modeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="ram-table-container">
+                    <table id="ram-table">
+                        <thead>
+                            <tr>
+                                <th><span class="address-full">Address</span><span class="address-short">#</span></th>
+                                <th>Type</th>
+                                <th>Value</th>
+                                <th class="edit-column hidden">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody><tr><td>0</td><td class="type-instruction">Instruction</td><td>LOAD 6</td></tr><tr><td>1</td><td class="type-instruction">Instruction</td><td>ADD 7</td></tr><tr><td>2</td><td class="type-instruction">Instruction</td><td>STORE 6</td></tr><tr><td>3</td><td class="type-instruction">Instruction</td><td>JUMP 1</td></tr><tr><td>4</td><td class="type-data">Data</td><td>0</td></tr><tr><td>5</td><td class="type-data">Data</td><td>0</td></tr><tr class=""><td>6</td><td class="type-data">Data</td><td>4</td></tr><tr><td>7</td><td class="type-data">Data</td><td>1</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <button id="explanationToggle" onclick="toggleExplanation()">Show Explanation</button>
+        <div id="explanation" class="explanation">
+            <div class="explanation-content">
+                <h2>What is this and how does it work?</h2>
+                <p>This simulator demonstrates the basic functioning of a Central Processing Unit (CPU) in a computer. At its core, every modern computer operates on similar principles, no matter how complex its tasks may seem.</p>
+                <p>The simulation shows five main components:</p>
+                <ul>
+                    <li><strong>CPU:</strong> the brain of the computer, containing registers for temporary data storage and processing.</li>
+                    <li><strong>RAM (Random Access Memory):</strong> where instructions and data are stored for quick access.</li>
+                    <li><strong>Clock:</strong> represented by the "Clock Tick" button, it drives the CPU through its cycle.</li>
+                    <li><strong>Program Counter:</strong> keeps track of which instruction to execute next.</li>
+                    <li><strong>Accumulator:</strong> shows the current cycle of the execution phases, the CPU needs to fetch, decode, and execute every instruction present in RAM before moving to the next phase of the cycle.</li>
+                </ul>
+                <p>The CPU operates in a continuous "Fetch-Decode-Execute" cycle:</p>
+                <ol>
+                    <li><strong>Fetch:</strong> the CPU pulls instructions from memory (RAM).</li>
+                    <li><strong>Decode:</strong> the CPU figures out what they mean.</li>
+                    <li><strong>Execute:</strong> the CPU carries out those tasks.</li>
+                </ol>
+                <p>In this simulator, you can see (and edit) this cycle in action. The program loaded into RAM is a simple counting program. With each complete cycle, it increments a value stored in RAM.</p>
+                <p>While this simulation runs at a speed we can observe, real CPUs execute billions of instructions per second. This incredible speed allows computers to perform complex tasks like playing video games or displaying this web page.</p>
+                <p>You can interact with this simulator by clicking the "Clock Tick" button to step through each phase of the cycle, or by switching to "Edit Mode" to modify the instructions in RAM. Or you can enable the "Auto-Run" mode to see the simulation progress automatically.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="./simple-cpu-emulator_files/script.js"></script><div class="validation-tooltip" style="display: none;"><div class="validation-tooltip-arrow"></div></div>
+
+
+</body></html>

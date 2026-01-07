@@ -1,0 +1,188 @@
+/* Register Containers */
+.register {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.register:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(221, 132, 72, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.register h3 {
+    font-size: 13px;
+    font-weight: 600;
+    color: #a0a0b0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    min-height: 28px;
+}
+
+/* Register Values */
+.register-value {
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    text-align: center;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.2);
+    font-size: 20px;
+    font-weight: 600;
+    font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+    color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+/* Electric Active Register */
+.register-value.electric-active {
+    position: relative;
+    animation: electric-pulse 0.6s ease-in-out;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 8px;
+    border-color: var(--electric-border-color);
+    background: linear-gradient(
+        135deg,
+        rgba(221, 132, 72, 0.05),
+        transparent,
+        rgba(221, 132, 72, 0.05)
+    );
+}
+
+.register-value.electric-active::before {
+    content: '';
+    position: absolute;
+    top: -0.5px;
+    left: -0.5px;
+    right: -0.5px;
+    bottom: -0.5px;
+    background: linear-gradient(
+        135deg,
+        var(--electric-border-color),
+        transparent,
+        var(--electric-light-color)
+    );
+    border-radius: 8px;
+    opacity: 0.3;
+    filter: blur(1px);
+    z-index: -1;
+    animation: electric-pulse 0.1s ease-in-out;
+}
+
+/* Execution Phases */
+.execution-phase {
+    position: relative;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px 16px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+    font-size: 14px;
+    color: #b0b0c0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.execution-phase:last-child {
+    margin-bottom: 0;
+}
+
+.active-phase {
+    font-weight: 600;
+    background: linear-gradient(
+        135deg,
+        rgba(221, 132, 72, 0.2),
+        rgba(255, 163, 102, 0.1)
+    );
+    border-color: rgba(221, 132, 72, 0.4);
+    color: #ffa366;
+    box-shadow: 0 0 20px rgba(221, 132, 72, 0.2);
+}
+
+/* Electric Active RAM Row */
+tr.electric-active-row {
+    position: relative;
+}
+
+tr.electric-active-row td {
+    position: relative;
+    background: linear-gradient(
+        135deg,
+        rgba(221, 132, 72, 0.05),
+        transparent,
+        rgba(221, 132, 72, 0.05)
+    ) !important;
+    animation: electric-pulse 0.6s ease-in-out;
+    border-top: 2px solid var(--electric-border-color) !important;
+    border-bottom: 2px solid var(--electric-border-color) !important;
+    z-index: 2;
+}
+
+/* First cell - left border and rounded corners */
+tr.electric-active-row td:first-child {
+    border-left: 2px solid var(--electric-border-color) !important;
+    border-top-left-radius: 8px !important;
+    border-bottom-left-radius: 8px !important;
+}
+
+/* Last cell - right border and rounded corners */
+tr.electric-active-row td:last-child {
+    border-right: 2px solid var(--electric-border-color) !important;
+    border-top-right-radius: 8px !important;
+    border-bottom-right-radius: 8px !important;
+}
+
+/* Unified glow effect for the whole active row */
+tr.electric-active-row::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% + 16px);
+    height: calc(100% + 16px);
+    background: radial-gradient(
+        ellipse,
+        rgba(221, 132, 72, 0.4) 0%,
+        rgba(255, 163, 102, 0.2) 40%,
+        transparent 70%
+    );
+    border-radius: 12px;
+    filter: blur(12px);
+    z-index: 1;
+    pointer-events: none;
+    animation: electric-pulse 0.6s ease-in-out;
+}
+
+/* Clock display */
+#clockTick {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Wrapper elements for tooltips on key registers */
+.accumulator-wrapper,
+.ir-wrapper,
+.pc-wrapper {
+    position: relative;
+    cursor: pointer;
+    z-index: 1;
+}

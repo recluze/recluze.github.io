@@ -1,0 +1,382 @@
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+        min-height: 100vh;
+    }
+
+    .container {
+        max-width: 100%;
+        border-radius: 16px;
+        margin: 0;
+    }
+
+    .simulator {
+        flex-direction: column;
+        height: auto;
+        gap: 0;
+    }
+
+    .cpu,
+    .ram {
+        padding: 20px 16px;
+        border-right: none;
+    }
+
+    .cpu {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    h2 {
+        font-size: 22px;
+        margin-bottom: 16px;
+    }
+
+    .cpu-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 4px;
+    }
+
+    .mode-toggle {
+        flex-shrink: 0;
+    }
+
+    .pill-button {
+        font-size: 12px;
+        padding: 3px 4px;
+    }
+
+    .pill-button-selection {
+        padding: 0.4em 0.8em;
+    }
+
+    .pill-button-highlight {
+        height: 26px;
+    }
+
+    .register {
+        padding-top: 6px;
+        padding-left: 12px;
+        padding-right: 12px;
+        padding-bottom: 6px;
+        margin-bottom: 6px;
+        box-sizing: border-box;
+        min-height: 40px;
+    }
+
+    .register h3 {
+        font-size: 11px;
+        max-width: 100px;
+        white-space: normal;
+        word-wrap: break-word;
+        line-height: 1.2;
+    }
+
+    .register-value {
+        font-size: 16px;
+        padding: 8px;
+    }
+
+    .top-row {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .top-row .register {
+        margin-bottom: 10px;
+    }
+
+    .bottom-row {
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    .bottom-row .register {
+        flex: 1;
+    }
+
+    .execution-phase {
+        padding: 8px 10px;
+        font-size: 11px;
+        margin-bottom: 0;
+    }
+
+    .execution-phase:not(:last-child) {
+        margin-bottom: 6px;
+    }
+
+    button {
+        padding: 12px 20px;
+        font-size: 14px;
+        height: 44px;
+        border-radius: 10px;
+    }
+
+    .start-reset-container .reset-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    .start-reset-container .reset-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .interval-control {
+        padding: 10px;
+    }
+
+    .interval-control label {
+        font-size: 12px;
+    }
+
+    .interval-control input[type="number"] {
+        padding: 8px 10px;
+        font-size: 14px;
+    }
+
+    .running-controls {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    .running-controls button {
+        width: 100%;
+    }
+
+    .ram-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 4px;
+    }
+
+    .mode-switch {
+        flex-shrink: 0;
+        margin-bottom: 0;
+    }
+
+    .mode-switch button {
+        width: auto;
+        height: 40px;
+        padding: 0 12px;
+        gap: 6px;
+    }
+
+    .mode-switch button svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    .mode-switch button span {
+        font-size: 13px;
+    }
+
+    .ram-table-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 100%;
+        font-size: 13px;
+    }
+
+    th,
+    td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    th {
+        font-size: 11px;
+    }
+
+    /* Address column header - show only # on mobile */
+    .address-full {
+        display: none;
+    }
+
+    .address-short {
+        display: inline;
+    }
+
+    td select,
+    td input {
+        font-size: 13px;
+        padding: 6px 8px;
+        height: 34px;
+    }
+
+    td:nth-child(2) select {
+        font-size: 12px;
+    }
+
+    #explanationToggle {
+        margin-top: 20px;
+        border-radius: 0 0 16px 16px;
+        font-size: 14px;
+        padding: 12px 20px;
+    }
+
+    .explanation {
+        padding: 0;
+    }
+
+    .explanation.visible {
+        padding: 0;
+        max-height: 2000px;
+    }
+
+    .explanation h2 {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .explanation p,
+    .explanation ul,
+    .explanation ol {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 12px;
+    }
+
+    .explanation ul,
+    .explanation ol {
+        padding-left: 20px;
+    }
+}
+
+/* Extra small mobile devices */
+@media screen and (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    .container {
+        border-radius: 12px;
+    }
+
+    .cpu,
+    .ram {
+        padding: 16px 12px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+}
+
+/* Very narrow screens - stack header */
+@media screen and (max-width: 320px) {
+    .cpu-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .mode-toggle {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .ram-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .mode-switch {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .register {
+        padding: 10px;
+        margin-bottom: 8px;
+    }
+
+    .register-value {
+        font-size: 14px;
+        padding: 6px;
+    }
+
+    .top-row,
+    .bottom-row {
+        gap: 8px;
+    }
+
+    .execution-phase {
+        padding: 6px 8px;
+        font-size: 10px;
+        margin-bottom: 0;
+    }
+
+    .execution-phase:not(:last-child) {
+        margin-bottom: 4px;
+    }
+
+    button {
+        padding: 10px 16px;
+        font-size: 13px;
+        height: 40px;
+    }
+
+    .pill-button {
+        font-size: 11px;
+    }
+
+    .pill-button-selection {
+        padding: 0.35em 0.7em;
+    }
+
+    .pill-button-highlight {
+        height: 24px;
+    }
+
+    th,
+    td {
+        padding: 6px 8px;
+        margin-right: 3px;
+        font-size: 11px;
+    }
+
+    td select,
+    td input {
+        font-size: 12px;
+        padding: 5px 6px;
+        height: 30px;
+    }
+
+    .explanation p,
+    .explanation ul,
+    .explanation ol {
+        font-size: 13px;
+    }
+}
+
+/* Landscape orientation on mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .simulator {
+        flex-direction: row;
+        height: auto;
+    }
+
+    .cpu,
+    .ram {
+        flex: 1;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: none;
+    }
+
+    .ram {
+        border-right: none;
+    }
+
+    .bottom-row {
+        flex-direction: row;
+    }
+}
