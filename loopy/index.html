@@ -1,0 +1,1455 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Loopy Thingies — Handmade Crochet Creations</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+            rel="stylesheet"
+        />
+
+        <!--
+  ╔══════════════════════════════════════════════════════════╗
+  ║            LOOPY THINGIES — PRODUCT CATALOGUE           ║
+  ║  ──────────────────────────────────────────────────────  ║
+  ║  Add items here. Each entry will become a product card.  ║
+  ║                                                          ║
+  ║  Fields:                                                 ║
+  ║    id          – unique slug (no spaces)                 ║
+  ║    title       – product name                            ║
+  ║    subtitle    – one-line tagline                        ║
+  ║    description – 1–3 sentence description                ║
+  ║    image       – URL or relative path to photo           ║
+  ║    tag         – category label (Toy / Décor / etc.)     ║
+  ║    accent      – CSS colour for card accent              ║
+  ╚══════════════════════════════════════════════════════════╝
+-->
+        <script id="catalogue-data" type="application/json">
+            [
+                {
+                    "id": "flower-earrings",
+                    "title": "Bloom Stud Earrings",
+                    "subtitle": "Tiny flowers, big charm",
+                    "description": "Delicate crochet flower studs in deep fuchsia, each centred with a lustrous pearl bead and framed by a pair of hand-looped green leaves. Crocheted from fine cotton thread — lightweight enough to wear all day, special enough to remember.",
+                    "image": "03.jpeg",
+                    "tag": "Jewellery",
+                    "accent": "#A0348A"
+                },
+                {
+                    "id": "rose-coaster-pot",
+                    "title": "Red Rose Coaster Pot",
+                    "subtitle": "Where function meets bloom",
+                    "description": "A crochet basket crowned with a full bouquet of miniature red roses, each petal individually formed and threaded with green leaves. Snug in its ceramic tray, it doubles as a coaster holder and a tabletop centrepiece — no watering required.",
+                    "image": "01.jpg",
+                    "tag": "Décor",
+                    "accent": "#C94F5A"
+                },
+                {
+                    "id": "little-dragon",
+                    "title": "Little Dragon",
+                    "subtitle": "Your tiny guardian",
+                    "description": "A palm-sized amigurumi dragon crocheted stitch by stitch in forest and lime green. One paw raised, ears perked, attitude fully intact — equal parts fearsome and huggable. Makes an unforgettable gift or the best thing on your desk.",
+                    "image": "02.jpg",
+                    "tag": "Toy",
+                    "accent": "#2E7D3A"
+                }
+            ]
+        </script>
+
+        <style>
+            *,
+            *::before,
+            *::after {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            :root {
+                --cream: #fbf8f4;
+                --white: #fefcf9;
+                --ink: #2a2320;
+                --muted: #7a716a;
+                --faint: #cec8c0;
+                --teal: #2e7d7a;
+                --teal-lt: #c4e0df;
+                --rose: #c94f5a;
+                --rose-lt: #f5dcde;
+                --sand: #d4b896;
+                --gold: #c9954a;
+                --border: rgba(42, 35, 32, 0.09);
+            }
+
+            html {
+                font-size: 16px;
+                scroll-behavior: auto;
+            }
+            body {
+                background: var(--cream);
+                color: var(--ink);
+                font-family: "Nunito", sans-serif;
+                overflow-x: hidden;
+                cursor: none;
+            }
+
+            /* ── CUSTOM YARN CURSOR ── */
+            #cursor-dot {
+                position: fixed;
+                width: 8px;
+                height: 8px;
+                background: var(--teal);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition:
+                    width 0.3s,
+                    height 0.3s,
+                    background 0.4s;
+            }
+            #cursor-ring {
+                position: fixed;
+                width: 32px;
+                height: 32px;
+                border: 1.5px solid var(--teal);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9998;
+                transform: translate(-50%, -50%);
+                opacity: 0.5;
+                transition:
+                    width 0.5s,
+                    height 0.5s,
+                    opacity 0.3s;
+            }
+            /* Thread trail canvas */
+            #thread-canvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 9997;
+                opacity: 0.35;
+            }
+
+            /* ── PROGRESS ── */
+            #progress-bar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 3px;
+                background: linear-gradient(
+                    90deg,
+                    var(--rose),
+                    var(--teal),
+                    var(--gold)
+                );
+                background-size: 200% 100%;
+                animation: gradShift 4s linear infinite;
+                z-index: 10000;
+                width: 0%;
+                transition: width 0.1s linear;
+            }
+            @keyframes gradShift {
+                0% {
+                    background-position: 0%;
+                }
+                100% {
+                    background-position: 200%;
+                }
+            }
+
+            /* ── BG TEXTURE CANVAS ── */
+            #bg-canvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 0;
+                opacity: 0.45;
+                pointer-events: none;
+            }
+
+            /* ── NAV ── */
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 500;
+                padding: 0 4rem;
+                height: 72px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: rgba(251, 248, 244, 0.92);
+                backdrop-filter: blur(14px);
+                border-bottom: 1px solid var(--border);
+                opacity: 0;
+                animation: fadeUp 0.8s 0.3s cubic-bezier(0.16, 1, 0.3, 1)
+                    forwards;
+            }
+            .nav-logo-wrap {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                text-decoration: none;
+                cursor: none;
+            }
+            .nav-logo-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                border: 1.5px solid var(--sand);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+            }
+            .nav-logo-text {
+                font-family: "Playfair Display", serif;
+                font-size: 1.05rem;
+                font-weight: 400;
+                color: var(--teal);
+                letter-spacing: 0.02em;
+            }
+            .nav-logo-text span {
+                font-style: italic;
+            }
+            .nav-links {
+                display: flex;
+                gap: 2rem;
+                list-style: none;
+                align-items: center;
+            }
+            .nav-links li {
+                cursor: none;
+            }
+            .nav-links a {
+                font-size: 0.65rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                font-weight: 600;
+                color: var(--muted);
+                text-decoration: none;
+                transition: color 0.25s;
+            }
+            .nav-links a:hover {
+                color: var(--teal);
+            }
+            .nav-cta {
+                font-size: 0.65rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                font-weight: 700;
+                padding: 0.55rem 1.3rem;
+                background: var(--teal);
+                color: white;
+                border-radius: 99px;
+                text-decoration: none;
+                transition:
+                    background 0.25s,
+                    transform 0.2s;
+                cursor: none;
+            }
+            .nav-cta:hover {
+                background: #235e5b;
+                transform: translateY(-1px);
+            }
+
+            @keyframes fadeUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(-16px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(40px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            /* ── HERO ── */
+            #hero {
+                position: relative;
+                z-index: 10;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                padding: 8rem 2rem 6rem;
+                overflow: hidden;
+            }
+            .hero-stitch {
+                font-size: 0.6rem;
+                letter-spacing: 0.45em;
+                text-transform: uppercase;
+                color: var(--gold);
+                margin-bottom: 1.6rem;
+                opacity: 0;
+                animation: slideUp 1s 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+            .hero-logo-ring {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                border: 2px solid var(--sand);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 2.5rem;
+                background: white;
+                box-shadow: 0 4px 24px rgba(212, 184, 150, 0.25);
+                opacity: 0;
+                animation: slideUp 1.2s 0.8s cubic-bezier(0.16, 1, 0.3, 1)
+                    forwards;
+            }
+            .hero-logo-ring img {
+                width: 88px;
+                height: 88px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .hero-title {
+                font-family: "Playfair Display", serif;
+                font-size: clamp(3rem, 8vw, 7rem);
+                font-weight: 400;
+                line-height: 0.95;
+                letter-spacing: -0.01em;
+                color: var(--ink);
+                opacity: 0;
+                animation: slideUp 1.3s 1.1s cubic-bezier(0.16, 1, 0.3, 1)
+                    forwards;
+            }
+            .hero-title em {
+                font-style: italic;
+                color: var(--teal);
+            }
+            .hero-sub {
+                font-size: 1rem;
+                font-weight: 300;
+                line-height: 1.8;
+                color: var(--muted);
+                margin-top: 2rem;
+                max-width: 440px;
+                opacity: 0;
+                animation: slideUp 1.2s 1.3s cubic-bezier(0.16, 1, 0.3, 1)
+                    forwards;
+            }
+            .hero-badges {
+                margin-top: 2.2rem;
+                display: flex;
+                gap: 0.6rem;
+                justify-content: center;
+                flex-wrap: wrap;
+                opacity: 0;
+                animation: fadeIn 1s 1.6s forwards;
+            }
+            .badge {
+                font-size: 0.58rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                font-weight: 700;
+                padding: 0.38rem 0.9rem;
+                border-radius: 99px;
+            }
+            .badge-teal {
+                background: var(--teal-lt);
+                color: var(--teal);
+            }
+            .badge-rose {
+                background: var(--rose-lt);
+                color: var(--rose);
+            }
+            .badge-gold {
+                background: #f2e6d2;
+                color: var(--gold);
+            }
+            .hero-scroll {
+                position: absolute;
+                bottom: 2.5rem;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                opacity: 0;
+                animation: fadeIn 1s 2.2s forwards;
+            }
+            .hero-scroll span {
+                font-size: 0.55rem;
+                letter-spacing: 0.3em;
+                text-transform: uppercase;
+                color: var(--faint);
+            }
+            .hero-scroll-line {
+                width: 1px;
+                height: 44px;
+                background: linear-gradient(
+                    to bottom,
+                    var(--teal),
+                    transparent
+                );
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 0.4;
+                }
+                50% {
+                    opacity: 1;
+                }
+            }
+
+            /* ── SECTION LABELS ── */
+            .section-label {
+                position: relative;
+                z-index: 10;
+                padding: 5rem 4rem 2.5rem;
+                display: flex;
+                align-items: center;
+                gap: 1.5rem;
+            }
+            .section-label h2 {
+                font-family: "Playfair Display", serif;
+                font-size: clamp(1.8rem, 4vw, 3rem);
+                font-weight: 400;
+                color: var(--ink);
+            }
+            .section-label h2 em {
+                font-style: italic;
+                color: var(--teal);
+            }
+            .section-label-line {
+                flex: 1;
+                height: 1px;
+                background: var(--border);
+            }
+            .section-count {
+                font-size: 0.6rem;
+                letter-spacing: 0.25em;
+                text-transform: uppercase;
+                color: var(--faint);
+                font-weight: 600;
+            }
+
+            /* ── PRODUCT GRID ── */
+            #catalogue {
+                position: relative;
+                z-index: 10;
+                padding: 0 3rem 6rem;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 2.5rem;
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            /* ── PRODUCT CARD ── */
+            .product-card {
+                background: var(--white);
+                border-radius: 16px;
+                overflow: hidden;
+                box-shadow: 0 2px 20px rgba(42, 35, 32, 0.07);
+                opacity: 0;
+                transform: translateY(50px) rotate(var(--card-rot, 0deg));
+                transition:
+                    box-shadow 0.3s,
+                    transform 0.3s;
+                cursor: none;
+                border: 1px solid var(--border);
+                position: relative;
+            }
+            .product-card:hover {
+                box-shadow: 0 8px 40px rgba(42, 35, 32, 0.14);
+                transform: translateY(-6px) rotate(0deg) !important;
+            }
+            /* subtle corner ribbon for tag */
+            .card-tag {
+                position: absolute;
+                top: 16px;
+                right: 16px;
+                z-index: 5;
+                font-size: 0.52rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                font-weight: 700;
+                padding: 0.3rem 0.75rem;
+                border-radius: 99px;
+                background: var(--white);
+                box-shadow: 0 1px 8px rgba(42, 35, 32, 0.1);
+            }
+            .card-img-wrap {
+                position: relative;
+                width: 100%;
+                aspect-ratio: 4/3;
+                overflow: hidden;
+                background: #f0ebe4;
+            }
+            .card-img-wrap img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+                display: block;
+            }
+            .product-card:hover .card-img-wrap img {
+                transform: scale(1.06);
+            }
+            /* yarn texture overlay */
+            .card-img-wrap::after {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(
+                    to bottom,
+                    transparent 55%,
+                    rgba(42, 35, 32, 0.18)
+                );
+                pointer-events: none;
+            }
+            .card-body {
+                padding: 1.5rem 1.6rem 1.8rem;
+            }
+            .card-eyebrow {
+                font-size: 0.58rem;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                font-weight: 600;
+                margin-bottom: 0.55rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            .card-eyebrow::before {
+                content: "";
+                display: block;
+                width: 18px;
+                height: 1.5px;
+                background: currentColor;
+                opacity: 0.5;
+                border-radius: 2px;
+            }
+            .card-title {
+                font-family: "Playfair Display", serif;
+                font-size: 1.4rem;
+                font-weight: 400;
+                line-height: 1.2;
+                color: var(--ink);
+                margin-bottom: 0.5rem;
+            }
+            .card-title em {
+                font-style: italic;
+            }
+            .card-desc {
+                font-size: 0.82rem;
+                font-weight: 300;
+                line-height: 1.85;
+                color: var(--muted);
+                margin-top: 0.6rem;
+            }
+            .card-footer {
+                margin-top: 1.3rem;
+                padding-top: 1.1rem;
+                border-top: 1px solid var(--border);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            .card-enquire {
+                font-size: 0.6rem;
+                letter-spacing: 0.15em;
+                text-transform: uppercase;
+                font-weight: 700;
+                color: var(--teal);
+                text-decoration: none;
+                cursor: none;
+                display: flex;
+                align-items: center;
+                gap: 0.4rem;
+                transition: gap 0.2s;
+            }
+            .card-enquire:hover {
+                gap: 0.7rem;
+            }
+            .card-enquire-arrow {
+                font-size: 0.9rem;
+                line-height: 1;
+            }
+            .card-stitch {
+                font-size: 0.75rem;
+                opacity: 0.35;
+                letter-spacing: 0.05em;
+            }
+
+            /* ── HOW IT'S MADE STRIP ── */
+            #process {
+                position: relative;
+                z-index: 10;
+                background: var(--teal);
+                color: white;
+                padding: 5rem 4rem;
+                overflow: hidden;
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            .process-inner {
+                max-width: 1100px;
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 4rem;
+                align-items: center;
+            }
+            .process-label {
+                font-size: 0.6rem;
+                letter-spacing: 0.35em;
+                text-transform: uppercase;
+                color: rgba(255, 255, 255, 0.5);
+                margin-bottom: 1.2rem;
+            }
+            .process-title {
+                font-family: "Playfair Display", serif;
+                font-size: clamp(1.8rem, 4vw, 3rem);
+                font-weight: 400;
+                line-height: 1.1;
+            }
+            .process-title em {
+                font-style: italic;
+                color: var(--teal-lt);
+            }
+            .process-body {
+                font-size: 0.9rem;
+                font-weight: 300;
+                line-height: 2;
+                color: rgba(255, 255, 255, 0.65);
+                margin-top: 1.2rem;
+            }
+            .process-steps {
+                display: flex;
+                flex-direction: column;
+                gap: 1.2rem;
+                margin-top: 0;
+            }
+            .process-step {
+                display: flex;
+                align-items: flex-start;
+                gap: 1rem;
+                padding: 1.1rem 1.3rem;
+                background: rgba(255, 255, 255, 0.08);
+                border-radius: 10px;
+                border-left: 3px solid rgba(255, 255, 255, 0.3);
+            }
+            .step-num {
+                font-family: "Playfair Display", serif;
+                font-size: 1.5rem;
+                font-style: italic;
+                font-weight: 400;
+                color: rgba(255, 255, 255, 0.3);
+                line-height: 1;
+                flex-shrink: 0;
+            }
+            .step-text {
+                font-size: 0.82rem;
+                font-weight: 400;
+                line-height: 1.65;
+                color: rgba(255, 255, 255, 0.75);
+            }
+            .step-text strong {
+                color: white;
+                font-weight: 600;
+                display: block;
+                margin-bottom: 0.2rem;
+            }
+
+            /* ── ABOUT / CLOSER ── */
+            #about {
+                position: relative;
+                z-index: 10;
+                padding: 6rem 4rem;
+                max-width: 1100px;
+                margin: 0 auto;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 6rem;
+                align-items: center;
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            .about-yarn-art {
+                width: 100%;
+                aspect-ratio: 1;
+                border-radius: 50%;
+                background: var(--teal-lt);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 6rem;
+                box-shadow: 0 4px 40px rgba(46, 125, 122, 0.15);
+                border: 2px solid rgba(46, 125, 122, 0.2);
+            }
+            .about-label {
+                font-size: 0.58rem;
+                letter-spacing: 0.35em;
+                text-transform: uppercase;
+                font-weight: 600;
+                color: var(--gold);
+                margin-bottom: 1.2rem;
+            }
+            .about-title {
+                font-family: "Playfair Display", serif;
+                font-size: clamp(1.8rem, 4vw, 3rem);
+                font-weight: 400;
+                line-height: 1.1;
+                color: var(--ink);
+            }
+            .about-title em {
+                font-style: italic;
+                color: var(--teal);
+            }
+            .about-body {
+                font-size: 0.9rem;
+                font-weight: 300;
+                line-height: 2;
+                color: var(--muted);
+                margin-top: 1.2rem;
+            }
+            .about-body p + p {
+                margin-top: 0.9rem;
+            }
+            .about-contact {
+                margin-top: 2rem;
+                display: inline-flex;
+                align-items: center;
+                gap: 0.6rem;
+                font-size: 0.65rem;
+                letter-spacing: 0.18em;
+                text-transform: uppercase;
+                font-weight: 700;
+                color: var(--teal);
+                text-decoration: none;
+                cursor: none;
+                border-bottom: 1.5px solid var(--teal-lt);
+                padding-bottom: 2px;
+                transition: border-color 0.25s;
+            }
+            .about-contact:hover {
+                border-color: var(--teal);
+            }
+
+            /* ── FOOTER ── */
+            footer {
+                position: relative;
+                z-index: 10;
+                background: var(--ink);
+                color: rgba(251, 248, 244, 0.5);
+                padding: 3rem 4rem;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .footer-brand {
+                font-family: "Playfair Display", serif;
+                font-size: 1.1rem;
+                font-weight: 400;
+                color: rgba(251, 248, 244, 0.8);
+            }
+            .footer-brand em {
+                font-style: italic;
+                color: var(--teal-lt);
+            }
+            .footer-note {
+                font-size: 0.7rem;
+                font-weight: 300;
+                letter-spacing: 0.05em;
+            }
+
+            /* ── RESPONSIVE ── */
+            @media (max-width: 900px) {
+                nav {
+                    padding: 0 1.5rem;
+                }
+                .section-label {
+                    padding: 4rem 1.5rem 2rem;
+                }
+                #catalogue {
+                    padding: 0 1.5rem 4rem;
+                    grid-template-columns: 1fr;
+                }
+                #process {
+                    padding: 3.5rem 1.5rem;
+                }
+                .process-inner {
+                    grid-template-columns: 1fr;
+                    gap: 2.5rem;
+                }
+                #about {
+                    grid-template-columns: 1fr;
+                    gap: 3rem;
+                    padding: 4rem 1.5rem;
+                }
+                .about-yarn-art {
+                    width: 160px;
+                    height: 160px;
+                    font-size: 4rem;
+                }
+                footer {
+                    padding: 2rem 1.5rem;
+                    flex-direction: column;
+                    text-align: center;
+                }
+            }
+            @media (max-width: 600px) {
+                .hero-title {
+                    font-size: 2.8rem;
+                }
+                .nav-links li:not(:last-child) {
+                    display: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="cursor-dot"></div>
+        <div id="cursor-ring"></div>
+        <canvas id="thread-canvas"></canvas>
+        <canvas id="bg-canvas"></canvas>
+        <div id="progress-bar"></div>
+
+        <!-- ── NAV ── -->
+        <nav>
+            <a class="nav-logo-wrap" href="#">
+                <div class="nav-logo-text">loopy <span>thingies</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#catalogue">Shop</a></li>
+                <li><a href="#process">How It's Made</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a class="nav-cta" href="#about">Order Custom</a></li>
+            </ul>
+        </nav>
+
+        <!-- ── HERO ── -->
+        <section id="hero">
+            <div class="hero-stitch">✦ Handmade · One Loop at a Time ✦</div>
+            <div class="hero-logo-ring">
+                <img src="logo.png" alt="Loopy Thingies logo" />
+            </div>
+            <h1 class="hero-title">Loopy<br /><em>Thingies</em></h1>
+            <p class="hero-sub">
+                Small objects, made with slow hands and bright yarn. Every piece
+                crocheted from scratch — no two exactly the same.
+            </p>
+            <div class="hero-badges">
+                <span class="badge badge-teal">🧸 Amigurumi Toys</span>
+                <span class="badge badge-rose">🌹 Crochet Décor</span>
+                <span class="badge badge-gold">🎁 Custom Orders</span>
+            </div>
+            <div class="hero-scroll">
+                <span>See the collection</span>
+                <div class="hero-scroll-line"></div>
+            </div>
+        </section>
+
+        <!-- ── CATALOGUE SECTION ── -->
+        <div class="section-label">
+            <h2>The <em>Collection</em></h2>
+            <div class="section-label-line"></div>
+            <span class="section-count" id="item-count"></span>
+        </div>
+
+        <div id="catalogue">
+            <!-- Cards injected by JS from the JSON above -->
+        </div>
+
+        <!-- ── HOW IT'S MADE ── -->
+        <section id="process">
+            <div class="process-inner">
+                <div>
+                    <div class="process-label">The Craft</div>
+                    <h2 class="process-title">
+                        Every stitch,<br />placed <em>by hand</em>
+                    </h2>
+                    <p class="process-body">
+                        No machines, no moulds. Each piece starts with a hook, a
+                        ball of yarn, and a pattern traced from imagination.
+                        What emerges is something that carries the warmth of the
+                        hands that made it.
+                    </p>
+                </div>
+                <div class="process-steps">
+                    <div class="process-step">
+                        <span class="step-num">1</span>
+                        <div class="step-text">
+                            <strong>Choose &amp; Sketch</strong>The idea starts
+                            as a drawing or a reference — a creature, a flower,
+                            a shape worth making real.
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <span class="step-num">2</span>
+                        <div class="step-text">
+                            <strong>Select the Yarn</strong>Colour, weight, and
+                            texture are chosen for each piece individually. Soft
+                            acrylics for toys, structured cotton for décor.
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <span class="step-num">3</span>
+                        <div class="step-text">
+                            <strong>Hook &amp; Stuff</strong>Crocheted in the
+                            round using the amigurumi technique — a tight,
+                            seamless fabric that holds its shape and stays safe
+                            for little hands.
+                        </div>
+                    </div>
+                    <div class="process-step">
+                        <span class="step-num">4</span>
+                        <div class="step-text">
+                            <strong>Finish &amp; Inspect</strong>Eyes attached,
+                            seams closed, any final embroidery added. Each piece
+                            is checked by hand before it goes out the door.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── ABOUT ── -->
+        <section id="about">
+            <div class="about-yarn-art" aria-hidden="true">🧶</div>
+            <div>
+                <div class="about-label">Behind the loops</div>
+                <h2 class="about-title">
+                    Made with<br />care, not <em>machine</em>!
+                </h2>
+                <div class="about-body">
+                    <p>
+                        Loopy Thingies is a small handmade business built on the
+                        simple belief that objects made slowly, by hand, carry
+                        something that mass-produced things simply can't.
+                    </p>
+                    <p>
+                        Every item is crocheted to order — which means you can
+                        ask for custom colours, sizes, or characters. If you can
+                        imagine it and it can be looped, we'll give it a go.
+                    </p>
+                    <p>
+                        Reach out on Instagram or drop a message to place a
+                        custom order, ask about availability, or just say hello.
+                    </p>
+                </div>
+                <a class="about-contact" href="mailto:hello@loopythingies.com">
+                    ✉ Get in touch →
+                </a>
+            </div>
+        </section>
+
+        <!-- ── FOOTER ── -->
+        <footer>
+            <div class="footer-brand">loopy <em>thingies</em></div>
+            <div class="footer-note">
+                Handmade Crochet Creations · All pieces made to order
+            </div>
+            <div class="footer-note">© 2026 Loopy Thingies</div>
+        </footer>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+        <script>
+            /* ═══════════════════════════════════════════════
+   READ CATALOGUE JSON & BUILD CARDS
+═══════════════════════════════════════════════ */
+            const catalogue = JSON.parse(
+                document.getElementById("catalogue-data").textContent,
+            );
+            const grid = document.getElementById("catalogue");
+            document.getElementById("item-count").textContent =
+                catalogue.length + " pieces";
+
+            // subtle card rotations — alternating slight tilts
+            const rots = [
+                "-0.8deg",
+                "0.5deg",
+                "-0.4deg",
+                "0.7deg",
+                "-0.6deg",
+                "0.4deg",
+            ];
+
+            catalogue.forEach((item, i) => {
+                const rot = rots[i % rots.length];
+                const card = document.createElement("article");
+                card.className = "product-card";
+                card.style.setProperty("--card-rot", rot);
+                card.innerHTML = `
+    <span class="card-tag" style="color:${item.accent}">${item.tag}</span>
+    <div class="card-img-wrap">
+      <img src="${item.image}" alt="${item.title}" loading="lazy">
+    </div>
+    <div class="card-body">
+      <div class="card-eyebrow" style="color:${item.accent}">${item.subtitle}</div>
+      <h3 class="card-title">${item.title}</h3>
+      <p class="card-desc">${item.description}</p>
+      <div class="card-footer">
+        <a class="card-enquire" href="#about" style="color:${item.accent}">
+          Enquire <span class="card-enquire-arrow">→</span>
+        </a>
+        <span class="card-stitch">🧶</span>
+      </div>
+    </div>
+  `;
+                grid.appendChild(card);
+            });
+
+            /* ═══════════════════════════════════════════════
+   LENIS SMOOTH SCROLL
+═══════════════════════════════════════════════ */
+            class Lenis {
+                constructor() {
+                    this.cur = 0;
+                    this.tgt = 0;
+                    this.ty = 0;
+                    this.cbs = [];
+                    this._w = this._w.bind(this);
+                    this._ts = this._ts.bind(this);
+                    this._tm = this._tm.bind(this);
+                    window.addEventListener("wheel", this._w, {
+                        passive: false,
+                    });
+                    window.addEventListener("touchstart", this._ts, {
+                        passive: true,
+                    });
+                    window.addEventListener("touchmove", this._tm, {
+                        passive: false,
+                    });
+                    requestAnimationFrame(this._loop.bind(this));
+                }
+                _max() {
+                    return (
+                        document.documentElement.scrollHeight -
+                        window.innerHeight
+                    );
+                }
+                _w(e) {
+                    e.preventDefault();
+                    this.tgt = Math.max(
+                        0,
+                        Math.min(this._max(), this.tgt + e.deltaY),
+                    );
+                }
+                _ts(e) {
+                    this.ty = e.touches[0].clientY;
+                }
+                _tm(e) {
+                    e.preventDefault();
+                    const d = (this.ty - e.touches[0].clientY) * 2;
+                    this.ty = e.touches[0].clientY;
+                    this.tgt = Math.max(0, Math.min(this._max(), this.tgt + d));
+                }
+                _loop() {
+                    this.cur +=
+                        (this.tgt - this.cur) * (1 - Math.pow(0.08, 1 / 60));
+                    window.scrollTo(0, this.cur);
+                    this.cbs.forEach((cb) => cb(this.cur));
+                    requestAnimationFrame(this._loop.bind(this));
+                }
+                on(cb) {
+                    this.cbs.push(cb);
+                }
+                to(sel) {
+                    const el =
+                        typeof sel === "string"
+                            ? document.querySelector(sel)
+                            : sel;
+                    if (el) this.tgt = el.offsetTop - 72;
+                }
+            }
+            const lenis = new Lenis();
+
+            /* nav link smooth scroll */
+            document.querySelectorAll('a[href^="#"]').forEach((a) => {
+                a.addEventListener("click", (e) => {
+                    const t = a.getAttribute("href");
+                    if (t === "#") {
+                        e.preventDefault();
+                        lenis.tgt = 0;
+                        return;
+                    }
+                    const el = document.querySelector(t);
+                    if (el) {
+                        e.preventDefault();
+                        lenis.to(el);
+                    }
+                });
+            });
+
+            /* progress bar */
+            lenis.on((scroll) => {
+                const max =
+                    document.documentElement.scrollHeight - window.innerHeight;
+                document.getElementById("progress-bar").style.width =
+                    (scroll / max) * 100 + "%";
+            });
+
+            /* ═══════════════════════════════════════════════
+   THREE.JS BACKGROUND — SOFT PAPER NOISE
+═══════════════════════════════════════════════ */
+            (function () {
+                const cv = document.getElementById("bg-canvas");
+                const rend = new THREE.WebGLRenderer({
+                    canvas: cv,
+                    alpha: true,
+                    antialias: false,
+                });
+                rend.setPixelRatio(Math.min(devicePixelRatio, 1.5));
+                rend.setSize(innerWidth, innerHeight);
+                const sc = new THREE.Scene();
+                const cam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+                const frag = `
+    precision mediump float;
+    varying vec2 vUv;
+    uniform float t;
+    uniform vec2 mouse;
+    uniform vec3 accent;
+
+    vec3 mod289(vec3 x){return x-floor(x*(1./289.))*289.;}
+    vec4 mod289(vec4 x){return x-floor(x*(1./289.))*289.;}
+    vec4 permute(vec4 x){return mod289(((x*34.)+1.)*x);}
+    float snoise(vec3 v){
+      const vec2 C=vec2(1./6.,1./3.);const vec4 D=vec4(0.,.5,1.,2.);
+      vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);
+      vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.-g;
+      vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);
+      vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;
+      i=mod289(i);
+      vec4 p=permute(permute(permute(i.z+vec4(0.,i1.z,i2.z,1.))+i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));
+      float n_=0.142857142857;vec3 ns=n_*D.wyz-D.xzx;
+      vec4 j=p-49.*floor(p*ns.z*ns.z);
+      vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.*x_);
+      vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.-abs(x)-abs(y);
+      vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);
+      vec4 s0=floor(b0)*2.+1.;vec4 s1=floor(b1)*2.+1.;vec4 sh=-step(h,vec4(0.));
+      vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;
+      vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);
+      vec4 norm=1.79284291400159-0.85373472095314*vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3));
+      p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;
+      vec4 m=max(0.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);
+      m=m*m;return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
+    }
+    void main(){
+      vec2 uv=vUv;
+      float d=length(uv-mouse);
+      float ripple=exp(-d*5.)*0.06;
+      float n=(snoise(vec3(uv*2.,t*.07))*0.5
+              +snoise(vec3(uv*5.+1.,t*.12))*0.3
+              +snoise(vec3(uv*.8,t*.05))*0.2)+ripple;
+      vec3 base=vec3(.984,.973,.957);
+      /* subtle warm tint waves */
+      vec3 warm=mix(base,accent*.12+base*.92,smoothstep(-.2,.9,n)*.4);
+      /* grain */
+      float g=fract(sin(dot(uv*280.,vec2(12.9898,78.233)))*43758.5453)*.015;
+      gl_FragColor=vec4(clamp(warm-g,0.,1.),1.);
+    }
+  `;
+                const mat = new THREE.ShaderMaterial({
+                    vertexShader:
+                        "varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}",
+                    fragmentShader: frag,
+                    uniforms: {
+                        t: { value: 0 },
+                        mouse: { value: new THREE.Vector2(0.5, 0.5) },
+                        accent: { value: new THREE.Vector3(0.18, 0.49, 0.48) }, // teal
+                    },
+                });
+                sc.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
+
+                const mx = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
+                document.addEventListener("mousemove", (e) => {
+                    mx.tx = e.clientX / innerWidth;
+                    mx.ty = 1 - e.clientY / innerHeight;
+                });
+
+                // accent colours cycling per scroll section
+                const accents = [
+                    [0.18, 0.49, 0.48], // teal — hero / default
+                    [0.79, 0.31, 0.35], // rose — catalogue
+                    [0.18, 0.49, 0.48], // teal — process
+                    [0.79, 0.61, 0.29], // gold — about
+                ];
+                let curAccent = accents[0].map((v) => v);
+                let tgtAccent = accents[0].map((v) => v);
+
+                gsap.registerPlugin(ScrollTrigger);
+                gsap.ticker.add(() => ScrollTrigger.update());
+
+                const accentSections = [
+                    ".section-label",
+                    "#catalogue",
+                    "#process",
+                    "#about",
+                ];
+                accentSections.forEach((sel, i) => {
+                    const el = document.querySelector(sel);
+                    if (!el) return;
+                    ScrollTrigger.create({
+                        trigger: el,
+                        start: "top 60%",
+                        onEnter: () => {
+                            tgtAccent =
+                                accents[Math.min(i, accents.length - 1)];
+                        },
+                        onLeaveBack: () => {
+                            tgtAccent = accents[Math.max(i - 1, 0)];
+                        },
+                    });
+                });
+
+                let clk = 0;
+                (function loop() {
+                    requestAnimationFrame(loop);
+                    clk += 0.016;
+                    mx.x += (mx.tx - mx.x) * 0.05;
+                    mx.y += (mx.ty - mx.y) * 0.05;
+                    curAccent = curAccent.map(
+                        (v, i) => v + (tgtAccent[i] - v) * 0.012,
+                    );
+                    mat.uniforms.t.value = clk;
+                    mat.uniforms.mouse.value.set(mx.x, mx.y);
+                    mat.uniforms.accent.value.set(...curAccent);
+                    rend.render(sc, cam);
+                })();
+
+                window.addEventListener("resize", () => {
+                    rend.setSize(innerWidth, innerHeight);
+                });
+            })();
+
+            /* ═══════════════════════════════════════════════
+   THREAD TRAIL CANVAS
+═══════════════════════════════════════════════ */
+            (function () {
+                const cv = document.getElementById("thread-canvas");
+                const ctx = cv.getContext("2d");
+                cv.width = innerWidth;
+                cv.height = innerHeight;
+                window.addEventListener("resize", () => {
+                    cv.width = innerWidth;
+                    cv.height = innerHeight;
+                });
+
+                const points = [];
+                const maxLen = 28;
+                const colors = ["#2E7D7A", "#C94F5A", "#C9954A", "#7A9C4A"];
+                let colorIdx = 0;
+                let mx = 0,
+                    my = 0;
+
+                document.addEventListener("mousemove", (e) => {
+                    mx = e.clientX;
+                    my = e.clientY;
+                    points.push({
+                        x: mx,
+                        y: my,
+                        color: colors[colorIdx % colors.length],
+                        age: 0,
+                    });
+                    if (points.length > maxLen) points.shift();
+                    if (points.length % 14 === 0) colorIdx++;
+                });
+
+                function drawThread() {
+                    ctx.clearRect(0, 0, cv.width, cv.height);
+                    for (let i = 1; i < points.length; i++) {
+                        const p1 = points[i - 1],
+                            p2 = points[i];
+                        const progress = i / points.length;
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = p2.color;
+                        ctx.lineWidth = progress * 2;
+                        ctx.lineCap = "round";
+                        ctx.globalAlpha = progress * 0.5;
+                        ctx.stroke();
+                    }
+                    ctx.globalAlpha = 1;
+                    requestAnimationFrame(drawThread);
+                }
+                drawThread();
+            })();
+
+            /* ═══════════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════════ */
+            (function () {
+                const dot = document.getElementById("cursor-dot");
+                const ring = document.getElementById("cursor-ring");
+                document.addEventListener("mousemove", (e) => {
+                    gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0.1 });
+                    gsap.to(ring, {
+                        x: e.clientX,
+                        y: e.clientY,
+                        duration: 0.3,
+                    });
+                });
+                document
+                    .querySelectorAll("a, button, .product-card")
+                    .forEach((el) => {
+                        el.addEventListener("mouseenter", () => {
+                            gsap.to(dot, {
+                                width: 16,
+                                height: 16,
+                                duration: 0.3,
+                            });
+                            gsap.to(ring, {
+                                width: 56,
+                                height: 56,
+                                opacity: 0.7,
+                                duration: 0.3,
+                            });
+                        });
+                        el.addEventListener("mouseleave", () => {
+                            gsap.to(dot, {
+                                width: 8,
+                                height: 8,
+                                duration: 0.3,
+                            });
+                            gsap.to(ring, {
+                                width: 32,
+                                height: 32,
+                                opacity: 0.5,
+                                duration: 0.3,
+                            });
+                        });
+                    });
+            })();
+
+            /* ═══════════════════════════════════════════════
+   GSAP SCROLL REVEALS
+═══════════════════════════════════════════════ */
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Cards staggered reveal
+            document.querySelectorAll(".product-card").forEach((card, i) => {
+                gsap.to(card, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.9,
+                    ease: "expo.out",
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 88%",
+                        toggleActions: "play none none reverse",
+                    },
+                    delay: (i % 3) * 0.1,
+                });
+            });
+
+            // Process section
+            gsap.to("#process", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: "#process",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse",
+                },
+            });
+
+            // Steps stagger
+            gsap.from(".process-step", {
+                opacity: 0,
+                x: -30,
+                duration: 0.8,
+                stagger: 0.12,
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: ".process-steps",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse",
+                },
+            });
+
+            // About
+            gsap.to("#about", {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: "#about",
+                    start: "top 80%",
+                    toggleActions: "play none none reverse",
+                },
+            });
+
+            // Section label
+            gsap.from(".section-label", {
+                opacity: 0,
+                y: 30,
+                duration: 0.9,
+                ease: "expo.out",
+                scrollTrigger: { trigger: ".section-label", start: "top 85%" },
+            });
+
+            // Parallax on hero logo
+            gsap.to(".hero-logo-ring", {
+                yPercent: 25,
+                ease: "none",
+                scrollTrigger: {
+                    trigger: "#hero",
+                    start: "top top",
+                    end: "bottom top",
+                    scrub: true,
+                },
+            });
+
+            // Scroll hint fade
+            ScrollTrigger.create({
+                trigger: "#hero",
+                start: "top top",
+                end: "20% top",
+                scrub: true,
+                onUpdate: (s) => {
+                    const h = document.querySelector(".hero-scroll");
+                    if (h) h.style.opacity = 1 - s.progress * 5;
+                },
+            });
+        </script>
+    </body>
+</html>
