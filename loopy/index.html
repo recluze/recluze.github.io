@@ -100,6 +100,15 @@
                     "image": "08.png",
                     "tag": "Toy",
                     "accent": "#A0521A"
+                },
+                {
+                    "id": "14-august-bracelet",
+                    "title": "14th August Bracelet",
+                    "subtitle": "Wear your green and white with pride",
+                    "description": "A circular crochet bracelet in crisp white yarn, dotted all around with hand-crocheted green hearts — a sweet nod to Pakistan's flag colours. Made for Independence Day and worn with pride, it's the kind of accessory that starts conversations.",
+                    "image": "09.jpeg",
+                    "tag": "Accessory",
+                    "accent": "#1A7A3A"
                 }
             ]
         </script>
@@ -137,7 +146,7 @@
                 color: var(--ink);
                 font-family: "Nunito", sans-serif;
                 overflow-x: hidden;
-                cursor: none;
+                /*cursor: none;*/
             }
 
             /* ── CUSTOM YARN CURSOR ── */
@@ -164,7 +173,7 @@
                 pointer-events: none;
                 z-index: 9998;
                 transform: translate(-50%, -50%);
-                opacity: 0.5;
+                opacity: 0; // 0.5;
                 transition:
                     width 0.5s,
                     height 0.5s,
@@ -179,7 +188,7 @@
                 height: 100%;
                 pointer-events: none;
                 z-index: 9997;
-                opacity: 0.35;
+                opacity: 0;
             }
 
             /* ── PROGRESS ── */
@@ -295,7 +304,7 @@
                 font-weight: 700;
                 padding: 0.55rem 1.3rem;
                 background: var(--teal);
-                color: white;
+                color: white !important;
                 border-radius: 99px;
                 text-decoration: none;
                 transition:
@@ -1013,7 +1022,12 @@
                         custom order, ask about availability, or just say hello.
                     </p>
                 </div>
-                <a class="about-contact" href="mailto:hello@loopythingies.com">
+                <!--<a class="about-contact" href="mailto:hello@loopythingies.com">-->
+                <a
+                    class="nav-cta"
+                    style="margin-top: 2em; display: block"
+                    href="mailto:hello@loopythingies.com"
+                >
                     ✉ Get in touch →
                 </a>
             </div>
