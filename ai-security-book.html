@@ -1,0 +1,1351 @@
+---
+permalink: /ai-security-book
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta
+            property="og:title"
+            content="Securing AI-Driven Development: Principles and Practice for the AI-Assisted Engineer"
+        />
+
+        <!-- Robots: allow large previews -->
+        <meta name="robots" content="max-image-preview:large" />
+
+        <!-- Open Graph -->
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="recluze" />
+        <meta
+            property="og:title"
+            content="Securing AI-Driven Development: Principles and Practice for the AI-Assisted Engineer"
+        />
+        <meta
+            property="og:description"
+            content="A practical, principled guide to building genuinely secure software with AI coding assistants -- covering prompt architecture, least privilege, cryptography, API hardening, and securing autonomous agentic coders."
+        />
+        <meta
+            property="og:image"
+            content="https://recluze.net/assets/images/ai-security-book-og-image.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta
+            property="og:url"
+            content="https://recluze.net/ai-security-book"
+        />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+            name="twitter:url"
+            content="https://recluze.net/ai-security-book"
+        />
+        <meta
+            name="twitter:title"
+            content="Securing AI-Driven Development: Principles and Practice for the AI-Assisted Engineer"
+        />
+        <meta
+            name="twitter:description"
+            content="A practical, principled guide to building genuinely secure software with AI coding assistants -- covering prompt architecture, least privilege, cryptography, API hardening, and securing autonomous agentic coders."
+        />
+        <meta
+            name="twitter:image:src"
+            content="https://recluze.net/assets/images/ai-security-book-og-image.png"
+        />
+        <meta name="twitter:site" content="@recluze" />
+
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Securing AI-Driven Development - Principles and Practice for the
+            AI-Assisted Engineer | Book Resources Page
+        </title>
+
+        <meta
+            name="description"
+            content="Securing AI-Driven Development: Principles and Practice for the AI-Assisted Engineer. A practical guide to writing genuinely secure code with AI coding assistants -- covering trust boundaries, least privilege, secrets management, cryptography, API hardening, LLM output verification, and securing autonomous agentic coders."
+        />
+        <meta
+            name="keywords"
+            content="AI security, secure coding, AI-assisted development, LLM code generation, prompt engineering, least privilege, trust boundaries, cryptography, API security, BOLA, IDOR, agentic AI, prompt injection, Claude, security engineering, book, Mohammad Nauman, recluze"
+        />
+
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            /* Custom styles for smooth transition */
+            .chapter-content {
+                max-height: 0;
+                overflow: hidden;
+                transition:
+                    max-height 0.5s ease-out,
+                    padding 0.5s ease-out;
+                padding-left: 1rem;
+                /* Indent content */
+                padding-right: 1rem;
+            }
+
+            .chapter-content.open {
+                /* Increased max-height slightly to accommodate potentially taller content */
+                max-height: 900px;
+                padding-top: 1rem;
+                padding-bottom: 1rem;
+                transition:
+                    max-height 0.5s ease-in,
+                    padding 0.5s ease-in;
+            }
+
+            .chevron-icon {
+                transition: transform 0.3s ease;
+            }
+
+            .chevron-icon.rotated {
+                transform: rotate(90deg);
+            }
+
+            /* Basic styling for the search input */
+            .search-input {
+                border: 1px solid #e2e8f0;
+                /* Tailwind gray-300 */
+                border-radius: 0.375rem;
+                /* Tailwind rounded-md */
+                padding: 0.5rem 0.75rem;
+                font-size: 0.875rem;
+                /* Tailwind text-sm */
+            }
+
+            /* Button styling */
+            .action-button {
+                display: flex;
+                align-items: center;
+                padding: 0.5rem 1rem;
+                border-radius: 0.375rem;
+                /* rounded-md */
+                font-weight: 500;
+                /* medium */
+                transition: background-color 0.2s ease;
+            }
+
+            .primary-button {
+                background-color: #1f2937;
+                /* gray-800 */
+                color: white;
+                justify-content: center;
+                /* Center text/icon */
+            }
+
+            .primary-button:hover {
+                background-color: #374151;
+                /* gray-700 */
+            }
+
+            .secondary-button {
+                background-color: #e5e7eb;
+                /* gray-200 */
+                color: #1f2937;
+                /* gray-800 */
+                border: 1px solid #d1d5db;
+                /* gray-300 */
+                justify-content: center;
+                /* Center text/icon */
+            }
+
+            .secondary-button:hover {
+                background-color: #d1d5db;
+                /* gray-300 */
+            }
+
+            .resource-button {
+                background-color: #f3f4f6;
+                /* gray-100 */
+                color: #374151;
+                /* gray-700 */
+                border: 1px solid #e5e7eb;
+                /* gray-200 */
+                font-size: 0.875rem;
+                /* text-sm */
+                justify-content: flex-start;
+                /* Align text/icon left */
+                text-align: left;
+                /* Responsive width handled by utility classes */
+            }
+
+            .resource-button:hover {
+                background-color: #e5e7eb;
+                /* gray-200 */
+            }
+
+            /* Add margin to block buttons */
+            .resource-button.block {
+                margin-bottom: 0.5rem;
+                /* Tailwind mb-2 */
+            }
+
+            /* Remove margin from the last block button in a group */
+            .resource-button.block:last-child {
+                margin-bottom: 0;
+            }
+
+            .book-blurb,
+            .about-author {
+                margin-bottom: 1em;
+                font-size: 1.05rem;
+                color: var(--secondary-color);
+                line-height: 1.8;
+                max-width: 95%;
+                /* letter-spacing: 0.01em; */
+                text-rendering: optimizeLegibility;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            .book-blurb p,
+            .about-author p {
+                margin-bottom: 0.5em;
+            }
+
+            .notebook-icon {
+                margin-right: 1em;
+            }
+
+            .book-title {
+                font-size: 1.05rem;
+                /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+                text-rendering: optimizeLegibility;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+            }
+
+            .intext-link {
+                color: #1f2937;
+                /* gray-800 */
+                /* text-decoration: underline; */
+                border-bottom: 1px dashed #1f2937;
+            }
+
+            header,
+            body {
+                font-family: "Roboto Slab", serif;
+            }
+        </style>
+    </head>
+
+    <body class="bg-gray-50 font-sans text-gray-800">
+        <div class="container mx-auto p-2 md:p-8 max-w-4xl">
+            <header class="mx-5">
+                <h1
+                    class="text-3xl md:text-4xl font-bold mb-2 text-gray-900 book-title"
+                >
+                    Securing AI-Driven Development
+                </h1>
+                <p class="text-lg text-gray-600 mb-4 book-title">
+                    Principles and Practice for the AI-Assisted Engineer
+                </p>
+            </header>
+            <section
+                class="mb-12 bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+            >
+                <!-- Stars  -->
+                <!-- <div class="flex items-center mb-6 text-yellow-500">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                class="fas fa-star-half-alt"></i>
+                <span class="ml-2 text-gray-600 text-sm">4.7 (42 reviews)</span>
+            </div> -->
+                <!-- <hr class="my-4" />  -->
+                <div class="flex flex-col md:flex-row gap-12 book-blurb">
+                    <!-- Left column: text -->
+                    <div class="md:w-2/3">
+                        <p>
+                            Software development has undergone a fundamental
+                            shift. AI coding assistants and agents have become
+                            the primary way a rapidly growing generation of
+                            developers writes software. Code that once took days
+                            is produced in hours. Systems that required large
+                            teams are being built by individuals. This is
+                            rapidly coming at the cost of security though.
+                        </p>
+                        <p>
+                            AI models generate code that looks secure but
+                            frequently isn't. They reproduce deprecated
+                            cryptographic patterns, write endpoints that
+                            authenticate users but never verify what those users
+                            are allowed to access, and configure infrastructure
+                            with over-permissive roles -- all confidently, in
+                            clean, readable code that passes casual review
+                            without raising any alarm bells. In this book, we
+                            challenge the general perception that security is a
+                            property that can be appended to a prompt. We will
+                            discuss and convince you that it is the result of
+                            deliberate architectural decisions that no AI can
+                            make on your behalf until you've learned to make
+                            them yourself.
+                        </p>
+                        <p>
+                            This book builds this genuine security thinking from
+                            the ground up, developed entirely within the context
+                            of AI-driven development. Across four parts, it
+                            moves from philosophy (what security actually means
+                            and why it's a tradeoff, not a binary property)
+                            through the core engineering principles where
+                            AI-generated code most repeatedly fails, into
+                            hardened applications and verification discipline,
+                            and finally to the agentic frontier, where
+                            autonomous systems actively execute code rather than
+                            just passively generating it.
+                        </p>
+                    </div>
+                    <!-- Right column: image placeholder -->
+                    <div class="md:w-1/4 flex justify-center items-start">
+                        <!-- Replace src with your image path -->
+                        <img
+                            src="/assets/images/ai-security-book-cover-3d.png"
+                            alt="Securing AI-Driven Development Book Cover"
+                            class="rounded-lg shadow-mdx max-w-full h-auto"
+                        />
+                    </div>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#">
+                        <button
+                            class="action-button primary-button inline-flex"
+                        >
+                            <i class="fas fa-book mr-2"></i> Get the Book
+                        </button>
+                    </a>
+                    <!-- <a href="#">
+                <button class="action-button primary-button inline-flex">
+                    <i class="fas fa-book mr-2"></i>Download Slide Deck
+                </button>
+              </a> -->
+                    <!-- <button class="action-button secondary-button inline-flex">
+                    <i class="fas fa-eye mr-2"></i> Preview
+                </button> -->
+                </div>
+            </section>
+
+            <!-- Slides section begin -->
+            <section
+                class="p-6 pb-1 my-5 bg-white rounded-lg shadow-sm border border-gray-200"
+            >
+                <h2
+                    class="text-2xl font-semibold mb-4 text-gray-900 flex items-center"
+                >
+                    Download Instructor Slides
+                </h2>
+                <div class="flex items-center space-x-4">
+                    <!-- <div class="w-16 h-16 bg-gray-300 rounded-full flex-shrink-0"></div> -->
+                    <div>
+                        <div class="flex flex-col md:flex-row gap-12">
+                            <!-- Left column: text -->
+                            <div
+                                class="md:w-1/2 text-sm text-gray-700 mt-1 about-author"
+                            >
+                                <p>
+                                    You can download the detailed Powerpoint
+                                    slide decks for all chapters of the book
+                                    from the
+                                    <a
+                                        class="intext-link"
+                                        href="https://github.com/recluze/ai-security-book-slides"
+                                        >Github repository here.</a
+                                    >
+                                    These slides are custom designed to
+                                    complement the book's content, include
+                                    carefully curated bullet points, figures and
+                                    code listings from the books and can be a
+                                    valuable resource for instructors and
+                                    learners alike.
+                                </p>
+                                <p>
+                                    Please see the last slide of slide decks for
+                                    copyrights and permissions for use.
+                                </p>
+                            </div>
+                            <!-- Right column: image placeholder -->
+                            <div
+                                class="md:w-1/2 flex justify-center items-start"
+                            >
+                                <!-- Replace src with your image path -->
+                                <img
+                                    src="/assets/images/slides-shot-ai-book.png"
+                                    alt="Slides Screenshot"
+                                    class="max-w-full h-auto"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slides section end  -->
+
+            <!-- Chapters section begin  -->
+            <section
+                class="bg-white rounded-lg shadow-sm border border-gray-200 p-6"
+            >
+                <div
+                    class="flex justify-between items-center mb-6 flex-wrap gap-4"
+                >
+                    <h2
+                        class="text-2xl font-semibold text-gray-900 flex items-center"
+                    >
+                        <i class="fas fa-list-ul mr-3 text-gray-500"></i> Table
+                        of Contents
+                    </h2>
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <input
+                                type="text"
+                                id="chapterSearch"
+                                placeholder="Search chapters..."
+                                class="search-input pl-8"
+                            />
+                            <!--<i
+                                class="fas fa-search absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400"
+                            ></i>-->
+                        </div>
+                        <button
+                            id="expandAllBtn"
+                            class="action-button secondary-button text-sm inline-flex"
+                        >
+                            Expand All
+                        </button>
+                    </div>
+                </div>
+
+                <div id="tocList" class="space-y-2">
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">1</span>
+                                Introduction</span
+                            >
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll set the stage for the
+                                rest of the book: why security doesn't
+                                automatically come along for the ride when you
+                                hand a coding task to an AI assistant, what this
+                                book is (and isn't) trying to teach you, and how
+                                the four parts of the book build toward a
+                                coherent way of thinking about security in an
+                                AI-assisted workflow. By the end, you'll know
+                                exactly how to read the rest of the book to get
+                                the most out of it.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>
+                                    Why Security Doesn't Come Along for the Ride
+                                </li>
+                                <li>What This Book Is and What It Isn't</li>
+                                <li>A Map of the Journey</li>
+                                <li>How to Read This Book</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">2</span> Why
+                                "Make it Secure" Fails in Prompts</span
+                            >
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll examine why simply asking
+                                an AI assistant to "make this secure" produces
+                                code that looks secure without actually being
+                                secure. We'll unpack the difference between an
+                                LLM's probabilistic pattern completion and the
+                                deterministic, adversarial reasoning that
+                                security actually requires, and we'll trace why
+                                legacy, insecure patterns are so often what
+                                these models reproduce. By the end, you'll
+                                understand why the developer's real job is to
+                                act as constraint architect rather than just
+                                prompt author.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>The Mirage of the Secure Prompt</li>
+                                <li>
+                                    Probabilistic Output vs. Deterministic
+                                    Security
+                                </li>
+                                <li>
+                                    The Training Data Problem: Why Legacy
+                                    Patterns Dominate
+                                </li>
+                                <li>Building Context Over Patching</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">3</span>
+                                The Seesaw: Risk, Balance, and Compromise
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll reframe security as a
+                                continuous balancing act rather than a binary
+                                property you either have or don't. We'll look at
+                                the real costs -- in performance, usability, and
+                                budget -- that every security control carries,
+                                and we'll build a practical, portable
+                                threat-modeling process you can use to turn
+                                vague security goals into requirements an AI
+                                assistant can actually act on. By the chapter's
+                                end, you'll be equipped to define your own
+                                threat profile for any project.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>Security is Not Binary</li>
+                                <li>
+                                    The Cost of Security: Performance,
+                                    Usability, and Budget
+                                </li>
+                                <li>
+                                    Practical Threat Modeling for Developers
+                                </li>
+                                <li>Defining Your Threat Profile</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">4</span>
+                                The Happy-Path Fallacy and Trust Boundaries
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll explore why AI-generated
+                                code is structurally biased toward the
+                                cooperative, well-behaved user -- and why the
+                                adversary is always the outlier that gets left
+                                out. We'll map where trust boundaries actually
+                                exist in a typical system (there are usually far
+                                more than you'd expect), and we'll compare soft,
+                                conventional input sanitization against hard,
+                                structural type safety. By the end, you'll see
+                                validation as an architectural decision made
+                                before you prompt, not a patch applied after.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>The Flaw of Ideal Runtimes</li>
+                                <li>The Anatomy of a Trust Boundary</li>
+                                <li>
+                                    Drawing Hard Boundaries in AI-Generated Code
+                                </li>
+                                <li>
+                                    Input Sanitization vs. Structural Type
+                                    Safety
+                                </li>
+                                <li>
+                                    Validation as Architecture, Not Afterthought
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">5</span>
+                                Least Privilege and Structural Defenses
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll move beyond one-off fixes
+                                and into the structural defenses that keep a
+                                breach from becoming a catastrophe. We'll take
+                                the principle of least privilege from theory
+                                into concrete practice across credentials, IAM
+                                roles, and process permissions, and we'll learn
+                                how to prompt AI tools for genuinely
+                                low-privilege cloud infrastructure rather than
+                                the sufficient-but-excessive scope they default
+                                to. By the chapter's end, you'll be designing
+                                systems around blast radius reduction from the
+                                very first prompt.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>Moving Beyond Micro-Fixes</li>
+                                <li>
+                                    The Principle of Least Privilege: From
+                                    Theory to Practice
+                                </li>
+                                <li>Architectural Compartmentalization</li>
+                                <li>
+                                    Prompting for Low-Privilege Cloud &amp; IAM
+                                    Infrastructure
+                                </li>
+                                <li>
+                                    Blast Radius Reduction: Designing for Breach
+                                    Containment
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">6</span>
+                                Secrets, State, and Context Leakage
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll trace how secrets
+                                actually leak in AI-assisted workflows --
+                                through git history, verbose logs, CI/CD
+                                pipelines, and the AI context window itself.
+                                We'll look at environment separation and secure
+                                secret stores as the structural fix, and we'll
+                                treat data exhaust as an aggregation problem
+                                that needs to be addressed at the level of
+                                prompt templates and workflow discipline, not
+                                one prompt at a time. By the end, you'll know
+                                how to keep proprietary and sensitive
+                                information out of your prompts by design.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>The Messy Reality of Memory</li>
+                                <li>
+                                    How Secrets Leak: Git, Logs, and Context
+                                    Windows
+                                </li>
+                                <li>
+                                    Environment Separation and Secure Secret
+                                    Stores
+                                </li>
+                                <li>
+                                    Abstracting Context to Prevent Data Exhaust
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">7</span>
+                                Cryptographic Realities (and AI Blunders)
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll confront the
+                                cryptographic mistakes AI assistants make with
+                                confidence and clean-looking code: outdated
+                                primitives inherited from decades of training
+                                data, weak randomness for key material, and
+                                hashing tools used for jobs they were never
+                                designed for. We'll build categorical fluency
+                                around modern primitives, key management, and
+                                entropy rules, and we'll talk about when to stop
+                                and use a well-vetted library instead of rolling
+                                your own. By the chapter's end, you'll know
+                                exactly what to specify explicitly so the model
+                                can't quietly default to something broken.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>The Legacy Copypasta Problem</li>
+                                <li>Modern Cryptographic Primitives</li>
+                                <li>
+                                    Hashing: Choosing the Right Tool for the Job
+                                </li>
+                                <li>Key Management and Entropy Rules</li>
+                                <li>Knowing When Not to Roll Your Own</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">8</span>
+                                APIs, Middleware, and Distributed Integration
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll dig into the gap between
+                                authentication and authorization -- the single
+                                most common failure in AI-generated API code --
+                                and see why ownership checks belong at the query
+                                level, not bolted on after retrieval. We'll
+                                examine middleware chain failures, JWT
+                                vulnerabilities, rate limiting, and the trust
+                                assumptions that break down the moment services
+                                start calling each other. By the end, you'll
+                                have a concrete checklist for hardening APIs and
+                                service-to-service communication against the
+                                failures AI reliably reproduces.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>The BOLA/IDOR Trap in Generated Code</li>
+                                <li>
+                                    Middleware Chain Failures and Route
+                                    Misconfiguration
+                                </li>
+                                <li>
+                                    Session Tokens, JWT Vulnerabilities, and
+                                    Authentication Integrity
+                                </li>
+                                <li>Rate Limiting and Request Validation</li>
+                                <li>Service-to-Service Authentication</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">9</span>
+                                The Security Lifecycle: Verifying the LLM's
+                                Output
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll build a layered
+                                verification discipline that catches what
+                                automated tools structurally cannot: missing
+                                ownership bindings, business-logic omissions,
+                                and race conditions that no scanner has a model
+                                of intent to detect. We'll combine SAST and DAST
+                                with a structured human audit framework built
+                                around several specific lenses, and we'll turn
+                                every audit finding into a regression test so a
+                                one-time review becomes a permanent, monitored
+                                guarantee. By the chapter's end, you'll have a
+                                repeatable process for verifying AI-generated
+                                code before it ships.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>SAST and DAST in the Automated Loop</li>
+                                <li>
+                                    What Automated Tools Miss: Logic and
+                                    Business Rule Flaws
+                                </li>
+                                <li>The Human-in-the-Loop Audit Framework</li>
+                                <li>
+                                    Continuous Regression Testing for Security
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">10</span>
+                                Securing Autonomous Agentic Coders
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll examine what changes --
+                                structurally, not incrementally -- when an AI
+                                model stops responding to prompts and starts
+                                acting as an autonomous agent with real tools.
+                                We'll map the expanded attack surface created by
+                                indirect prompt injection, where adversarial
+                                content can reach an agent through documents,
+                                database records, images, and even other agents
+                                in a multi-agent chain. We'll then build the
+                                principle of minimal agency and runtime
+                                isolation as the two layers of defense that hold
+                                regardless of what the model decides to do. By
+                                the end, you'll understand why the developer's
+                                role shifts from reviewing output to designing
+                                constraints before the agent ever starts.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>From Snippets to Autonomous Agents</li>
+                                <li>
+                                    The Expanded Attack Surface of Agentic
+                                    Systems
+                                </li>
+                                <li>
+                                    Indirect Prompt Injection: The Risk of
+                                    Dynamic Tool Execution
+                                </li>
+                                <li>The Principle of Minimal Agency</li>
+                                <li>Runtime Isolation and Sandboxing</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">11</span>
+                                Practical Prompt Blueprints for Defensive Design
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll turn the book's
+                                principles into operational, session-level
+                                practice. We'll build a three-layer system
+                                prompt architecture, walk through the
+                                critic-actor pattern for structured multi-turn
+                                verification, and cover meta-prompting
+                                techniques that shape what a model generates
+                                before it generates anything. We'll also design
+                                context files as a form of institutional
+                                security memory that persists across sessions.
+                                By the chapter's end, you'll have reusable
+                                blueprints you can adapt directly into your own
+                                projects' system prompts and configuration
+                                files.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>System Prompt Architecture</li>
+                                <li>
+                                    The Critic-Actor Pattern: Multi-Turn
+                                    Verification
+                                </li>
+                                <li>Meta-Prompting for Edge Cases</li>
+                                <li>
+                                    Context Files and Project-Level Security
+                                    Constraints
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">12</span>
+                                From Vulnerable to Fortified
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this chapter, we'll take everything from the
+                                previous eleven chapters and apply it to an
+                                existing, already-fragile system rather than a
+                                greenfield prompt. We'll perform forensic threat
+                                modeling against real architecture drift, walk
+                                through a refactoring sequence where order
+                                itself is a security decision, and verify that
+                                hardening actually holds under adversarial
+                                conditions rather than just passing tests. By
+                                the end, you'll have a repeatable playbook for
+                                taking a system from vulnerable to genuinely
+                                production-ready.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>Anatomy of a Fragile System</li>
+                                <li>
+                                    Threat Modeling the Existing Architecture
+                                </li>
+                                <li>Step-by-Step Refactoring and Migration</li>
+                                <li>Verification and Validation</li>
+                                <li>Final Production Readiness Checklist</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+
+                    <!-- start of Chapter  -->
+                    <div
+                        class="chapter-item border border-gray-200 rounded-lg overflow-hidden"
+                    >
+                        <button
+                            class="chapter-header w-full flex justify-between items-center p-4 bg-gray-50 hover:bg-gray-100 focus:outline-none text-left"
+                            aria-expanded="false"
+                        >
+                            <span class="font-medium text-gray-700"
+                                ><span class="mr-2 text-gray-500">13</span>
+                                The Secure Generation Playbook
+                            </span>
+                            <i
+                                class="fas fa-chevron-right chevron-icon text-gray-500"
+                            ></i>
+                        </button>
+                        <div class="chapter-content bg-white">
+                            <p class="text-gray-600 text-sm mb-4">
+                                In this final chapter, we'll consolidate
+                                everything into a portable set of guidelines
+                                organized around three phases of AI-assisted
+                                generation -- Constrain First, Specify Don't
+                                Suggest, and Close the Loop -- plus a section on
+                                the anti-patterns to watch for in your own
+                                workflow. It's both a recap of the book's
+                                argument and a reference you can return to on
+                                future projects. We close with the book's
+                                central claim: generating code and specifying
+                                what that code must do are different activities,
+                                and the model is a far better implementer than
+                                it is a judge of what needs to be implemented.
+                            </p>
+                            <h4
+                                class="font-semibold text-gray-700 mb-2 text-sm"
+                            >
+                                Subsections:
+                            </h4>
+                            <ul
+                                class="list-disc list-inside text-sm text-gray-600 mb-4 space-y-1"
+                            >
+                                <li>Constrain First</li>
+                                <li>Specify, Don't Suggest</li>
+                                <li>Close the Loop</li>
+                                <li>The Anti-Patterns</li>
+                                <li>A Final Word</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Enf of Chapter  -->
+                </div>
+            </section>
+
+            <!-- End of all chapters  -->
+
+            <section
+                class="p-6 pb-1 my-5 bg-white rounded-lg shadow-sm border border-gray-200"
+            >
+                <h2
+                    class="text-2xl font-semibold mb-4 text-gray-900 flex items-center"
+                >
+                    About the Author
+                </h2>
+                <div class="flex items-center space-x-4">
+                    <!-- <div class="w-16 h-16 bg-gray-300 rounded-full flex-shrink-0"></div> -->
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800">
+                            Dr. Mohammad Nauman
+                        </h3>
+                        <p class="text-sm text-gray-600 pb-3">
+                            PhD in Computer Science, PostDoc in Security and
+                            Machine Learning
+                        </p>
+                        <div class="text-sm text-gray-700 mt-1 about-author">
+                            <p>
+                                Dr. Mohammad Nauman (recluze) is a passionate
+                                developer and educator with a deep love for
+                                computer science. With a background in software
+                                development and a strong commitment to making
+                                complex concepts accessible, he has dedicated
+                                his career to demystifying the world of computer
+                                science and making it approachable for everyone.
+                            </p>
+                            <p>
+                                As a technical writer and educator, recluze has
+                                a unique perspective on the field, drawing from
+                                his experiences in both development and
+                                education. He is committed to helping others
+                                understand and master the tools and concepts
+                                that power the world.
+                            </p>
+                            <p>
+                                You can find more about recluze and his work on
+                                recluze.net and take a look at his video courses
+                                on
+                                <a href="https://recluze.net/learn"
+                                    >recluze.net/learn</a
+                                >.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer style="text-align: center" class="mb-5">
+            <p>Connect with the Author</p>
+            <div style="line-height: 2">
+                <i class="fab fa-youtube"></i>
+                <a
+                    href="https://www.youtube.com/@recluze"
+                    target="_blank"
+                    style="margin-right: 1em"
+                    >recluze</a
+                >
+
+                <i class="fab fa-github"></i>
+                <a
+                    href="https://github.com/recluze"
+                    target="_blank"
+                    style="margin-right: 1em"
+                    >recluze</a
+                >
+
+                <i class="fab fa-twitter"></i>
+                <a
+                    href="https://twitter.com/recluze"
+                    target="_blank"
+                    style="margin-right: 1em"
+                    >recluze</a
+                >
+
+                <i class="fab fa-linkedin"></i>
+                <a
+                    href="https://www.linkedin.com/in/recluze"
+                    target="_blank"
+                    style="margin-right: 1em"
+                    >recluze</a
+                >
+            </div>
+        </footer>
+
+        <script>
+            // Get all chapter headers and content elements
+            const chapterHeaders = document.querySelectorAll(".chapter-header");
+            const chapterContents =
+                document.querySelectorAll(".chapter-content");
+            const expandAllBtn = document.getElementById("expandAllBtn");
+            const chapterSearch = document.getElementById("chapterSearch");
+            const tocList = document.getElementById("tocList");
+            const chapterItems = tocList.querySelectorAll(".chapter-item"); // Get all chapter containers
+
+            let allExpanded = false; // Track state for Expand All button
+
+            // Function to toggle a single chapter
+            function toggleChapter(header, content, icon) {
+                const isOpen = header.getAttribute("aria-expanded") === "true";
+                header.setAttribute("aria-expanded", !isOpen);
+                content.classList.toggle("open");
+                icon.classList.toggle("rotated");
+                updateExpandAllButtonState(); // Update button text after individual toggle
+            }
+
+            // Add click listener to each chapter header
+            chapterHeaders.forEach((header) => {
+                const content = header.nextElementSibling; // The content div is the next sibling
+                const icon = header.querySelector(".chevron-icon");
+
+                if (content && icon) {
+                    header.addEventListener("click", () => {
+                        toggleChapter(header, content, icon);
+                    });
+                } else {
+                    console.error(
+                        "Could not find content or icon for header:",
+                        header,
+                    );
+                }
+            });
+
+            // Function to update the Expand All button text and state
+            function updateExpandAllButtonState() {
+                // Filter only visible chapters when calculating state
+                const visibleChapterItems = Array.from(chapterItems).filter(
+                    (item) => item.style.display !== "none",
+                );
+                const visibleChapterHeaders = visibleChapterItems.map((item) =>
+                    item.querySelector(".chapter-header"),
+                );
+                const openChapters = visibleChapterHeaders.filter(
+                    (header) => header.getAttribute("aria-expanded") === "true",
+                ).length;
+                const totalVisibleChapters = visibleChapterHeaders.length;
+
+                // Handle case where no chapters are visible (due to search)
+                if (totalVisibleChapters === 0) {
+                    expandAllBtn.textContent = "Expand All";
+                    allExpanded = false;
+                    expandAllBtn.disabled = true; // Optionally disable button
+                    return;
+                }
+
+                expandAllBtn.disabled = false; // Re-enable button if chapters are visible
+
+                if (openChapters === totalVisibleChapters) {
+                    expandAllBtn.textContent = "Collapse All";
+                    allExpanded = true;
+                } else {
+                    expandAllBtn.textContent = "Expand All";
+                    allExpanded = false;
+                }
+            }
+
+            // Add click listener to the Expand All / Collapse All button
+            expandAllBtn.addEventListener("click", () => {
+                allExpanded = !allExpanded; // Toggle the state
+                // Only toggle chapters that are currently visible (not filtered out by search)
+                const visibleChapterItems = Array.from(chapterItems).filter(
+                    (item) => item.style.display !== "none",
+                );
+
+                visibleChapterItems.forEach((item) => {
+                    const header = item.querySelector(".chapter-header");
+                    const content = header.nextElementSibling;
+                    const icon = header.querySelector(".chevron-icon");
+                    const shouldBeOpen = allExpanded;
+                    const isCurrentlyOpen =
+                        header.getAttribute("aria-expanded") === "true";
+
+                    if (content && icon && shouldBeOpen !== isCurrentlyOpen) {
+                        header.setAttribute("aria-expanded", shouldBeOpen);
+                        content.classList.toggle("open", shouldBeOpen);
+                        icon.classList.toggle("rotated", shouldBeOpen);
+                    }
+                });
+                // Update button text immediately after action
+                expandAllBtn.textContent = allExpanded
+                    ? "Collapse All"
+                    : "Expand All";
+            });
+
+            // Add input listener for the search functionality
+            chapterSearch.addEventListener("input", (e) => {
+                const searchTerm = e.target.value.toLowerCase();
+
+                chapterItems.forEach((item) => {
+                    const header = item.querySelector(".chapter-header");
+                    const chapterTitle = header.textContent.toLowerCase();
+
+                    const content = header.nextElementSibling;
+                    const chapterContent = content.textContent.toLowerCase();
+
+                    const chapterText = chapterTitle + chapterContent;
+                    console.log(chapterText);
+
+                    // Check if the chapter title includes the search term
+                    if (chapterText.includes(searchTerm)) {
+                        item.style.display = ""; // Show the chapter item
+                    } else {
+                        item.style.display = "none"; // Hide the chapter item
+                        // Optionally collapse hidden chapters when they are filtered out
+                        // const content = header.nextElementSibling;
+                        // const icon = header.querySelector('.chevron-icon');
+                        // if (header.getAttribute('aria-expanded') === 'true') {
+                        //     toggleChapter(header, content, icon);
+                        // }
+                    }
+                });
+                // Update Expand All button state after filtering
+                updateExpandAllButtonState();
+            });
+
+            // Initialize button state on load
+            updateExpandAllButtonState();
+        </script>
+    </body>
+</html>
