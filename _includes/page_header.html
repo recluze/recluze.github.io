@@ -1,18 +1,15 @@
-<div class="container">
-	<h1>{{ site.texture.title }}</h1>
-	<h2>{{ site.texture.tagline }}</h2>
-	<ul class="social">
-		{%- if site.texture.social_links.github -%}
-			<a href="https://github.com/{{ site.texture.social_links.github }}"><li><i class="icon-github-circled"></i></li></a>
-		{%- endif -%}
-		{%- if site.texture.social_links.linkedIn -%}
-			<a href="https://linkedin.com/{{ site.texture.social_links.linkedIn }}"><li><i class="icon-linkedin-squared"></i></li></a>
-		{%- endif -%}
-		{%- if site.texture.social_links.twitter -%}
-			<a href="https://twitter.com/{{ site.texture.social_links.twitter }}"><li><i class="icon-twitter-squared"></i></li></a>
-		{%- endif -%}
-		{%- if site.texture.social_links.youtube -%}
-			<a href="https://youtube.com/{{ site.texture.social_links.youtube }}"><li><i class="icon-youtube-squared"></i></li></a>
-		{%- endif -%}
-	</ul>
-</div>
+<section class="hero">
+  <div class="wrap{% if page.layout == 'learn' %} wide{% endif %}">
+    {%- if page.layout == 'home' or page.title == nil -%}
+    <h1 class="hero-title">{{ site.texture.tagline | default: site.texture.title }}</h1>
+    <ul class="social">
+      {%- if site.texture.social_links.github -%}<li><a href="https://github.com/{{ site.texture.social_links.github }}">GitHub</a></li>{%- endif -%}
+      {%- if site.texture.social_links.linkedIn -%}<li><a href="https://linkedin.com/{{ site.texture.social_links.linkedIn }}">LinkedIn</a></li>{%- endif -%}
+      {%- if site.texture.social_links.twitter -%}<li><a href="https://twitter.com/{{ site.texture.social_links.twitter }}">Twitter</a></li>{%- endif -%}
+      {%- if site.texture.social_links.youtube -%}<li><a href="https://youtube.com/{{ site.texture.social_links.youtube }}">YouTube</a></li>{%- endif -%}
+    </ul>
+    {%- else -%}
+    <h1 class="hero-title">{{ page.title }}</h1>
+    {%- endif -%}
+  </div>
+</section>

@@ -1,6 +1,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{%- comment -%}
+  Redesigned layouts call this as: include head.html design=true
+  (the learn layout also passes learn=true so it keeps the Tailwind + cards styles its cards need).
+  Anything that includes head.html without design=true (e.g. 404.html) gets the original stylesheet stack.
+{%- endcomment -%}
+{%- if include.design -%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+{%- if include.learn -%}
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans:600,600i,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ "/assets/css/tailwind.css" | relative_url }}">
+<link rel="stylesheet" href="{{ "/assets/css/cards.css" | relative_url }}">
+{%- endif -%}
+<link rel="stylesheet" href="{{ "/assets/css/design.css" | relative_url }}">
+{%- else -%}
 <!-- <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700&display=swap" rel="stylesheet"> -->
 <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:600,600i,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet"> 
@@ -10,6 +28,7 @@
 <link rel="stylesheet" href="{{ "/assets/css/cards.css" | relative_url }}">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+{%- endif -%}
 <title>{{ page.title | default: site.title }}</title>
 
 

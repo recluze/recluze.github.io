@@ -2,21 +2,22 @@
 layout: page
 ---
 {%- if site.posts.size > 0 -%}
-<ul class="posts">
+<ul class="post-list">
+	{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
 	{%- for post in site.posts -%}
-	<li>
-		{%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-		<div class="post-meta">
-			<a class="post-link" href="{{ post.url | relative_url }}">
-				<h2 class="post-title">{{ post.title | escape }}</h2>
-			</a>
-			<div class="post-date"><i class="icon-calendar"></i>{{ post.date | date: date_format }}</div>
-		</div>
-		<div class="post">
-			{%- if site.show_excerpts -%}
-			{{ post.excerpt }}
-			{%- endif -%}
-		</div>
+	<li class="post-card">
+		<div class="post-date">{{ post.date | date: date_format }}</div>
+		<h2 class="post-card-title"><a href="{{ post.url | relative_url }}">{{ post.title | escape }}</a></h2>
+		{%- if site.show_excerpts -%}
+		<p class="excerpt">{{ post.excerpt | strip_html | normalize_whitespace | truncate: 220 }}</p>
+		{%- endif -%}
+		{%- if post.categories.size > 0 -%}
+		<ul class="chips">
+			{%- for tag in post.categories limit: 3 -%}
+			<li class="chip chip-{{ forloop.index0 | modulo: 3 }}">{{ tag }}</li>
+			{%- endfor -%}
+		</ul>
+		{%- endif -%}
 	</li>
 	{%- endfor -%}
 </ul>

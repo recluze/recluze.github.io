@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	{%- include head.html -%}
+	{%- include head.html design=true learn=true -%}
 </head>
-<body>
-	<header class="texture-{{ site.texture.style }} small-height">
-		<div class="container">
-			{%- include nav.html -%}
-		</div>
-		{%- include page_header.html -%}	
-	</header>
-	<main>
+<body class="ds ds-learn">
+	<a class="skip" href="#main">Skip to content</a>
+	{%- include nav.html -%}
+	{%- include page_header.html -%}
+	<main id="main">
           <div class='learn-container'> 
           {{ content }}
           </div> 

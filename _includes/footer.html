@@ -37,6 +37,15 @@
 
 
 
-<footer class="footer">
-  <span class="text-muted"> recluze | No rights reserved.</span>
+<footer class="site-footer">
+  <div class="wrap">
+    <span>recluze | No rights reserved.</span>
+    <ul class="social">
+      {%- if site.texture.social_links.github -%}<li><a href="https://github.com/{{ site.texture.social_links.github }}">GitHub</a></li>{%- endif -%}
+      {%- if site.texture.social_links.linkedIn -%}<li><a href="https://linkedin.com/{{ site.texture.social_links.linkedIn }}">LinkedIn</a></li>{%- endif -%}
+      {%- if site.texture.social_links.twitter -%}<li><a href="https://twitter.com/{{ site.texture.social_links.twitter }}">Twitter</a></li>{%- endif -%}
+      {%- if site.texture.social_links.youtube -%}<li><a href="https://youtube.com/{{ site.texture.social_links.youtube }}">YouTube</a></li>{%- endif -%}
+    </ul>
+  </div>
 </footer>
+<script src="{{ "/assets/js/site.js" | relative_url }}" defer></script>

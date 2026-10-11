@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	{%- include head.html -%}
+	{%- include head.html design=true -%}
 </head>
-<body>
-	<header class="texture-{{ site.texture.style }} medium-height">
-		<div class="container">
-			{%- include nav.html -%}
-		</div>
-		{%- include page_header.html -%}	
-	</header>
-	<main>
-		<div class="container">
+<body class="ds ds-page">
+	<a class="skip" href="#main">Skip to content</a>
+	{%- include nav.html -%}
+	{%- include page_header.html -%}
+	<main id="main">
+		<div class="wrap{% unless page.layout == 'home' %} prose{% endunless %}">
 			{{ content }}
 		</div>
 	</main>
